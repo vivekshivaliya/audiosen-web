@@ -1,0 +1,20 @@
+<svg width="920" height="600" viewBox="0 0 920 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="44" y1="32" x2="874" y2="566" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EBF6FF"/>
+      <stop offset="1" stop-color="#EAFBF7"/>
+    </linearGradient>
+  </defs>
+  <rect x="20" y="20" width="880" height="560" rx="36" fill="url(#bg)"/>
+  <rect x="96" y="130" width="728" height="340" rx="30" fill="#FFFFFF" stroke="#DCE8F4" stroke-width="4"/>
+  <rect x="142" y="184" width="284" height="24" rx="12" fill="#DBEAFE"/>
+  <rect x="142" y="224" width="360" height="24" rx="12" fill="#E0F2FE"/>
+  <rect x="142" y="264" width="322" height="24" rx="12" fill="#E2E8F0"/>
+  <rect x="142" y="332" width="232" height="84" rx="18" fill="#0EA5E9"/>
+  <text x="190" y="381" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Get In Touch</text>
+  <circle cx="655" cy="296" r="104" fill="#DDF7F2"/>
+  <path d="M672 218C624 218 585 257 585 305V327C585 356 568 381 543 393C510 408 487 438 487 474C487 528 531 572 585 572C641 572 685 527 685 471V443C685 417 703 399 729 399C765 399 794 370 794 334V328C794 267 745 218 684 218H672Z" transform="translate(40 -72)" fill="#F8C4A6"/>
+  <path d="M552 280C611 244 673 244 748 280" stroke="#22D3EE" stroke-width="8" stroke-linecap="round"/>
+  <path d="M560 332C619 302 678 302 756 332" stroke="#2DD4BF" stroke-width="7" stroke-linecap="round"/>
+</svg>
+

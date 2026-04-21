@@ -1,0 +1,57 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg5" x1="48" y1="40" x2="1142" y2="722" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EAF4FF"/>
+      <stop offset="0.46" stop-color="#F7FBFF"/>
+      <stop offset="1" stop-color="#E7FBF6"/>
+    </linearGradient>
+    <linearGradient id="ai" x1="770" y1="162" x2="1052" y2="566" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#0369A1"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="24" width="1152" height="712" rx="42" fill="url(#bg5)"/>
+  <circle cx="166" cy="126" r="78" fill="#DDECFF"/>
+  <circle cx="1058" cy="630" r="98" fill="#D5F8EA"/>
+
+  <rect x="84" y="104" width="1032" height="552" rx="34" fill="#FFFFFF" stroke="#DDEAF6" stroke-width="4"/>
+
+  <rect x="132" y="170" width="592" height="420" rx="30" fill="#F8FCFF" stroke="#D9E6F3" stroke-width="3"/>
+
+  <rect x="184" y="212" width="258" height="338" rx="34" fill="#E6F2FF" stroke="#CFE1F3" stroke-width="3"/>
+  <rect x="204" y="240" width="218" height="246" rx="18" fill="#FFFFFF"/>
+  <rect x="230" y="278" width="166" height="14" rx="7" fill="#DBEAFF"/>
+  <rect x="230" y="308" width="140" height="14" rx="7" fill="#D9F0FF"/>
+  <rect x="230" y="338" width="156" height="14" rx="7" fill="#DCFCEB"/>
+  <rect x="230" y="368" width="124" height="14" rx="7" fill="#E9F1FF"/>
+  <circle cx="312" cy="518" r="12" fill="#9DB4CC"/>
+
+  <rect x="470" y="236" width="218" height="292" rx="28" fill="#F0FDFA" stroke="#D2F1E5" stroke-width="3"/>
+  <text x="542" y="278" fill="#0F766E" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">AI</text>
+  <circle cx="550" cy="336" r="10" fill="#10B981"/>
+  <circle cx="608" cy="336" r="10" fill="#10B981"/>
+  <circle cx="579" cy="382" r="10" fill="#10B981"/>
+  <path d="M550 336L579 382L608 336" stroke="#0F766E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="516" y="428" width="124" height="18" rx="9" fill="#D7F8EA"/>
+  <rect x="528" y="456" width="102" height="18" rx="9" fill="#D7F8EA"/>
+
+  <rect x="760" y="170" width="314" height="420" rx="30" fill="url(#ai)"/>
+
+  <circle cx="916" cy="290" r="70" fill="#FFFFFF1F" stroke="#C4EFFF" stroke-width="3"/>
+  <path d="M916 248C885 248 860 273 860 304V325C860 343 850 358 835 368C815 381 801 401 801 425C801 462 832 493 869 493C907 493 938 462 938 424V406C938 392 948 383 962 383C987 383 1008 362 1008 337V328C1008 284 972 248 928 248H916Z" transform="translate(16 -36)" fill="#FFD4B8"/>
+  <path d="M964 306C931 292 899 292 866 306" stroke="#B8F3D3" stroke-width="6" stroke-linecap="round"/>
+  <path d="M971 339C938 327 907 327 876 339" stroke="#84E5BC" stroke-width="5" stroke-linecap="round"/>
+  <path d="M978 371C949 361 921 361 892 371" stroke="#4FD09E" stroke-width="4" stroke-linecap="round"/>
+
+  <circle cx="846" cy="460" r="12" fill="#D7F2FF"/>
+  <circle cx="984" cy="460" r="12" fill="#D7F2FF"/>
+  <circle cx="916" cy="526" r="12" fill="#D7F2FF"/>
+  <path d="M846 460L916 526L984 460" stroke="#D7F2FF" stroke-width="4" stroke-linecap="round"/>
+
+  <rect x="818" y="548" width="196" height="32" rx="16" fill="#FFFFFF1F" stroke="#C4EFFF"/>
+  <text x="845" y="570" fill="#E9F8FF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">App Control + Streaming</text>
+
+  <text x="132" y="624" fill="#123153" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700">The Future of Hearing Technology</text>
+  <text x="132" y="658" fill="#4F6782" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">AI-powered devices are smarter, smaller, and easier to personalize.</text>
+</svg>

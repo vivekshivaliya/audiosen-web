@@ -1,0 +1,62 @@
+
+> audiosen-web@1.0.0 dev
+> next dev --port 3000
+
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.17:3000
+- Environments: .env
+✓ Ready in 778ms
+Creating turbopack project { dir: 'C:\\Users\\vivek\\audiosen\\audiosen-web', testMode: true }
+
+ GET / 200 in 2.4s (next.js: 1224ms, application-code: 1213ms)
+ GET / 200 in 162ms (next.js: 5ms, application-code: 156ms)
+✓ Compiled in 93ms
+ GET / 200 in 263ms (next.js: 103ms, application-code: 160ms)
+✓ Compiled in 694ms
+ GET / 200 in 1206ms (next.js: 601ms, application-code: 606ms)
+ GET / 200 in 421ms (next.js: 75ms, application-code: 346ms)
+ GET / 200 in 267ms (next.js: 9ms, application-code: 258ms)
+ GET / 200 in 268ms (next.js: 136ms, application-code: 132ms)
+ GET / 200 in 272ms (next.js: 83ms, application-code: 189ms)
+ GET / 200 in 157ms (next.js: 75ms, application-code: 83ms)
+ GET / 200 in 474ms (next.js: 5ms, application-code: 470ms)
+ GET / 200 in 150ms (next.js: 5ms, application-code: 146ms)
+ GET /about 200 in 71ms (next.js: 40ms, application-code: 31ms)
+ GET / 200 in 57ms (next.js: 3ms, application-code: 54ms)
+ GET /blog 200 in 121ms (next.js: 64ms, application-code: 57ms)
+ GET /images/products/real-hearing-aid-glasses.jpg 404 in 212ms (next.js: 79ms, application-code: 133ms)
+ GET /images/products/real-pixabay-device-1.jpg 404 in 161ms (next.js: 10ms, application-code: 151ms)
+ GET /accessibility 200 in 65ms (next.js: 41ms, application-code: 24ms)
+ GET /sitemap 200 in 76ms (next.js: 38ms, application-code: 39ms)
+ GET / 200 in 104ms (next.js: 11ms, application-code: 93ms)
+ GET / 200 in 58ms (next.js: 4ms, application-code: 53ms)
+ GET / 200 in 557ms (next.js: 106ms, application-code: 451ms)
+ GET / 200 in 369ms (next.js: 5ms, application-code: 364ms)
+ GET / 200 in 279ms (next.js: 5ms, application-code: 275ms)
+ GET / 200 in 281ms (next.js: 59ms, application-code: 223ms)
+ GET / 200 in 284ms (next.js: 115ms, application-code: 169ms)
+ GET / 200 in 288ms (next.js: 170ms, application-code: 118ms)
+ GET /sitemap 200 in 139ms (next.js: 96ms, application-code: 43ms)
+ GET / 200 in 83ms (next.js: 4ms, application-code: 79ms)
+ GET / 200 in 634ms (next.js: 101ms, application-code: 533ms)
+ GET / 200 in 442ms (next.js: 6ms, application-code: 436ms)
+ GET / 200 in 331ms (next.js: 80ms, application-code: 251ms)
+ GET / 200 in 331ms (next.js: 234ms, application-code: 97ms)
+ GET / 200 in 334ms (next.js: 5ms, application-code: 329ms)
+ GET / 200 in 334ms (next.js: 161ms, application-code: 173ms)
+✓ Compiled in 97ms
+ GET / 200 in 506ms (next.js: 148ms, application-code: 358ms)
+✓ Compiled in 181ms
+ GET / 200 in 1011ms (next.js: 206ms, application-code: 805ms)
+ GET / 200 in 654ms (next.js: 5ms, application-code: 649ms)
+ GET / 200 in 536ms (next.js: 15ms, application-code: 521ms)
+ GET / 200 in 536ms (next.js: 140ms, application-code: 396ms)
+ GET / 200 in 535ms (next.js: 381ms, application-code: 154ms)
+ GET / 200 in 537ms (next.js: 259ms, application-code: 278ms)
+ GET / 200 in 816ms (next.js: 143ms, application-code: 673ms)
+ GET / 200 in 561ms (next.js: 6ms, application-code: 554ms)
+ GET / 200 in 446ms (next.js: 201ms, application-code: 245ms)
+ GET / 200 in 451ms (next.js: 128ms, application-code: 323ms)
+ GET / 200 in 455ms (next.js: 12ms, application-code: 443ms)
+ GET / 200 in 450ms (next.js: 281ms, application-code: 169ms)

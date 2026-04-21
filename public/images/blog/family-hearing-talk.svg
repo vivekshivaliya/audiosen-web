@@ -1,0 +1,55 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg4" x1="58" y1="40" x2="1124" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F1F8FF"/>
+      <stop offset="0.5" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F2FDF6"/>
+    </linearGradient>
+    <linearGradient id="bubble" x1="724" y1="176" x2="1038" y2="548" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="24" width="1152" height="712" rx="42" fill="url(#bg4)"/>
+  <circle cx="174" cy="126" r="76" fill="#DDEEFF"/>
+  <circle cx="1064" cy="624" r="96" fill="#D6F8EA"/>
+
+  <rect x="84" y="104" width="1032" height="552" rx="34" fill="#FFFFFF" stroke="#DDEAF6" stroke-width="4"/>
+
+  <rect x="132" y="170" width="618" height="420" rx="30" fill="#F8FCFF" stroke="#D9E6F3" stroke-width="3"/>
+
+  <circle cx="274" cy="334" r="96" fill="#DBEAFE"/>
+  <circle cx="610" cy="334" r="96" fill="#D1FAE5"/>
+  <circle cx="274" cy="322" r="44" fill="#F7C8A8"/>
+  <circle cx="610" cy="322" r="44" fill="#F7C8A8"/>
+  <rect x="214" y="372" width="120" height="126" rx="58" fill="#2563EB"/>
+  <rect x="550" y="372" width="120" height="126" rx="58" fill="#10B981"/>
+
+  <path d="M402 308C364 308 334 338 334 376C334 414 364 444 402 444H438L466 472V444H522C560 444 590 414 590 376C590 338 560 308 522 308H402Z" fill="#FFFFFF" stroke="#CFE0EF" stroke-width="3"/>
+  <circle cx="414" cy="376" r="8" fill="#7C93AA"/>
+  <circle cx="462" cy="376" r="8" fill="#7C93AA"/>
+  <circle cx="510" cy="376" r="8" fill="#7C93AA"/>
+
+  <circle cx="438" cy="518" r="54" fill="#ECFEF5" stroke="#CFEEDD" stroke-width="3"/>
+  <path d="M438 486C414 486 395 505 395 529V542C395 555 388 567 377 573C362 581 352 595 352 612C352 637 373 658 398 658C424 658 445 637 445 611V595C445 584 452 577 463 577C480 577 494 563 494 546V542C494 511 469 486 438 486Z" transform="translate(40 -82)" fill="#F8C8A6"/>
+  <path d="M489 518C473 511 457 511 441 518" stroke="#9EDFC3" stroke-width="5" stroke-linecap="round"/>
+  <path d="M493 534C477 528 462 528 447 534" stroke="#6EC9A5" stroke-width="4" stroke-linecap="round"/>
+
+  <rect x="782" y="170" width="292" height="420" rx="30" fill="url(#bubble)"/>
+  <rect x="822" y="224" width="212" height="114" rx="22" fill="#FFFFFF1F" stroke="#BCEFF7"/>
+  <text x="848" y="272" fill="#F0FDFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Do's</text>
+  <rect x="848" y="286" width="160" height="12" rx="6" fill="#D9F9FF"/>
+  <rect x="848" y="306" width="130" height="12" rx="6" fill="#D9F9FF"/>
+
+  <rect x="822" y="356" width="212" height="114" rx="22" fill="#FFFFFF1F" stroke="#BCEFF7"/>
+  <text x="848" y="404" fill="#F0FDFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Don'ts</text>
+  <rect x="848" y="418" width="160" height="12" rx="6" fill="#D9F9FF"/>
+  <rect x="848" y="438" width="130" height="12" rx="6" fill="#D9F9FF"/>
+
+  <rect x="822" y="492" width="212" height="66" rx="20" fill="#FFFFFF1A" stroke="#BCEFF7"/>
+  <text x="842" y="532" fill="#E8FBFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Talk with kindness</text>
+
+  <text x="132" y="624" fill="#123153" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700">How to Talk to a Loved One About Hearing Loss</text>
+  <text x="132" y="658" fill="#4F6782" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">Support, empathy, and teamwork make the conversation easier.</text>
+</svg>

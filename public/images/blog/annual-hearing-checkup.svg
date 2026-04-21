@@ -1,0 +1,50 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="70" y1="40" x2="1120" y2="710" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E9F4FF"/>
+      <stop offset="0.52" stop-color="#F8FBFF"/>
+      <stop offset="1" stop-color="#E8FCF5"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="700" y1="160" x2="1010" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#0369A1"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="24" width="1152" height="712" rx="42" fill="url(#bg)"/>
+  <circle cx="162" cy="146" r="82" fill="#DCEEFE"/>
+  <circle cx="1034" cy="648" r="102" fill="#D7F9EF"/>
+
+  <rect x="84" y="108" width="1032" height="548" rx="34" fill="#FFFFFF" stroke="#D7E6F4" stroke-width="4"/>
+
+  <rect x="144" y="176" width="322" height="376" rx="28" fill="#F8FBFF" stroke="#D9E7F5" stroke-width="3"/>
+  <rect x="144" y="176" width="322" height="86" rx="28" fill="#E0F2FE"/>
+  <rect x="194" y="208" width="86" height="14" rx="7" fill="#0369A1"/>
+  <rect x="298" y="208" width="122" height="14" rx="7" fill="#0EA5E9"/>
+  <rect x="188" y="286" width="236" height="18" rx="9" fill="#CFE6FA"/>
+  <rect x="188" y="324" width="188" height="18" rx="9" fill="#D6ECFF"/>
+  <rect x="188" y="362" width="212" height="18" rx="9" fill="#D6ECFF"/>
+  <rect x="188" y="400" width="152" height="18" rx="9" fill="#D6ECFF"/>
+  <rect x="188" y="438" width="202" height="18" rx="9" fill="#D6ECFF"/>
+
+  <rect x="510" y="176" width="286" height="376" rx="28" fill="#F7FFFB" stroke="#CFEEDD" stroke-width="3"/>
+  <rect x="550" y="234" width="204" height="20" rx="10" fill="#DCF7ED"/>
+  <circle cx="560" cy="304" r="14" fill="#10B981"/>
+  <path d="M553 304L559 310L569 298" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="584" y="294" width="152" height="20" rx="10" fill="#E6FAF2"/>
+  <circle cx="560" cy="356" r="14" fill="#10B981"/>
+  <path d="M553 356L559 362L569 350" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="584" y="346" width="138" height="20" rx="10" fill="#E6FAF2"/>
+  <circle cx="560" cy="408" r="14" fill="#10B981"/>
+  <path d="M553 408L559 414L569 402" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="584" y="398" width="166" height="20" rx="10" fill="#E6FAF2"/>
+
+  <rect x="828" y="176" width="236" height="376" rx="30" fill="url(#panel)"/>
+  <path d="M949 248C902 248 866 285 866 332V362C866 389 851 414 826 427C794 444 772 478 772 517C772 576 821 624 880 624C940 624 989 575 989 515V484C989 461 1005 445 1028 445C1068 445 1100 413 1100 373V358C1100 298 1052 248 992 248H949Z" transform="translate(24 -36)" fill="#FFD3B5"/>
+  <path d="M984 330C935 309 887 309 838 330" stroke="#B7F3D0" stroke-width="8" stroke-linecap="round"/>
+  <path d="M994 376C944 357 896 357 848 376" stroke="#8CE6BE" stroke-width="7" stroke-linecap="round"/>
+  <path d="M1004 422C958 406 913 406 868 422" stroke="#56CFA3" stroke-width="6" stroke-linecap="round"/>
+
+  <text x="144" y="618" fill="#0F2E4F" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="700">Annual Hearing Check-up</text>
+  <text x="144" y="654" fill="#4F6682" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">Early screening helps protect clarity, confidence, and brain health.</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="42" y1="44" x2="1146" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EFF6FF"/>
+      <stop offset="0.5" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFF5EB"/>
+    </linearGradient>
+    <linearGradient id="device" x1="860" y1="158" x2="1076" y2="506" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#0284C7"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="24" width="1152" height="712" rx="42" fill="url(#bg2)"/>
+  <circle cx="176" cy="120" r="76" fill="#DBEAFE"/>
+  <circle cx="1066" cy="624" r="96" fill="#FFE7D5"/>
+
+  <rect x="82" y="102" width="1036" height="556" rx="34" fill="#FFFFFF" stroke="#DEE8F4" stroke-width="4"/>
+
+  <rect x="132" y="166" width="644" height="428" rx="30" fill="#F8FBFF" stroke="#D9E6F3" stroke-width="3"/>
+
+  <rect x="174" y="212" width="560" height="56" rx="22" fill="#E6F0FF"/>
+  <circle cx="208" cy="240" r="17" fill="#2563EB"/>
+  <text x="201" y="246" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">1</text>
+  <rect x="242" y="230" width="454" height="19" rx="9" fill="#CDE1FB"/>
+
+  <rect x="174" y="280" width="560" height="56" rx="22" fill="#E8F8FF"/>
+  <circle cx="208" cy="308" r="17" fill="#0EA5E9"/>
+  <text x="201" y="314" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">2</text>
+  <rect x="242" y="298" width="474" height="19" rx="9" fill="#CBEFFE"/>
+
+  <rect x="174" y="348" width="560" height="56" rx="22" fill="#ECFEF7"/>
+  <circle cx="208" cy="376" r="17" fill="#10B981"/>
+  <text x="201" y="382" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">3</text>
+  <rect x="242" y="366" width="448" height="19" rx="9" fill="#CEF6E7"/>
+
+  <rect x="174" y="416" width="560" height="56" rx="22" fill="#FFF6ED"/>
+  <circle cx="208" cy="444" r="17" fill="#F97316"/>
+  <text x="201" y="450" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">4</text>
+  <rect x="242" y="434" width="420" height="19" rx="9" fill="#FEE2CC"/>
+
+  <rect x="174" y="484" width="560" height="56" rx="22" fill="#FFF1F2"/>
+  <circle cx="208" cy="512" r="17" fill="#E11D48"/>
+  <text x="201" y="518" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">5</text>
+  <rect x="242" y="502" width="496" height="19" rx="9" fill="#FFD9E1"/>
+
+  <rect x="812" y="166" width="262" height="428" rx="30" fill="url(#device)"/>
+  <path d="M942 212C901 212 868 245 868 286V316C868 339 855 360 835 371C809 385 792 412 792 444C792 493 832 532 881 532C931 532 971 492 971 443V417C971 397 984 383 1005 383C1038 383 1064 357 1064 324V311C1064 256 1020 212 965 212H942Z" fill="#FFD6B8"/>
+  <path d="M1007 287C964 267 922 267 880 287" stroke="#B4F1D1" stroke-width="7" stroke-linecap="round"/>
+  <path d="M1016 328C973 311 932 311 891 328" stroke="#7CE2B5" stroke-width="6" stroke-linecap="round"/>
+  <path d="M1024 368C985 354 947 354 907 368" stroke="#42C793" stroke-width="5" stroke-linecap="round"/>
+  <rect x="846" y="486" width="194" height="68" rx="20" fill="#FFFFFF1F" stroke="#BDEBFF"/>
+  <text x="866" y="527" fill="#E7F6FF" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">7-10 years</text>
+
+  <text x="132" y="626" fill="#102E4D" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700">5 Signs You Might Need Hearing Aids</text>
+  <text x="132" y="660" fill="#526A85" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">Recognize early signals and get support without fear.</text>
+</svg>

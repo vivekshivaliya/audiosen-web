@@ -1,0 +1,43 @@
+<svg width="960" height="720" viewBox="0 0 960 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="110" y1="80" x2="860" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8F6FF"/>
+      <stop offset="0.55" stop-color="#F5FAFF"/>
+      <stop offset="1" stop-color="#E9F8F6"/>
+    </linearGradient>
+    <linearGradient id="earTone" x1="470" y1="188" x2="720" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD5BF"/>
+      <stop offset="1" stop-color="#F9B896"/>
+    </linearGradient>
+    <linearGradient id="ringA" x1="340" y1="260" x2="820" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="ringB" x1="360" y1="340" x2="840" y2="340" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#14B8A6"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="20" width="912" height="680" rx="56" fill="url(#bg)"/>
+
+  <circle cx="240" cy="174" r="84" fill="#DFF2FF"/>
+  <circle cx="774" cy="566" r="118" fill="#DDF7F2"/>
+
+  <path d="M655 194C604 194 562 236 562 289V311C562 341 544 367 517 380C482 397 458 431 458 470C458 529 507 578 566 578C627 578 676 528 676 467V436C676 408 696 386 724 386C764 386 797 353 797 313V306C797 244 746 194 684 194H655Z" fill="url(#earTone)"/>
+  <path d="M648 262C608 262 575 294 575 334V354C575 380 558 404 534 414C503 426 482 455 482 489C482 539 522 579 572 579C623 579 663 538 663 488V454C663 430 680 412 704 412C739 412 768 384 768 348V342C768 298 732 262 688 262H648Z" stroke="#E59B76" stroke-width="16"/>
+  <path d="M609 390C584 390 564 410 564 435C564 460 584 480 609 480C634 480 654 460 654 435" stroke="#D78462" stroke-width="14" stroke-linecap="round"/>
+
+  <path d="M314 280C408 228 545 228 736 280" stroke="url(#ringA)" stroke-width="14" stroke-linecap="round"/>
+  <path d="M334 360C423 315 541 315 756 360" stroke="url(#ringB)" stroke-width="12" stroke-linecap="round"/>
+  <path d="M350 438C437 400 537 400 770 438" stroke="#34D399" stroke-width="10" stroke-linecap="round" opacity="0.9"/>
+
+  <circle cx="323" cy="279" r="12" fill="#0284C7"/>
+  <circle cx="341" cy="359" r="10" fill="#0F766E"/>
+  <circle cx="358" cy="438" r="8" fill="#059669"/>
+
+  <rect x="172" y="544" width="298" height="108" rx="26" fill="#FFFFFF" stroke="#D4E6F4" stroke-width="4"/>
+  <text x="202" y="595" fill="#0F3B67" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">AI Hearing Care</text>
+  <text x="203" y="624" fill="#4A6D92" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600">Premium, Clear, Connected</text>
+</svg>
+

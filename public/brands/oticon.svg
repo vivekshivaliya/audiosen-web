@@ -1,0 +1,18 @@
+<svg width="640" height="220" viewBox="0 0 640 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="640" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EAF8FF"/>
+      <stop offset="1" stop-color="#FFFFFF"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="68" y1="48" x2="140" y2="118" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0284C7"/>
+      <stop offset="1" stop-color="#0F3A72"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="636" height="216" rx="40" fill="url(#bg)" stroke="#D2ECFF" stroke-width="4"/>
+  <rect x="64" y="56" width="76" height="76" rx="22" fill="url(#mark)"/>
+  <path d="M85 94C85 83.5 93.5 75 104 75H120V113H104C93.5 113 85 104.5 85 94Z" fill="#ECFAFF"/>
+  <text x="168" y="108" fill="#144579" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" letter-spacing="4">OTICON</text>
+  <text x="168" y="145" fill="#4E7FA9" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600" letter-spacing="2">BRAIN HEARING TECHNOLOGY</text>
+</svg>
+

@@ -1,0 +1,10 @@
+
+> audiosen-web@1.0.0 dev
+> next dev --hostname 127.0.0.1 --port 3003
+
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://127.0.0.1:3003
+- Network:       http://127.0.0.1:3003
+- Environments: .env
+✓ Ready in 1041ms
+[?25h

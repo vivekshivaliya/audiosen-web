@@ -1,0 +1,21 @@
+
+> audiosen-web@1.0.0 dev
+> next dev --hostname 127.0.0.1 --port 3000
+
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://127.0.0.1:3000
+- Network:       http://127.0.0.1:3000
+- Environments: .env
+✓ Ready in 660ms
+Creating turbopack project { dir: 'C:\\Users\\vivek\\audiosen\\audiosen-web', testMode: true }
+
+ GET / 200 in 1279ms (next.js: 660ms, application-code: 619ms)
+ GET /brands 200 in 511ms (next.js: 58ms, application-code: 453ms)
+ GET / 200 in 533ms (next.js: 158ms, application-code: 375ms)
+ GET /about 200 in 110ms (next.js: 41ms, application-code: 69ms)
+ GET /brands/phonak 200 in 774ms (next.js: 678ms, generate-params: 642ms, application-code: 96ms)
+ GET / 200 in 141ms (next.js: 9ms, application-code: 132ms)
+ GET /brands/phonak 200 in 99ms (next.js: 16ms, generate-params: 10ms, application-code: 84ms)
+ GET /about 200 in 192ms (next.js: 13ms, application-code: 179ms)
+ GET /brands 200 in 196ms (next.js: 41ms, application-code: 156ms)
+ GET / 200 in 182ms (next.js: 8ms, application-code: 174ms)

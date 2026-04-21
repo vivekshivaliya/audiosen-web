@@ -1,0 +1,18 @@
+<svg width="640" height="220" viewBox="0 0 640 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="640" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EAFBF5"/>
+      <stop offset="1" stop-color="#FFFFFF"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="66" y1="46" x2="142" y2="124" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D9488"/>
+      <stop offset="1" stop-color="#115E59"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="636" height="216" rx="40" fill="url(#bg)" stroke="#D4F2E7" stroke-width="4"/>
+  <rect x="66" y="54" width="76" height="76" rx="24" fill="url(#mark)"/>
+  <path d="M84 107L100 77L116 107H109L100 90L91 107H84Z" fill="#EEFFFA"/>
+  <text x="168" y="108" fill="#0E5C56" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" letter-spacing="4">WIDEX</text>
+  <text x="168" y="145" fill="#4A8A83" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600" letter-spacing="2">NATURAL SOUND EXPERIENCE</text>
+</svg>
+

@@ -1,0 +1,49 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg3" x1="80" y1="50" x2="1120" y2="710" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EEF9FF"/>
+      <stop offset="0.52" stop-color="#F7FBFF"/>
+      <stop offset="1" stop-color="#ECFFF5"/>
+    </linearGradient>
+    <linearGradient id="meter" x1="760" y1="164" x2="1020" y2="572" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="24" width="1152" height="712" rx="42" fill="url(#bg3)"/>
+  <circle cx="144" cy="138" r="72" fill="#D7EEFF"/>
+  <circle cx="1062" cy="618" r="98" fill="#D4F8E7"/>
+
+  <rect x="84" y="104" width="1032" height="552" rx="34" fill="#FFFFFF" stroke="#DDEAF6" stroke-width="4"/>
+
+  <rect x="130" y="170" width="570" height="420" rx="30" fill="#F9FCFF" stroke="#D9E6F3" stroke-width="3"/>
+  <text x="170" y="228" fill="#1C3A5A" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Noise Risk Reference</text>
+
+  <rect x="170" y="264" width="486" height="274" rx="24" fill="#FFFFFF" stroke="#DCE9F5" stroke-width="3"/>
+
+  <rect x="200" y="474" width="50" height="40" rx="10" fill="#22C55E"/>
+  <rect x="266" y="440" width="50" height="74" rx="10" fill="#84CC16"/>
+  <rect x="332" y="402" width="50" height="112" rx="10" fill="#FACC15"/>
+  <rect x="398" y="350" width="50" height="164" rx="10" fill="#FB923C"/>
+  <rect x="464" y="300" width="50" height="214" rx="10" fill="#F97316"/>
+  <rect x="530" y="250" width="50" height="264" rx="10" fill="#EF4444"/>
+  <text x="200" y="544" fill="#4B647F" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600">60</text>
+  <text x="266" y="544" fill="#4B647F" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600">85</text>
+  <text x="332" y="544" fill="#4B647F" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600">95</text>
+  <text x="397" y="544" fill="#4B647F" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600">110</text>
+  <text x="460" y="544" fill="#4B647F" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600">140+</text>
+
+  <rect x="736" y="170" width="338" height="420" rx="30" fill="url(#meter)"/>
+  <circle cx="905" cy="290" r="92" fill="#FFFFFF24" stroke="#B8F4EC" stroke-width="3"/>
+  <path d="M856 324V292C856 266 877 245 903 245C929 245 950 266 950 292V324" stroke="#F1FFFA" stroke-width="16" stroke-linecap="round"/>
+  <rect x="844" y="320" width="122" height="92" rx="30" fill="#E8FFF6"/>
+  <rect x="874" y="368" width="16" height="36" rx="8" fill="#0F766E"/>
+  <rect x="908" y="352" width="16" height="52" rx="8" fill="#0F766E"/>
+  <circle cx="892" cy="500" r="66" fill="#FFFFFF21" stroke="#B8F4EC" stroke-width="3"/>
+  <path d="M892 458L850 476V512C850 553 879 574 892 578C905 574 934 553 934 512V476L892 458Z" fill="#E9FFF9"/>
+  <path d="M875 516L888 529L912 501" stroke="#0F766E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="130" y="624" fill="#123153" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700">Protecting Your Ears in a Noisy World</text>
+  <text x="130" y="658" fill="#4F6782" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600">Simple habits today prevent permanent hearing damage tomorrow.</text>
+</svg>

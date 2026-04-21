@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: "Manrope", sans-serif;
+  --font-display: "Cormorant Garamond", serif;
+  --surface: #ffffff;
+  --surface-soft: #f3f8fc;
+  --ink: #11203a;
+  --ink-muted: #4f627c;
+  --primary: #0a5c9e;
+  --primary-dark: #084477;
+  --accent: #0096a3;
+  --line: #dce7f2;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--ink);
+}
+
+.font-display {
+  font-family: var(--font-display), serif;
+}
+
+.surface-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), #ffffff);
+  border: 1px solid var(--line);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 20px 48px -28px rgba(8, 68, 119, 0.4);
+  backdrop-filter: blur(12px);
+}
