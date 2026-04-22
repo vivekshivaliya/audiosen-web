@@ -25,7 +25,7 @@ export const localBusinessJsonLd = {
   url: "https://audiosen.com/",
   image: "https://audiosen.com/og-image.jpg",
   telephone: "+919311279270",
-  email: "hello@audiosengmail.com",
+  email: "hello@audiosen.com",
   priceRange: "₹₹",
   description: siteMeta.description,
   address: {
@@ -681,7 +681,7 @@ export const footerContact = {
   copyright: "Copyright 2026 - Better hearing, better living",
   location: "Dehradun, Uttarakhand, India",
   phone: "+91 9311279270",
-  gmail: "hello@audiosengmail.com",
+  gmail: "hello@audiosen.com",
 };
 
 export const infoPages: Record<
