@@ -723,7 +723,7 @@ export const infoPages: Record<
     title: "Accessibility Commitment",
     paragraphs: [
       "Audiosen is committed to making hearing care accessible for everyone.",
-      "If you need any special accommodation, please call us at +91 9220440421 before your visit.",
+      "If you need any special accommodation, please call us at +91 9311279270,744-0555069 before your visit.",
     ],
     bullets: [
       "Large-print materials on request",

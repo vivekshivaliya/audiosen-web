@@ -348,8 +348,8 @@ export default function BlogPage() {
 
               <div>
                 <Image
-                  src="/images/products/real-hearing-aid-glasses.jpg"
-                  alt="Protective hearing device display and assistive hearing technology"
+                  src="/images/blog/noise-protection-guide.svg"
+                  alt="Noise protection guide illustration with hearing safety tips"
                   width={1200}
                   height={760}
                   className="h-auto w-full rounded-[1.5rem] border border-slate-200 object-cover"
