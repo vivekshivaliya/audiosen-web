@@ -203,7 +203,7 @@ export default function BlogPage() {
             <div className="grid items-start gap-7 lg:grid-cols-[1fr_1.15fr]">
               <div className="order-last lg:order-first">
                 <Image
-                  src="/images/products/real-pixabay-device-1.jpg"
+                  src="/images/products/real-oticon-top-view.jpg"
                   alt="Modern hearing aid being held during a fitting discussion"
                   width={1200}
                   height={760}

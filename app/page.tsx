@@ -65,7 +65,7 @@ export default function HomePage() {
                 />
                 <div className="grid gap-3">
                   <Image
-                    src="/images/products/real-pixabay-device-1.jpg"
+                    src="/images/products/real-oticon-top-view.jpg"
                     alt="Modern hearing aid device"
                     width={760}
                     height={760}
