@@ -55,36 +55,54 @@ export default function HomePage() {
           <Reveal delay={0.1}>
             <div className="glass-panel rounded-[1.75rem] p-5 sm:p-7">
               <div className="grid gap-3 sm:grid-cols-[1.2fr_0.8fr]">
-                <Image
-                  src="/images/contact-audiologist-doctor-hq.jpg"
-                  alt="Professional hearing care consultation"
-                  width={1200}
-                  height={900}
-                  className="h-full w-full rounded-2xl border border-sky-100 object-cover"
-                  priority
-                />
+                <div className="relative flex min-h-[360px] items-center justify-center overflow-hidden rounded-2xl border border-sky-100 bg-white p-6 shadow-[0_24px_50px_-36px_rgba(8,68,119,0.65)]">
+                  <span className="absolute left-4 top-4 rounded-full border border-sky-100 bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-800">
+                    Phonak Infinio
+                  </span>
+                  <Image
+                    src="/images/products/phonak/audeo-sphere-infinio.png"
+                    alt="Phonak Audéo Sphere Infinio premium hearing aid"
+                    width={900}
+                    height={900}
+                    className="max-h-[280px] w-full object-contain drop-shadow-2xl"
+                    priority
+                  />
+                  <p className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/85 px-3 py-2 text-center text-sm font-semibold text-slate-800 shadow-sm">
+                    Premium AI hearing aid for clearer speech
+                  </p>
+                </div>
                 <div className="grid gap-3">
-                  <Image
-                    src="/images/products/real-oticon-top-view.jpg"
-                    alt="Modern hearing aid device"
-                    width={760}
-                    height={760}
-                    className="h-full w-full rounded-2xl border border-sky-100 bg-white object-cover"
-                  />
-                  <Image
-                    src="/images/products/official/signia-silk-ix.jpg"
-                    alt="Invisible hearing aid"
-                    width={760}
-                    height={760}
-                    className="h-full w-full rounded-2xl border border-sky-100 bg-white object-contain"
-                  />
+                  <div className="relative flex min-h-[174px] items-center justify-center overflow-hidden rounded-2xl border border-sky-100 bg-white p-5 shadow-[0_18px_38px_-30px_rgba(8,68,119,0.5)]">
+                    <span className="absolute left-3 top-3 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                      Signia IX
+                    </span>
+                    <Image
+                      src="/images/products/signia/pure-chargego-bct-ix.png"
+                      alt="Signia Pure Charge&Go BCT IX hearing aid"
+                      width={760}
+                      height={760}
+                      className="max-h-[118px] w-full object-contain drop-shadow-xl"
+                    />
+                  </div>
+                  <div className="relative flex min-h-[174px] items-center justify-center overflow-hidden rounded-2xl border border-sky-100 bg-white p-5 shadow-[0_18px_38px_-30px_rgba(8,68,119,0.5)]">
+                    <span className="absolute left-3 top-3 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                      ReSound Vivia
+                    </span>
+                    <Image
+                      src="/images/products/resound/vivia-grey.png"
+                      alt="ReSound Vivia premium rechargeable hearing aid"
+                      width={760}
+                      height={760}
+                      className="max-h-[118px] w-full object-contain drop-shadow-xl"
+                    />
+                  </div>
                 </div>
               </div>
               <p className="mt-4 text-center text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
-                Consultation + sales + support
+                Latest premium hearing aids
               </p>
               <p className="mt-2 text-center text-lg font-semibold text-slate-800">
-                Hearing care, branded devices, fitting, repair, and after-sales service
+                Advanced rechargeable devices, discreet styles, fitting, repair, and support
               </p>
             </div>
           </Reveal>
