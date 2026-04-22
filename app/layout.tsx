@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
+import Script from "next/script";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { localBusinessJsonLd, siteMeta } from "@/lib/content";
 import "./globals.css";
+
+const googleAnalyticsId = "G-Q6H49XWK0S";
 
 const sans = Manrope({
   subsets: ["latin"],
@@ -66,6 +69,18 @@ export default function RootLayout({
       <body
         className={`${sans.variable} ${display.variable} min-h-screen bg-[linear-gradient(135deg,#f5fbff_0%,#f8fafc_40%,#eef5fb_100%)] font-sans text-slate-900`}
       >
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${googleAnalyticsId}');
+          `}
+        </Script>
         <div className="relative isolate overflow-hidden">
           <script
             type="application/ld+json"
