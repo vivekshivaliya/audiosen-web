@@ -59,6 +59,7 @@ export const navLinks = [
   { label: "Solutions", href: "/#solutions" },
   { label: "Brands", href: "/#brands" },
   { label: "Rent", href: "/#rental" },
+  { label: "Subscription", href: "/#subscription" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/#contact" },
 ];
