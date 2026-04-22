@@ -11,10 +11,6 @@ type FormState = {
   website: string;
 };
 
-type WindowWithGtag = Window & {
-  gtag?: (...args: unknown[]) => void;
-};
-
 const initialState: FormState = {
   name: "",
   email: "",
@@ -64,11 +60,6 @@ export function ContactForm() {
       setNotice({
         tone: payload.warning ? "warning" : "success",
         message: payload.warning || payload.message || contactContent.successLabel,
-      });
-      const browserWindow = window as WindowWithGtag;
-      browserWindow.gtag?.("event", "generate_lead", {
-        event_category: "lead",
-        event_label: "contact_form",
       });
       setForm(initialState);
     } catch {
