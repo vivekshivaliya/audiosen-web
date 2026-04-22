@@ -15,6 +15,7 @@ export const siteMeta = {
     "hearing care services, hearing aid sales, hearing tests, hearing aid fitting, hearing aid repair, hearing aid maintenance, audiologist in Dehradun, hearing solutions Dehradun, Phonak, Signia, Widex, ReSound",
   canonicalUrl: "https://audiosen.com/",
   ogImage: "https://audiosen.com/og-image.jpg",
+  logo: "https://audiosen.com/audiosen-company-logo.png",
 };
 
 export const localBusinessJsonLd = {
@@ -22,7 +23,9 @@ export const localBusinessJsonLd = {
   "@type": "LocalBusiness",
   "@id": "https://audiosen.com/#business",
   name: "Audiosen Hearing Care",
+  alternateName: "Audiosen",
   url: "https://audiosen.com/",
+  logo: siteMeta.logo,
   image: "https://audiosen.com/og-image.jpg",
   telephone: "+919311279270",
   email: "hello@audiosen.com",

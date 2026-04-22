@@ -56,7 +56,11 @@ export const metadata: Metadata = {
     images: [siteMeta.ogImage],
   },
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/audiosen-company-logo.png", sizes: "1254x1254", type: "image/png" },
+    ],
+    shortcut: "/audiosen-company-logo.png",
+    apple: "/audiosen-company-logo.png",
   },
 };
 
