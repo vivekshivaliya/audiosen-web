@@ -57,10 +57,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/audiosen-company-logo.png", sizes: "1254x1254", type: "image/png" },
+      { url: "/favicon.png", sizes: "512x512", type: "image/png" },
     ],
-    shortcut: "/audiosen-company-logo.png",
-    apple: "/audiosen-company-logo.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 
