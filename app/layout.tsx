@@ -7,6 +7,7 @@ import { localBusinessJsonLd, siteMeta } from "@/lib/content";
 import "./globals.css";
 
 const googleAnalyticsId = "G-Q6H49XWK0S";
+const googleAdsId = "AW-18110980849";
 
 const sans = Manrope({
   subsets: ["latin"],
@@ -79,6 +80,7 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${googleAnalyticsId}');
+            gtag('config', '${googleAdsId}');
           `}
         </Script>
         <div className="relative isolate overflow-hidden">
