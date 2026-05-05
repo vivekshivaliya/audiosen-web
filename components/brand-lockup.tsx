@@ -9,13 +9,13 @@ type BrandLockupProps = {
 export function BrandLockup({ href = "/", className = "" }: BrandLockupProps) {
   return (
     <Link href={href} className={`inline-flex items-center gap-3 text-slate-900 ${className}`.trim()}>
-      <span className="relative inline-flex h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_10px_18px_-14px_rgba(8,68,119,0.7)]">
+      <span className="relative inline-flex h-12 w-12 shrink-0">
         <Image
-          src="/audiosen-company-logo.png"
+          src="/audiosen-logo-mark.png"
           alt="Audiosen logo mark"
           fill
-          sizes="44px"
-          className="object-cover object-center scale-[2.2] translate-y-[-16%]"
+          sizes="48px"
+          className="object-contain object-center"
           priority
         />
       </span>
