@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import Script from "next/script";
+import { AnalyticsClickTracker } from "@/components/analytics-click-tracker";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { localBusinessJsonLd, siteMeta } from "@/lib/content";
@@ -39,7 +40,6 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  alternates: { canonical: "/" },
   openGraph: {
     title: siteMeta.title,
     description: siteMeta.description,
@@ -72,9 +72,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${sans.variable} ${display.variable} min-h-screen bg-[linear-gradient(135deg,#f5fbff_0%,#f8fafc_40%,#eef5fb_100%)] font-sans text-slate-900`}
-      >
+      <body className={`${sans.variable} ${display.variable} min-h-screen font-sans text-slate-900 antialiased`}>
+        <AnalyticsClickTracker />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
           strategy="afterInteractive"
@@ -93,7 +92,8 @@ export default function RootLayout({
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
           />
-          <div className="pointer-events-none absolute -top-32 left-1/2 h-[30rem] w-[40rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(10,92,158,0.18),transparent_68%)] blur-2xl" />
+          <div className="pointer-events-none absolute -top-40 left-1/2 h-[34rem] w-[44rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(9,92,153,0.2),transparent_70%)] blur-2xl" />
+          <div className="pointer-events-none absolute right-[-12rem] top-1/3 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(14,138,143,0.16),transparent_72%)] blur-3xl" />
           <SiteHeader />
           {children}
           <SiteFooter />

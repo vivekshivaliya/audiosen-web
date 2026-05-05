@@ -28,13 +28,15 @@ export const localBusinessJsonLd = {
   logo: siteMeta.logo,
   image: "https://audiosen.com/og-image.jpg",
   telephone: "+919311279270",
-  email: "hello@audiosen.com",
+  email: "support@audiosen.com",
   priceRange: "₹₹",
   description: siteMeta.description,
   address: {
     "@type": "PostalAddress",
+    streetAddress: "Audiosen Hearing Care Clinic",
     addressLocality: "Dehradun",
     addressRegion: "Uttarakhand",
+    postalCode: "248001",
     addressCountry: "IN",
   },
   areaServed: [
@@ -59,6 +61,7 @@ export const localBusinessJsonLd = {
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
+  { label: "Online Test", href: "/hearing-test" },
   { label: "Solutions", href: "/#solutions" },
   { label: "Brands", href: "/#brands" },
   { label: "Rent", href: "/#rental" },
@@ -78,9 +81,9 @@ export const heroContent: HeroContent = {
 
 export const hearingTestContent: HearingTestContent = {
   title: "Online Hearing Screening",
-  subtitle: "A quick ear-by-ear tone check to help you decide whether to book a full consultation.",
+  subtitle: "An easy ear-by-ear tone check to help you decide when to book clinic diagnosis.",
   helper:
-    "Use headphones in a quiet room. Start the test, listen carefully, and answer only when you are sure whether you heard the tone.",
+    "Use stereo headphones in a quiet room. Keep volume comfortable and answer honestly for each tone.",
   readyStatus: "Ready when you are. Use headphones and set your device volume to a comfortable level.",
   resultTitle: "Your Hearing Screening Report",
   disclaimer:
@@ -91,9 +94,21 @@ export const hearingTestContent: HearingTestContent = {
     "Keep volume comfortable",
   ],
   steps: [
-    "Test each ear separately",
-    "Listen for tones at different frequencies",
-    "Review your summary and next steps",
+    "Wear stereo headphones and sit in a quiet room",
+    "Run a quick sound check at comfortable volume",
+    "Test each ear and answer each tone with Yes/No",
+    "Review your report and confirm diagnosis at Audiosen Hearing Care Clinic",
+  ],
+  interpretationGuide: [
+    "PTA (Pure Tone Average) is the average of key speech frequencies (500, 1000, 2000 Hz).",
+    "Normal: up to 25 dB HL, Mild: 26-40 dB HL, Moderate: 41-60 dB HL, Severe: above 60 dB HL.",
+    "Reliability explains confidence in your responses. Low reliability means you should re-test before interpretation.",
+    "If you struggle in conversations, noisy places, or phone calls, book a full clinic evaluation even with a normal screen.",
+  ],
+  whoShouldNotRely: [
+    "Children should use a clinic-based pediatric hearing evaluation instead of this online screening.",
+    "Do not rely on this test if you have sudden hearing loss, ear pain, ear discharge, or active infection.",
+    "If you have persistent severe tinnitus, dizziness, or one-sided sudden change, seek urgent medical care first.",
   ],
   reportNotes: [
     "Online results can vary depending on headphones, device volume, and room noise.",
@@ -683,13 +698,21 @@ export const subscriptionPlans: SubscriptionPlan[] = [
 export const footerContact = {
   company: "Audiosen Hearing Care",
   copyright: "Copyright 2026 - Better hearing, better living",
-  location: "Dehradun, Uttarakhand, India",
-  phone: "+91 9311279270",
-  gmail: "hello@audiosen.com",
+  location: "Audiosen Hearing Care Clinic, Dehradun, Uttarakhand 248001, India",
+  phone: "+91 8383993592, (+91 9311279270 whatsapp support only)",
+  gmail: "support@audiosen.com",
 };
 
 export const infoPages: Record<
-  "about" | "careers" | "blog" | "accessibility" | "sitemap",
+  | "about"
+  | "careers"
+  | "blog"
+  | "accessibility"
+  | "sitemap"
+  | "legal"
+  | "privacyPolicy"
+  | "termsOfService"
+  | "refundCancellation",
   InfoPageContent
 > = {
   about: {
@@ -727,7 +750,7 @@ export const infoPages: Record<
     title: "Accessibility Commitment",
     paragraphs: [
       "Audiosen is committed to making hearing care accessible for everyone.",
-      "If you need any special accommodation, please call us at +91 9311279270,744-0555069 before your visit.",
+      "If you need any special accommodation, please call us at +91 8383993592, (+91 9311279270 - whatsapp support only) before your visit.",
     ],
     bullets: [
       "Large-print materials on request",
@@ -738,14 +761,96 @@ export const infoPages: Record<
   },
   sitemap: {
     title: "Sitemap",
-    paragraphs: ["Audiosen, Dehradun, Uttarakhand 248001"],
+    paragraphs: [
+      "Audiosen website map and key pages for hearing care services, support, and policies.",
+      "Address: Audiosen, Dehradun, Uttarakhand 248001, India.",
+    ],
     bullets: [
       "Home",
+      "About Us",
+      "Careers",
+      "Blog",
+      "Accessibility",
+      "Online Hearing Test",
       "Services",
       "Hearing Aid Brands",
       "Our Experts",
       "Contact & Location",
-      "Privacy Policy | Terms of Use",
+      "Legal",
+      "Privacy Policy",
+      "Terms of Service",
+      "Refund & Cancellation",
+    ],
+  },
+  legal: {
+    title: "Legal Information",
+    paragraphs: [
+      "Effective date: May 1, 2026.",
+      "This page provides a central reference to Audiosen's legal, privacy, and customer policy documents. These policies apply to visitors, customers, and users of our website and related digital services.",
+      "By using our website, booking services, or submitting enquiries, you agree to the applicable terms listed below.",
+    ],
+    bullets: [
+      "Privacy Policy: how we collect, use, and protect your data.",
+      "Terms of Service: rules for using our website and services.",
+      "Refund & Cancellation: appointment, service, and payment cancellation terms.",
+      "For policy questions, contact support@audiosen.com or +91 8383993592, (+91 9311279270 - whatsapp support only).",
+    ],
+  },
+  privacyPolicy: {
+    title: "Privacy Policy",
+    paragraphs: [
+      "Effective date: May 1, 2026.",
+      "Audiosen values your privacy. This Privacy Policy explains what information we collect through our website, how we use it, and the choices available to you.",
+      "When you submit a contact or enquiry form, we may collect details such as your name, phone number, email address, city, hearing concern, and message content.",
+      "We use this information to respond to enquiries, provide hearing care guidance, schedule appointments, improve service quality, and maintain support records.",
+      "We do not sell your personal information. We may share information only with trusted service providers involved in website hosting, email delivery, payment processing, or lawful compliance requirements.",
+      "We apply reasonable technical and administrative safeguards to protect information, but no internet transmission or storage system can be guaranteed 100% secure.",
+      "You may request correction or deletion of your data, subject to legal and operational requirements. To request this, contact support@audiosen.com.",
+      "By using this website, you consent to this Privacy Policy and related processing for legitimate service purposes.",
+    ],
+    bullets: [
+      "Data collected: contact details, enquiry details, and basic usage diagnostics.",
+      "Data use: customer communication, service delivery, operations, and compliance.",
+      "Data retention: kept only as long as reasonably required for support and legal needs.",
+      "Contact for privacy concerns: support@audiosen.com.",
+    ],
+  },
+  termsOfService: {
+    title: "Terms of Service",
+    paragraphs: [
+      "Effective date: May 1, 2026.",
+      "These Terms of Service govern use of the Audiosen website and related online interactions. If you do not agree with these terms, please do not use this website.",
+      "Website content is provided for general information and does not replace a clinical diagnosis, emergency care, or direct medical advice.",
+      "Users agree to provide accurate information while submitting enquiries, appointment requests, or service details.",
+      "Audiosen may update website content, prices, product availability, and service scope without prior notice.",
+      "All logos, designs, written content, and media on this site are owned by or licensed to Audiosen and must not be copied or reused without permission.",
+      "Audiosen is not liable for losses arising from third-party websites, network interruptions, external payment issues, or misuse of user credentials.",
+      "These terms are governed by applicable laws of India. Any disputes are subject to competent jurisdiction as per applicable law.",
+    ],
+    bullets: [
+      "Use the website lawfully and responsibly.",
+      "Do not attempt unauthorized access, scraping, or service disruption.",
+      "Clinical recommendations should be confirmed in a proper consultation.",
+      "Policy updates may be posted on this page from time to time.",
+    ],
+  },
+  refundCancellation: {
+    title: "Refund & Cancellation Policy",
+    paragraphs: [
+      "Effective date: May 1, 2026.",
+      "This policy applies to online and offline bookings, hearing care consultations, device services, and plan payments made to Audiosen.",
+      "Appointment cancellation requests should be shared as early as possible through phone or email. Timely rescheduling requests are generally accommodated subject to slot availability.",
+      "If Audiosen cancels a confirmed appointment due to operational constraints, customers may choose a rescheduled slot or applicable refund for the affected service fee.",
+      "Refund eligibility depends on service type, device category, payment channel, and whether the service has already been delivered or consumed.",
+      "For hearing aid device purchases, trials, rentals, consumables, and custom-fit products, return and refund outcomes are subject to product condition, hygiene handling, manufacturer terms, and documented service scope.",
+      "Approved refunds are processed back to the original payment method where possible, and processing timelines may vary by bank or payment provider.",
+      "Non-refundable items may include completed consultations, already-rendered service sessions, used consumables, damaged products, and partially used plan durations unless otherwise committed in writing.",
+    ],
+    bullets: [
+      "To request cancellation/refund: support@audiosen.com or +91 8383993592,+91 9311279270.",
+      "Share booking ID, payment reference, and reason for request for faster processing.",
+      "Refund decisions are based on service records and applicable policy terms.",
+      "Rental and subscription plans also remain subject to their specific signed terms.",
     ],
   },
 };

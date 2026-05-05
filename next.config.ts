@@ -3,13 +3,16 @@ import path from "node:path";
 
 function contentSecurityPolicy() {
   const isDev = process.env.NODE_ENV !== "production";
+  const analyticsScripts = "https://www.googletagmanager.com";
+  const analyticsConnect =
+    "https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.googleadservices.com https://googleads.g.doubleclick.net";
 
   const scriptSrc = isDev
-    ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://checkout.razorpay.com;"
-    : "script-src 'self' 'unsafe-inline' https://checkout.razorpay.com;";
+    ? `script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://checkout.razorpay.com ${analyticsScripts};`
+    : `script-src 'self' 'unsafe-inline' https://checkout.razorpay.com ${analyticsScripts};`;
   const connectSrc = isDev
-    ? "connect-src 'self' ws: wss: https: https://api.razorpay.com;"
-    : "connect-src 'self' https://api.razorpay.com;";
+    ? `connect-src 'self' ws: wss: https: https://api.razorpay.com ${analyticsConnect};`
+    : `connect-src 'self' https://api.razorpay.com ${analyticsConnect};`;
 
   return [
     "default-src 'self';",

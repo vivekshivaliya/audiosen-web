@@ -78,7 +78,25 @@ export interface HearingTestContent {
   disclaimer: string;
   checklist: string[];
   steps: string[];
+  interpretationGuide: string[];
+  whoShouldNotRely: string[];
   reportNotes: string[];
+}
+
+export type HearingThreshold = number | "N/A";
+
+export type HearingTestReliability = "good" | "fair" | "low";
+
+export interface HearingTestSummary {
+  completedAt: string;
+  leftPta: HearingThreshold;
+  rightPta: HearingThreshold;
+  leftSeverity: string;
+  rightSeverity: string;
+  reliability: HearingTestReliability;
+  reliabilityLabel: string;
+  recommendation: string;
+  notes: string[];
 }
 
 export interface SubscriptionPlan {

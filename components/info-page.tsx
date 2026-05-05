@@ -9,7 +9,7 @@ export function InfoPage({ content }: { content: InfoPageContent }) {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 pb-20 pt-14 sm:px-6 lg:px-8">
       <Reveal>
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_18px_45px_-28px_rgba(10,44,74,0.45)] sm:p-12">
+        <section className="premium-shell p-8 sm:p-12">
           <Image
             src={heroImage}
             alt={heroAlt}
@@ -22,14 +22,14 @@ export function InfoPage({ content }: { content: InfoPageContent }) {
             {content.title}
           </h1>
 
-          <div className="mt-6 space-y-4 text-base leading-relaxed text-slate-700">
+          <div className="premium-prose mt-6 space-y-4 text-base">
             {content.paragraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
 
           {content.bullets?.length ? (
-            <ul className="mt-6 list-disc space-y-2 pl-5 text-base leading-relaxed text-slate-700">
+            <ul className="premium-prose mt-6 list-disc space-y-2 pl-5 text-base">
               {content.bullets.map((bullet) => (
                 <li key={bullet}>{bullet}</li>
               ))}

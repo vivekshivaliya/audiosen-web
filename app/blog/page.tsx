@@ -91,23 +91,22 @@ export const metadata: Metadata = {
   },
 };
 
-const postCardClass =
-  "rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_48px_-30px_rgba(8,68,119,0.45)] sm:p-8";
+const postCardClass = "premium-shell p-6 sm:p-8";
 
 export default function BlogPage() {
   return (
     <main className="mx-auto w-full max-w-7xl px-4 pb-20 pt-14 sm:px-6 lg:px-8">
       <Reveal>
-        <section className="relative overflow-hidden rounded-[2rem] border border-sky-100 bg-gradient-to-br from-[#eff7ff] via-white to-[#ebfdf8] p-7 sm:p-10">
+        <section className="premium-shell relative overflow-hidden p-7 sm:p-10">
           <div className="pointer-events-none absolute -left-16 -top-20 h-52 w-52 rounded-full bg-sky-200/35 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -right-16 h-56 w-56 rounded-full bg-teal-200/35 blur-3xl" />
-          <p className="inline-flex rounded-full border border-sky-200 bg-white/80 px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] text-sky-800">
+          <p className="premium-eyebrow">
             Audiosen Hearing Blog
           </p>
-          <h1 className="mt-4 max-w-4xl font-display text-4xl leading-tight text-slate-900 sm:text-5xl">
+          <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">
             Trusted hearing guidance for patients and families
           </h1>
-          <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-700 sm:text-lg">
+          <p className="premium-prose mt-5 max-w-3xl text-base sm:text-lg">
             Explore practical hearing care advice, early warning signs, prevention tips, family
             communication guidance, and the latest hearing technology updates - all in one place.
           </p>
@@ -261,7 +260,7 @@ export default function BlogPage() {
                 </div>
 
                 <Link
-                  href="/#hearingtest"
+                  href="/hearing-test"
                   className="mt-6 inline-flex rounded-full bg-sky-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-800"
                 >
                   Take our 2-minute online hearing screener

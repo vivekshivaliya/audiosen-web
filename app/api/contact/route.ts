@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
           `Phone: ${phone || "N/A"}`,
           `Message: ${message}`,
           "",
-          "Need help? Call us at +91 9220440421.",
+          "Need help? Call us at +91 8383993592,(+91 9311279270 whatsapp support only).",
           "",
           "Warm regards,",
           "Audiosen Team - Dehradun",
@@ -166,7 +166,7 @@ export async function POST(request: NextRequest) {
                 <p style="margin: 8px 0 0;">Message:<br/>${safeMessage}</p>
               </div>
               <p style="margin-top: 16px;">
-                Need help immediately? Call us at <strong>+91 9220440421</strong>.
+                Need help immediately? Call us at <strong>+91 8383993592, (+91 9311279270 whatsapp support only)</strong>.
               </p>
               <p style="margin-bottom: 0;">
                 Warm regards,<br/>
