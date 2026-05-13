@@ -698,7 +698,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
 export const footerContact = {
   company: "Audiosen Hearing Care",
   copyright: "Copyright 2026 - Better hearing, better living",
-  location: "Audiosen Hearing Care Clinic, Dehradun, Uttarakhand 248001, India",
+  location: "Audiosen Hearing Care Solutions, Dehradun, Uttarakhand 248001, India, Serving All Over India",
   phone: "+91 8383993592, (+91 9311279270 whatsapp support only)",
   gmail: "support@audiosen.com",
 };
