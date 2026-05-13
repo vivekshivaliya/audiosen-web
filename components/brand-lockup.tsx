@@ -22,7 +22,7 @@ export function BrandLockup({ href = "/", className = "" }: BrandLockupProps) {
       <span className="flex flex-col leading-none">
         <span className="font-display text-[2rem] font-semibold tracking-tight">Audiosen</span>
         <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-          Hearing Care Clinic
+          Hearing Care Solutions
         </span>
       </span>
     </Link>
