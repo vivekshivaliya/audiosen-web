@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import Script from "next/script";
 import { AnalyticsClickTracker } from "@/components/analytics-click-tracker";
+import { BookServicePopup } from "@/components/book-service-popup";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { localBusinessJsonLd, siteMeta } from "@/lib/content";
@@ -95,6 +96,7 @@ export default function RootLayout({
           <div className="pointer-events-none absolute -top-40 left-1/2 h-[34rem] w-[44rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(9,92,153,0.2),transparent_70%)] blur-2xl" />
           <div className="pointer-events-none absolute right-[-12rem] top-1/3 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(14,138,143,0.16),transparent_72%)] blur-3xl" />
           <SiteHeader />
+          <BookServicePopup />
           {children}
           <SiteFooter />
         </div>

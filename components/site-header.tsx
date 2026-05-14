@@ -3,10 +3,16 @@
 import Link from "next/link";
 import { useState } from "react";
 import { BrandLockup } from "@/components/brand-lockup";
+import { BOOK_SERVICE_POPUP_EVENT } from "@/lib/book-service-popup";
 import { navLinks } from "@/lib/content";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+
+  function openBookServicePopup() {
+    window.dispatchEvent(new Event(BOOK_SERVICE_POPUP_EVENT));
+    setOpen(false);
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/88 backdrop-blur-xl">
@@ -32,9 +38,9 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Link href="/#contact" className="premium-button-primary">
+          <button type="button" className="premium-button-primary" onClick={openBookServicePopup}>
             Book Service
-          </Link>
+          </button>
         </nav>
       </div>
 
@@ -51,13 +57,13 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/#contact"
+            <button
+              type="button"
               className="premium-button-primary mt-1 text-sm"
-              onClick={() => setOpen(false)}
+              onClick={openBookServicePopup}
             >
               Book Service
-            </Link>
+            </button>
           </div>
         </nav>
       ) : null}

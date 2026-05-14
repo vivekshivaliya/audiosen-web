@@ -26,7 +26,11 @@ const initialState: FormState = {
   website: "",
 };
 
-export function ContactForm() {
+type ContactFormProps = {
+  surface?: "shell" | "plain";
+};
+
+export function ContactForm({ surface = "shell" }: ContactFormProps) {
   const [form, setForm] = useState<FormState>(initialState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -122,7 +126,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="premium-shell p-6 sm:p-8"
+      className={surface === "shell" ? "premium-shell p-6 sm:p-8" : ""}
     >
       <div className="grid gap-4">
         <label className="grid gap-2 text-sm font-medium text-slate-700">
