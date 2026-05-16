@@ -2,11 +2,6 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { contactContent } from "@/lib/content";
-import {
-  AI_CONTACT_PREFILL_EVENT,
-  clearAiContactPrefill,
-  readAiContactPrefill,
-} from "@/lib/ai-assistant-storage";
 import { trackEvent } from "@/lib/analytics";
 import {
   clearHearingTestSummary,
@@ -35,7 +30,7 @@ type ContactFormProps = {
   surface?: "shell" | "plain";
 };
 
-type PrefillSource = "hearing-report" | "ai-assistant";
+type PrefillSource = "hearing-report";
 
 export function ContactForm({ surface = "shell" }: ContactFormProps) {
   const [form, setForm] = useState<FormState>(initialState);
@@ -49,10 +44,9 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
 
   useEffect(() => {
     const hydratePrefills = () => {
-      const aiPrefill = readAiContactPrefill();
       const summary = readHearingTestSummary();
 
-      if (!aiPrefill && !summary) {
+      if (!summary) {
         setPrefillSource(null);
         return;
       }
@@ -60,39 +54,24 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
       setForm((current) => {
         if (current.message.trim().length > 0) return current;
 
-        if (aiPrefill) {
-          return {
-            ...current,
-            message: aiPrefill.message,
-          };
-        }
-
-        if (!summary) return current;
-
         return {
           ...current,
           message: formatHearingTestSummaryForContact(summary),
         };
       });
-      setPrefillSource(aiPrefill ? "ai-assistant" : "hearing-report");
+      setPrefillSource("hearing-report");
     };
 
     hydratePrefills();
-    window.addEventListener(AI_CONTACT_PREFILL_EVENT, hydratePrefills);
     window.addEventListener(HEARING_TEST_SUMMARY_EVENT, hydratePrefills);
 
     return () => {
-      window.removeEventListener(AI_CONTACT_PREFILL_EVENT, hydratePrefills);
       window.removeEventListener(HEARING_TEST_SUMMARY_EVENT, hydratePrefills);
     };
   }, []);
 
   function clearPrefilledMessage() {
-    if (prefillSource === "ai-assistant") {
-      clearAiContactPrefill();
-    } else {
-      clearHearingTestSummary();
-    }
+    clearHearingTestSummary();
     setPrefillSource(null);
     setForm((current) => ({ ...current, message: "" }));
   }
@@ -139,7 +118,6 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
         form_name: "book_hearing_care_consultation",
         lead_source: "website_contact_form",
       });
-      clearAiContactPrefill();
       clearHearingTestSummary();
       setPrefillSource(null);
       setForm(initialState);
@@ -195,9 +173,7 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
           How can we help you?
           {prefillSource ? (
             <span className="inline-flex items-center justify-between rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800">
-              {prefillSource === "ai-assistant"
-                ? "AI assistant summary was prefilled."
-                : "Hearing test report was prefilled."}
+              Hearing test report was prefilled.
               <button
                 type="button"
                 onClick={clearPrefilledMessage}

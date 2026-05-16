@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import Script from "next/script";
-import { AiPatientAssistant } from "@/components/ai-patient-assistant";
 import { AnalyticsClickTracker } from "@/components/analytics-click-tracker";
 import { BookServicePopup } from "@/components/book-service-popup";
 import { SiteFooter } from "@/components/site-footer";
@@ -100,7 +99,6 @@ export default function RootLayout({
           <BookServicePopup />
           {children}
           <SiteFooter />
-          <AiPatientAssistant />
         </div>
       </body>
     </html>

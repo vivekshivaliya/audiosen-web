@@ -81,8 +81,6 @@ MAIL_FROM=Audiosen <your_email@gmail.com>
 MAIL_TO=your_email@gmail.com
 RAZORPAY_KEY_ID=rzp_live_or_test_key
 RAZORPAY_KEY_SECRET=your_razorpay_secret
-OPENAI_API_KEY=sk-your_openai_api_key
-OPENAI_MODEL=gpt-5.5
 ```
 
 Save: `Ctrl+O`, Enter, `Ctrl+X`.
