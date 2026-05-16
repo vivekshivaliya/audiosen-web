@@ -53,6 +53,20 @@ const subscriptionTerms = [
   "Extra repair parts, accessories, or major servicing can be billed separately.",
 ];
 
+const campaignOffer = {
+  headline: "50% OFF on All Devices & Hearing Care Services",
+  subline:
+    "Limited-time campaign for consultations, fitting support, repairs, and branded hearing aid devices.",
+  ctaLabel: "Claim 50% Offer",
+  ctaHref: "#contact",
+};
+
+const offerHighlights = [
+  "All hearing aid devices included",
+  "All hearing care services included",
+  "Priority callback for offer enquiries",
+];
+
 export const metadata: Metadata = {
   alternates: {
     canonical: "/",
@@ -67,6 +81,7 @@ export default function HomePage() {
           <Reveal>
             <div>
               <p className="premium-eyebrow mb-4">Hearing Care Services & Hearing Aid Solutions</p>
+              <p className="offer-kicker">Limited Period Campaign - 50% OFF</p>
               <h1 className="font-display text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
                 {heroContent.title}
               </h1>
@@ -81,6 +96,22 @@ export default function HomePage() {
                   Explore Hearing Aids
                 </Link>
               </div>
+
+              <div className="offer-panel mt-8 p-5">
+                <p className="text-xs font-black uppercase tracking-[0.14em] text-amber-100">Mega Offer</p>
+                <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">{campaignOffer.headline}</h2>
+                <p className="mt-2 text-sm text-amber-50 sm:text-base">{campaignOffer.subline}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {offerHighlights.map((item) => (
+                    <span key={item} className="offer-pill">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <Link href={campaignOffer.ctaHref} className="premium-button-secondary mt-4 border-white/60 bg-white text-rose-700">
+                  {campaignOffer.ctaLabel}
+                </Link>
+              </div>
             </div>
           </Reveal>
 
@@ -89,6 +120,7 @@ export default function HomePage() {
               <div className="grid gap-3 sm:grid-cols-[1.2fr_0.8fr]">
                 <div className="premium-card relative flex min-h-[360px] items-center justify-center overflow-hidden p-6">
                   <span className="premium-chip absolute left-4 top-4">Phonak Infinio</span>
+                  <span className="offer-ribbon absolute right-4 top-4">50% OFF</span>
                   <Image
                     src="/images/products/phonak/audeo-sphere-infinio.png"
                     alt="Phonak Audeo Sphere Infinio premium hearing aid"
@@ -104,6 +136,7 @@ export default function HomePage() {
                 <div className="grid gap-3">
                   <div className="premium-card relative flex min-h-[174px] items-center justify-center overflow-hidden p-5">
                     <span className="premium-chip absolute left-3 top-3 text-[11px]">Signia IX</span>
+                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">50% OFF</span>
                     <Image
                       src="/images/products/signia/pure-chargego-bct-ix.png"
                       alt="Signia Pure Charge and Go BCT IX hearing aid"
@@ -114,6 +147,7 @@ export default function HomePage() {
                   </div>
                   <div className="premium-card relative flex min-h-[174px] items-center justify-center overflow-hidden p-5">
                     <span className="premium-chip absolute left-3 top-3 text-[11px]">ReSound Vivia</span>
+                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">50% OFF</span>
                     <Image
                       src="/images/products/resound/vivia-grey.png"
                       alt="ReSound Vivia premium rechargeable hearing aid"
@@ -129,6 +163,9 @@ export default function HomePage() {
               </p>
               <p className="mt-2 text-center text-lg font-semibold text-slate-800">
                 Advanced rechargeable devices, discreet styles, fitting, repair, and support
+              </p>
+              <p className="mt-2 text-center text-sm font-bold uppercase tracking-[0.12em] text-rose-600">
+                Every featured device is now at 50% OFF
               </p>
             </div>
           </Reveal>
@@ -150,7 +187,7 @@ export default function HomePage() {
             Our Hearing Care Services
           </h2>
           <p className="premium-prose mx-auto mt-4 max-w-3xl text-center">
-            Everything you need for better hearing, from consultation to long-term support.
+            Everything you need for better hearing, now with 50% OFF across all hearing care services.
           </p>
         </Reveal>
         <ServicesExplorer services={services} />
@@ -237,8 +274,8 @@ export default function HomePage() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {rentalSpotlightDevices.map((device) => (
                     <div key={device.alt} className="premium-card p-3">
-                      <span className="mb-2 inline-flex rounded-full bg-emerald-100 px-2 py-1 text-[10px] font-semibold text-emerald-700">
-                        Rent Available
+                      <span className="mb-2 inline-flex rounded-full bg-rose-100 px-2 py-1 text-[10px] font-semibold text-rose-700">
+                        50% OFF + Rent Available
                       </span>
                       <Image
                         src={device.src}

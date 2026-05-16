@@ -16,9 +16,8 @@ export function ServicesExplorer({ services }: ServicesExplorerProps) {
     <div className="premium-shell mt-8 p-5 sm:p-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p className="premium-eyebrow">
-            Service Explorer
-          </p>
+          <p className="premium-eyebrow">Service Explorer</p>
+          <p className="offer-kicker mt-3">Limited Offer: 50% OFF on all hearing care services</p>
           <h3 className="mt-3 font-display text-3xl font-semibold text-slate-900 sm:text-4xl">
             Click to explore all {services.length} hearing care services
           </h3>
@@ -52,6 +51,7 @@ export function ServicesExplorer({ services }: ServicesExplorerProps) {
             key={service.title}
             className="premium-card-soft p-4 text-sm font-medium text-slate-700"
           >
+            <span className="offer-ribbon mb-2 text-[10px]">50% OFF</span>
             {service.title}
           </div>
         ))}
@@ -75,8 +75,9 @@ export function ServicesExplorer({ services }: ServicesExplorerProps) {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.03 }}
-                  className="surface-card h-full p-6"
+                  className="surface-card relative h-full p-6"
                 >
+                  <span className="offer-ribbon absolute right-4 top-4 text-[10px]">50% OFF Service</span>
                   <h4 className="text-xl font-semibold text-slate-900">{service.title}</h4>
                   <p className="premium-prose mt-3 text-sm">{service.description}</p>
                   <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">

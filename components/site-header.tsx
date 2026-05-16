@@ -6,6 +6,12 @@ import { BrandLockup } from "@/components/brand-lockup";
 import { BOOK_SERVICE_POPUP_EVENT } from "@/lib/book-service-popup";
 import { navLinks } from "@/lib/content";
 
+const offerTapeItems = [
+  "50% OFF on all hearing aid devices",
+  "50% OFF on all hearing care services",
+  "Limited-time campaign - book your slot now",
+];
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
@@ -16,6 +22,16 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/88 backdrop-blur-xl">
+      <div className="offer-marquee" role="status" aria-label="Limited time discount offer">
+        <div className="offer-marquee-track">
+          {[...offerTapeItems, ...offerTapeItems].map((item, index) => (
+            <span key={`${item}-${index}`} className="offer-marquee-item">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-5 px-4 py-4 sm:px-6 lg:px-8">
         <BrandLockup />
 

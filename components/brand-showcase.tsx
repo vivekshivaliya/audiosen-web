@@ -21,9 +21,8 @@ export function BrandShowcase({ items }: { items: Brand[] }) {
   return (
     <section id="brands" className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
       <div className="text-center">
-        <p className="premium-eyebrow mb-4">
-          Premium Hearing Aid Brands
-        </p>
+        <p className="premium-eyebrow mb-4">Premium Hearing Aid Brands</p>
+        <p className="offer-kicker">Now 50% OFF on all hearing aid devices</p>
         <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
           Choose a Brand. Explore Its Latest Devices.
         </h2>
@@ -97,6 +96,7 @@ export function BrandShowcase({ items }: { items: Brand[] }) {
               className="premium-card group flex h-full flex-col overflow-hidden rounded-[1.45rem] transition duration-300 hover:-translate-y-1"
             >
               <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-50 to-sky-50">
+                <span className="offer-ribbon absolute left-4 top-4 z-10">50% OFF Device</span>
                 <Image
                   src={device.image}
                   alt={device.imageAlt}

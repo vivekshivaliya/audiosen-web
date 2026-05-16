@@ -42,6 +42,111 @@ body {
   letter-spacing: 0;
 }
 
+.offer-marquee {
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background:
+    linear-gradient(90deg, rgba(180, 18, 43, 0.95), rgba(233, 80, 33, 0.94)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent);
+  color: #fff6e8;
+}
+
+.offer-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  animation: offer-marquee-scroll 22s linear infinite;
+}
+
+.offer-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  white-space: nowrap;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.offer-marquee-item::after {
+  content: "•";
+  color: rgba(255, 246, 232, 0.7);
+}
+
+.offer-kicker {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 110, 47, 0.42);
+  background: linear-gradient(135deg, #fff4ea, #ffe6d3);
+  color: #b91f1f;
+  padding: 0.38rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.offer-panel {
+  border: 1px solid rgba(253, 186, 116, 0.45);
+  border-radius: 1.2rem;
+  background:
+    radial-gradient(circle at 6% 8%, rgba(255, 255, 255, 0.22), transparent 36%),
+    linear-gradient(140deg, #bf1236, #f97316);
+  box-shadow: 0 26px 50px -34px rgba(126, 34, 10, 0.68);
+}
+
+.offer-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff7ed;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.offer-ribbon {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: linear-gradient(125deg, #c81e3a, #fb923c);
+  color: white;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.34rem 0.72rem;
+  box-shadow: 0 12px 26px -16px rgba(190, 24, 93, 0.85);
+  animation: offer-ribbon-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes offer-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes offer-ribbon-pulse {
+  0%,
+  100% {
+    box-shadow: 0 12px 26px -16px rgba(190, 24, 93, 0.85);
+  }
+
+  50% {
+    box-shadow: 0 18px 32px -12px rgba(234, 88, 12, 0.9);
+  }
+}
+
 .premium-shell {
   border: 1px solid var(--line-soft);
   border-radius: var(--radius-shell);
