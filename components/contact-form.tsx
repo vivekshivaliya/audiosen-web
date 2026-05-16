@@ -2,6 +2,11 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { contactContent } from "@/lib/content";
+import {
+  AI_CONTACT_PREFILL_EVENT,
+  clearAiContactPrefill,
+  readAiContactPrefill,
+} from "@/lib/ai-assistant-storage";
 import { trackEvent } from "@/lib/analytics";
 import {
   clearHearingTestSummary,
@@ -30,45 +35,65 @@ type ContactFormProps = {
   surface?: "shell" | "plain";
 };
 
+type PrefillSource = "hearing-report" | "ai-assistant";
+
 export function ContactForm({ surface = "shell" }: ContactFormProps) {
   const [form, setForm] = useState<FormState>(initialState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [hasReportPrefill, setHasReportPrefill] = useState(false);
+  const [prefillSource, setPrefillSource] = useState<PrefillSource | null>(null);
   const [notice, setNotice] = useState<{
     tone: "success" | "warning";
     message: string;
   } | null>(null);
 
   useEffect(() => {
-    const hydrateFromSummary = () => {
+    const hydratePrefills = () => {
+      const aiPrefill = readAiContactPrefill();
       const summary = readHearingTestSummary();
-      if (!summary) {
-        setHasReportPrefill(false);
+
+      if (!aiPrefill && !summary) {
+        setPrefillSource(null);
         return;
       }
 
       setForm((current) => {
         if (current.message.trim().length > 0) return current;
+
+        if (aiPrefill) {
+          return {
+            ...current,
+            message: aiPrefill.message,
+          };
+        }
+
+        if (!summary) return current;
+
         return {
           ...current,
           message: formatHearingTestSummaryForContact(summary),
         };
       });
-      setHasReportPrefill(true);
+      setPrefillSource(aiPrefill ? "ai-assistant" : "hearing-report");
     };
 
-    hydrateFromSummary();
-    window.addEventListener(HEARING_TEST_SUMMARY_EVENT, hydrateFromSummary);
+    hydratePrefills();
+    window.addEventListener(AI_CONTACT_PREFILL_EVENT, hydratePrefills);
+    window.addEventListener(HEARING_TEST_SUMMARY_EVENT, hydratePrefills);
 
     return () => {
-      window.removeEventListener(HEARING_TEST_SUMMARY_EVENT, hydrateFromSummary);
+      window.removeEventListener(AI_CONTACT_PREFILL_EVENT, hydratePrefills);
+      window.removeEventListener(HEARING_TEST_SUMMARY_EVENT, hydratePrefills);
     };
   }, []);
 
-  function clearPrefilledReport() {
-    clearHearingTestSummary();
-    setHasReportPrefill(false);
+  function clearPrefilledMessage() {
+    if (prefillSource === "ai-assistant") {
+      clearAiContactPrefill();
+    } else {
+      clearHearingTestSummary();
+    }
+    setPrefillSource(null);
     setForm((current) => ({ ...current, message: "" }));
   }
 
@@ -107,14 +132,16 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
       });
       trackEvent("contact_form_submit", {
         form_name: "book_hearing_care_consultation",
-        report_prefill: hasReportPrefill ? "yes" : "no",
+        report_prefill: prefillSource === "hearing-report" ? "yes" : "no",
+        prefill_source: prefillSource || "manual",
       });
       trackEvent("generate_lead", {
         form_name: "book_hearing_care_consultation",
         lead_source: "website_contact_form",
       });
+      clearAiContactPrefill();
       clearHearingTestSummary();
-      setHasReportPrefill(false);
+      setPrefillSource(null);
       setForm(initialState);
     } catch {
       setError("Network error. Please try again later.");
@@ -166,12 +193,14 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
 
         <label className="grid gap-2 text-sm font-medium text-slate-700">
           How can we help you?
-          {hasReportPrefill ? (
+          {prefillSource ? (
             <span className="inline-flex items-center justify-between rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800">
-              Hearing test report was prefilled.
+              {prefillSource === "ai-assistant"
+                ? "AI assistant summary was prefilled."
+                : "Hearing test report was prefilled."}
               <button
                 type="button"
-                onClick={clearPrefilledReport}
+                onClick={clearPrefilledMessage}
                 className="ml-3 rounded-full border border-emerald-400 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-emerald-800 transition hover:bg-emerald-100"
               >
                 Clear Prefill
