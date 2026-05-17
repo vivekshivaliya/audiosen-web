@@ -3,7 +3,7 @@ import { InfoPage } from "@/components/info-page";
 import { infoPages } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Accessibility | Audiosen Hearing Care",
+  title: "Accessibility | Audiosen Hearing Care Solutions",
   description:
     "Read Audiosen's accessibility commitment and support options for elderly, mobility-limited, and first-time hearing care visitors.",
   alternates: {

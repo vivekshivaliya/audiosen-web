@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { infoPages } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "About Audiosen | Hearing Care Clinic in Dehradun",
+  title: "About Audiosen | Audiosen Hearing Care Solutions",
   description:
-    "Learn about Audiosen Hearing Care, our mission, and our hearing services for children, adults, seniors, and families in Dehradun.",
+    "Learn about Audiosen Hearing Care Solutions, our mission, and our hearing services for children, adults, seniors, and families across India.",
   alternates: {
     canonical: "/about",
   },

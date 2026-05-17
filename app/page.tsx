@@ -385,7 +385,7 @@ export default function HomePage() {
             </h2>
             <p className="premium-prose mx-auto mt-4 max-w-3xl">
               Take a simple hearing self-check, answer tone prompts for each ear, and get a clear
-              report with diagnosis suggestions for Audiosen Hearing Care Clinic.
+              report with diagnosis suggestions for Audiosen Hearing Care Solutions.
             </p>
           </div>
         </Reveal>

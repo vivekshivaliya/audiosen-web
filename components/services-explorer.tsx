@@ -75,10 +75,10 @@ export function ServicesExplorer({ services }: ServicesExplorerProps) {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.03 }}
-                  className="surface-card relative h-full p-6"
+                  className="surface-card h-full p-6"
                 >
-                  <span className="offer-ribbon absolute right-4 top-4 text-[10px]">50% OFF Service</span>
                   <h4 className="text-xl font-semibold text-slate-900">{service.title}</h4>
+                  <span className="offer-ribbon mt-2 text-[10px]">50% OFF Service</span>
                   <p className="premium-prose mt-3 text-sm">{service.description}</p>
                   <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-600">
                     {service.points.map((point) => (

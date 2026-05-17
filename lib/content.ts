@@ -12,7 +12,7 @@ export const siteMeta = {
   description:
     "Audiosen provides hearing tests, hearing aid sales, fitting, repair, maintenance, and complete hearing care solutions with trusted brands and expert support.",
   keywords:
-    "hearing care services, hearing aid sales, hearing tests, hearing aid fitting, hearing aid repair, hearing aid maintenance, audiologist in Dehradun, hearing solutions Dehradun, Phonak, Signia, Widex, ReSound",
+    "hearing care services, hearing aid sales, hearing tests, hearing aid fitting, hearing aid repair, hearing aid maintenance, hearing solutions India, Phonak, Signia, Widex, ReSound",
   canonicalUrl: "https://audiosen.com/",
   ogImage: "https://audiosen.com/og-image.jpg",
   logo: "https://audiosen.com/audiosen-company-logo.png",
@@ -22,7 +22,7 @@ export const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "@id": "https://audiosen.com/#business",
-  name: "Audiosen Hearing Care",
+  name: "Audiosen Hearing Care Solutions",
   alternateName: "Audiosen",
   url: "https://audiosen.com/",
   logo: siteMeta.logo,
@@ -33,17 +33,13 @@ export const localBusinessJsonLd = {
   description: siteMeta.description,
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Audiosen Hearing Care Clinic",
+    streetAddress: "Audiosen Hearing Care Solutions",
     addressLocality: "Dehradun",
     addressRegion: "Uttarakhand",
     postalCode: "248001",
     addressCountry: "IN",
   },
-  areaServed: [
-    "Dehradun",
-    "Uttarakhand",
-    "India",
-  ],
+  areaServed: ["India"],
   knowsAbout: [
     "Hearing tests",
     "Hearing aid fitting",
@@ -97,7 +93,7 @@ export const hearingTestContent: HearingTestContent = {
     "Wear stereo headphones and sit in a quiet room",
     "Run a quick sound check at comfortable volume",
     "Test each ear and answer each tone with Yes/No",
-    "Review your report and confirm diagnosis at Audiosen Hearing Care Clinic",
+    "Review your report and confirm diagnosis at Audiosen Hearing Care Solutions",
   ],
   interpretationGuide: [
     "PTA (Pure Tone Average) is the average of key speech frequencies (500, 1000, 2000 Hz).",
@@ -696,9 +692,9 @@ export const subscriptionPlans: SubscriptionPlan[] = [
 ];
 
 export const footerContact = {
-  company: "Audiosen Hearing Care",
+  company: "Audiosen Hearing Care Solutions",
   copyright: "Copyright 2026 - Better hearing, better living",
-  location: "Audiosen Hearing Care Solutions, Dehradun, Uttarakhand 248001, India, Serving All Over India",
+  location: "Audiosen Hearing Care Solutions, Dehradun, Uttarakhand 248001, India | Serving patients across India",
   phone: "+91 8383993592, (+91 9311279270 whatsapp support only)",
   gmail: "support@audiosen.com",
 };

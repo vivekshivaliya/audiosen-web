@@ -85,7 +85,7 @@ function buildRecommendation(
   reliability: HearingTestReliability,
 ): string {
   if (reliability === "low") {
-    return "Response consistency is low. Please retake the test in a quieter room, then confirm diagnosis at Audiosen Hearing Care Clinic.";
+    return "Response consistency is low. Please retake the test in a quieter room, then confirm diagnosis at Audiosen Hearing Care Solutions.";
   }
 
   const worstLevel = [leftPta, rightPta].reduce<number | null>((current, value) => {
@@ -94,22 +94,22 @@ function buildRecommendation(
   }, null);
 
   if (worstLevel === null) {
-    return "No clear estimate was captured. Re-test once and then book diagnosis at Audiosen Hearing Care Clinic.";
+    return "No clear estimate was captured. Re-test once and then book diagnosis at Audiosen Hearing Care Solutions.";
   }
 
   if (worstLevel <= 25) {
-    return "Screening looks within normal range. If speech still feels unclear, get a clinical hearing diagnosis at Audiosen Hearing Care Clinic.";
+    return "Screening looks within normal range. If speech still feels unclear, get a clinical hearing diagnosis at Audiosen Hearing Care Solutions.";
   }
 
   if (worstLevel <= 40) {
-    return "Screening suggests mild hearing difficulty. Please book a full hearing diagnosis at Audiosen Hearing Care Clinic.";
+    return "Screening suggests mild hearing difficulty. Please book a full hearing diagnosis at Audiosen Hearing Care Solutions.";
   }
 
   if (worstLevel <= 60) {
-    return "Screening suggests moderate hearing difficulty. A complete clinical diagnosis at Audiosen Hearing Care Clinic is strongly recommended soon.";
+    return "Screening suggests moderate hearing difficulty. A complete clinical diagnosis at Audiosen Hearing Care Solutions is strongly recommended soon.";
   }
 
-  return "Screening suggests significant hearing difficulty. Please visit Audiosen Hearing Care Clinic for urgent full diagnosis.";
+  return "Screening suggests significant hearing difficulty. Please visit Audiosen Hearing Care Solutions for urgent full diagnosis.";
 }
 
 function buildReport(
@@ -144,7 +144,7 @@ function buildReport(
 
   if (reliability === "low") {
     notes.unshift(
-      "Response consistency was low in repeat/catch checks. Re-test and then confirm diagnosis at Audiosen Hearing Care Clinic.",
+      "Response consistency was low in repeat/catch checks. Re-test and then confirm diagnosis at Audiosen Hearing Care Solutions.",
     );
   }
 
@@ -571,7 +571,7 @@ export function HearingTest({ mode = "home", onComplete }: HearingTestProps) {
           {hearingTestContent.title}
         </h3>
         <p className="premium-prose mt-2 max-w-3xl text-sm sm:text-base">
-          Easy self-check with clear instructions and diagnosis guidance for Audiosen Hearing Care Clinic.
+          Easy self-check with clear instructions and diagnosis guidance for Audiosen Hearing Care Solutions.
         </p>
       </div>
 

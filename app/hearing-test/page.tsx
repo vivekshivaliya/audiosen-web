@@ -26,7 +26,7 @@ export default function HearingTestPage() {
           <p className="premium-prose mt-5 max-w-3xl text-base sm:text-lg">
             Do a quick sound check, run ear-by-ear tone screening, and get a clear result summary.
             You will also get reliability feedback and a direct suggestion to confirm diagnosis in a
-            Audiosen Hearing Care Clinic.
+            Audiosen Hearing Care Solutions.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">

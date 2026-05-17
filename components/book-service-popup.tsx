@@ -129,7 +129,7 @@ export function BookServicePopup() {
 
             <div className="mt-7 grid gap-3 text-sm font-semibold text-slate-100">
               <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
-                Dehradun clinic support
+                Nationwide support across India
               </div>
               <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
                 All India service guidance

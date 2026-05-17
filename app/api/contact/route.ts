@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
           "Need help? Call us at +91 8383993592,(+91 9311279270 whatsapp support only).",
           "",
           "Warm regards,",
-          "Audiosen Team - Dehradun",
+          "Audiosen Hearing Care Solutions Team",
         ].join("\n"),
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto; color: #1f2937; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
@@ -170,7 +170,7 @@ export async function POST(request: NextRequest) {
               </p>
               <p style="margin-bottom: 0;">
                 Warm regards,<br/>
-                <strong>Audiosen Team - Dehradun</strong>
+                <strong>Audiosen Hearing Care Solutions Team</strong>
               </p>
             </div>
           </div>
