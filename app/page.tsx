@@ -187,7 +187,7 @@ export default function HomePage() {
             Our Hearing Care Services
           </h2>
           <p className="premium-prose mx-auto mt-4 max-w-3xl text-center">
-            Everything you need for better hearing, now with 50% OFF across all hearing care services.
+            Everything you need for better hearing, from testing and fitting to ongoing care services.
           </p>
         </Reveal>
         <ServicesExplorer services={services} />
@@ -274,9 +274,6 @@ export default function HomePage() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {rentalSpotlightDevices.map((device) => (
                     <div key={device.alt} className="premium-card p-3">
-                      <span className="mb-2 inline-flex rounded-full bg-rose-100 px-2 py-1 text-[10px] font-semibold text-rose-700">
-                        50% OFF + Rent Available
-                      </span>
                       <Image
                         src={device.src}
                         alt={device.alt}
