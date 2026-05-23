@@ -1,21 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 
 const blogIndex = [
-  {
-    href: "#best-hearing-aid-price-dehradun",
-    title: "Best Hearing Aid Price in Dehradun",
-  },
-  {
-    href: "#ent-vs-audiologist-dehradun",
-    title: "When to See ENT vs Audiologist",
-  },
-  {
-    href: "#speech-delay-therapy-options-dehradun",
-    title: "Speech Delay Therapy Options in Dehradun",
-  },
   {
     href: "#annual-checkup",
     title: "The Importance of Regular Hearing Check-ups",
@@ -94,37 +82,6 @@ const decibelGuide = [
   },
 ];
 
-const hearingAidPriceFactors = [
-  "Technology tier (basic, advanced, premium AI)",
-  "Style (BTE, RIC, CIC, IIC, custom shells)",
-  "Rechargeability and Bluetooth capability",
-  "Follow-up support, tuning sessions, and repairs",
-  "Warranty and replacement policy coverage",
-];
-
-const entVsAudiologistGuide = [
-  {
-    situation: "Ear pain, discharge, sudden one-sided hearing drop",
-    firstStep: "ENT first",
-  },
-  {
-    situation: "Gradual hearing difficulty, TV volume increase, speech clarity issues",
-    firstStep: "Audiologist first",
-  },
-  {
-    situation: "Tinnitus with dizziness, pressure, or ear infection history",
-    firstStep: "ENT + Audiology coordinated pathway",
-  },
-];
-
-const speechDelayWarningSigns = [
-  "No clear words by expected milestones",
-  "Very limited vocabulary growth month to month",
-  "Difficulty following age-appropriate instructions",
-  "Unclear pronunciation beyond expected age range",
-  "Hearing concerns or frequent ear infections",
-];
-
 export const metadata: Metadata = {
   title: "Audiosen Blog | Hearing Health Tips, Care Guides & Technology",
   description:
@@ -168,193 +125,7 @@ export default function BlogPage() {
         </section>
       </Reveal>
 
-      <div className="mt-10 space-y-8">
-        <Reveal delay={0.01}>
-          <article id="best-hearing-aid-price-dehradun" className={postCardClass}>
-            <div className="grid items-start gap-7 lg:grid-cols-[1.15fr_0.85fr]">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-700">
-                  Dehradun Search Intent
-                </p>
-                <h2 className="mt-3 font-display text-3xl text-slate-900 sm:text-4xl">
-                  Best Hearing Aid Price in Dehradun: What You Should Actually Compare
-                </h2>
-                <p className="mt-2 text-lg font-semibold text-slate-700">
-                  Price matters, but fitting quality and follow-up matter more
-                </p>
-                <p className="mt-5 text-base leading-relaxed text-slate-700">
-                  Many people search only for the lowest quoted hearing aid price. In real
-                  outcomes, long-term comfort and speech clarity depend on correct diagnostics,
-                  programming, and follow-up care. Compare total care value, not just device MRP.
-                </p>
-
-                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-700 sm:text-base">
-                  {hearingAidPriceFactors.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-
-                <p className="mt-4 rounded-xl border border-sky-100 bg-sky-50/70 px-4 py-3 text-sm leading-relaxed text-slate-700 sm:text-base">
-                  Hindi (Roman): Sirf device ka daam compare mat kijiye. Accurate hearing test,
-                  fitting, aur follow-up tuning bhi final result ko strongly impact karte hain.
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <Link
-                    href="/hearing-aids-dehradun"
-                    className="inline-flex rounded-full bg-sky-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-800"
-                  >
-                    Explore Hearing Aids Dehradun
-                  </Link>
-                  <Link
-                    href="/#contact"
-                    className="inline-flex rounded-full border border-sky-300 bg-white px-6 py-3 text-sm font-semibold text-sky-800 transition hover:bg-sky-50"
-                  >
-                    Request Price Guidance
-                  </Link>
-                </div>
-              </div>
-
-              <div className="premium-card-soft p-5">
-                <h3 className="text-xl font-semibold text-slate-900">Quick price reality check</h3>
-                <ul className="mt-3 space-y-2 text-sm text-slate-700">
-                  <li>Entry: INR 18,000 to INR 55,000</li>
-                  <li>Advanced: INR 55,000 to INR 1,40,000</li>
-                  <li>Premium: INR 1,40,000 to INR 2,50,000</li>
-                </ul>
-                <p className="mt-4 text-sm leading-relaxed text-slate-700">
-                  Final recommendation depends on hearing profile, speech-in-noise challenges,
-                  dexterity, recharge preference, and support expectations.
-                </p>
-              </div>
-            </div>
-          </article>
-        </Reveal>
-
-        <Reveal delay={0.02}>
-          <article id="ent-vs-audiologist-dehradun" className={postCardClass}>
-            <div className="grid items-start gap-7 lg:grid-cols-[1fr_1fr]">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-700">
-                  Dehradun Search Intent
-                </p>
-                <h2 className="mt-3 font-display text-3xl text-slate-900 sm:text-4xl">
-                  ENT vs Audiologist: Who Should You Visit First?
-                </h2>
-                <p className="mt-2 text-lg font-semibold text-slate-700">
-                  Choose the right first visit to save time and avoid delays
-                </p>
-                <p className="mt-5 text-base leading-relaxed text-slate-700">
-                  ENT and audiology services overlap but serve different first-line goals. A simple
-                  rule-based triage can help you decide your first appointment correctly.
-                </p>
-
-                <p className="mt-4 rounded-xl border border-sky-100 bg-sky-50/70 px-4 py-3 text-sm leading-relaxed text-slate-700 sm:text-base">
-                  Hindi (Roman): Agar dard, discharge, ya achanak hearing loss hai to ENT se
-                  shuruaat karein. Dheere-dheere hearing clarity issue ho to audiologist se test
-                  karwana pehla step ho sakta hai.
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <Link
-                    href="/ent-clinic-dehradun"
-                    className="inline-flex rounded-full bg-sky-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-800"
-                  >
-                    Visit ENT Care Page
-                  </Link>
-                  <Link
-                    href="/audiologist-dehradun"
-                    className="inline-flex rounded-full border border-sky-300 bg-white px-6 py-3 text-sm font-semibold text-sky-800 transition hover:bg-sky-50"
-                  >
-                    Visit Audiologist Page
-                  </Link>
-                </div>
-              </div>
-
-              <div className="overflow-hidden rounded-2xl border border-slate-200">
-                <table className="w-full text-left text-sm sm:text-base">
-                  <thead className="bg-sky-50 text-slate-900">
-                    <tr>
-                      <th className="px-4 py-3 font-semibold">Symptom pattern</th>
-                      <th className="px-4 py-3 font-semibold">First visit</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-200 text-slate-700">
-                    {entVsAudiologistGuide.map((item) => (
-                      <tr key={item.situation}>
-                        <td className="px-4 py-3">{item.situation}</td>
-                        <td className="px-4 py-3 font-semibold text-slate-900">{item.firstStep}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-        </Reveal>
-
-        <Reveal delay={0.025}>
-          <article id="speech-delay-therapy-options-dehradun" className={postCardClass}>
-            <div className="grid items-start gap-7 lg:grid-cols-[1.1fr_0.9fr]">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-700">
-                  Dehradun Search Intent
-                </p>
-                <h2 className="mt-3 font-display text-3xl text-slate-900 sm:text-4xl">
-                  Speech Delay Therapy Options in Dehradun
-                </h2>
-                <p className="mt-2 text-lg font-semibold text-slate-700">
-                  Early action helps communication outcomes improve faster
-                </p>
-                <p className="mt-5 text-base leading-relaxed text-slate-700">
-                  Speech delay support usually includes assessment, family coaching, therapy goals,
-                  and regular reviews. For many cases, hearing evaluation is also important so that
-                  language growth is not blocked by undetected hearing challenges.
-                </p>
-
-                <h3 className="mt-5 text-xl font-semibold text-slate-900">Common warning signs</h3>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-700 sm:text-base">
-                  {speechDelayWarningSigns.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-
-                <p className="mt-4 rounded-xl border border-sky-100 bg-sky-50/70 px-4 py-3 text-sm leading-relaxed text-slate-700 sm:text-base">
-                  Hindi (Roman): Jaldi assessment se therapy planning behtar hoti hai, aur ghar par
-                  parent practice se progress accelerate hota hai.
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <Link
-                    href="/speech-therapy-dehradun"
-                    className="inline-flex rounded-full bg-sky-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-800"
-                  >
-                    Explore Speech Therapy Support
-                  </Link>
-                  <Link
-                    href="/#contact"
-                    className="inline-flex rounded-full border border-sky-300 bg-white px-6 py-3 text-sm font-semibold text-sky-800 transition hover:bg-sky-50"
-                  >
-                    Book Assessment Callback
-                  </Link>
-                </div>
-              </div>
-
-              <div className="premium-card-soft p-5">
-                <h3 className="text-xl font-semibold text-slate-900">What parents can expect</h3>
-                <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-slate-700 sm:text-base">
-                  <li>Initial communication and milestone assessment</li>
-                  <li>Need-based hearing screening recommendation</li>
-                  <li>Weekly/periodic therapy goals</li>
-                  <li>Home reinforcement routine with caregiver guidance</li>
-                  <li>Progress review and plan adjustments</li>
-                </ol>
-              </div>
-            </div>
-          </article>
-        </Reveal>
-
-        <Reveal delay={0.03}>
+      <div className="mt-10 space-y-8"><Reveal delay={0.03}>
           <article id="annual-checkup" className={postCardClass}>
             <div className="grid items-start gap-7 lg:grid-cols-[1.2fr_1fr]">
               <div>
@@ -745,3 +516,5 @@ export default function BlogPage() {
     </main>
   );
 }
+
+

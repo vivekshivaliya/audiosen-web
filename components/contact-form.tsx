@@ -28,7 +28,7 @@ const initialState: FormState = {
   name: "",
   email: "",
   phone: "",
-  city: "Dehradun",
+  city: "",
   language: "English",
   serviceNeeded: "Hearing aid consultation",
   preferredChannel: "Call",

@@ -4,7 +4,6 @@
   HearingTestContent,
   HeroContent,
   InfoPageContent,
-  LocalServicePageContent,
   ServiceItem,
   SubscriptionPlan,
 } from "@/lib/types";
@@ -107,7 +106,6 @@ export const localBusinessJsonLd = {
 
 export const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Dehradun", href: "/hearing-aids-dehradun" },
   { label: "Services", href: "/#services" },
   { label: "Online Test", href: "/hearing-test" },
   { label: "Solutions", href: "/#solutions" },
@@ -788,295 +786,6 @@ export const clinicianProfiles: ClinicianProfile[] = [
   },
 ];
 
-export const dehradunLocalPages: LocalServicePageContent[] = [
-  {
-    slug: "hearing-aids-dehradun",
-    title: "Hearing Aids in Dehradun | Audiosen Hearing Care Solutions",
-    description:
-      "Explore hearing aid consultation, trial, fitting, and repair services in Dehradun with Audiosen's hearing care team.",
-    heroEyebrow: "Dehradun Local Hearing Care",
-    heroTitle: "Hearing Aids in Dehradun with Expert Fitting and Follow-up Care",
-    heroSummary:
-      "Compare leading hearing aid brands, test comfort in clinic, and get fitting tuned to your speech needs.",
-    heroSummaryHi:
-      "Dehradun mein aadhunik hearing aid vikalp, sahi fitting aur niyamit follow-up support ek hi sthan par.",
-    primaryIntent: "Best for searches like: hearing aids near me, hearing aid price in Dehradun",
-    treatmentList: [
-      "Digital hearing aid consultation and lifestyle assessment",
-      "30-day guided hearing aid trial options",
-      "Rechargeable and discreet style recommendations",
-      "Hearing aid fitting with speech clarity tuning",
-      "Hearing aid repair and maintenance support",
-      "After-sales follow-up for comfort and adaptation",
-    ],
-    pricing: [
-      {
-        label: "Essential range",
-        range: "INR 18,000 to INR 55,000",
-        note: "Suitable for basic speech clarity and daily home use.",
-      },
-      {
-        label: "Advanced range",
-        range: "INR 55,000 to INR 1,40,000",
-        note: "Better noise management, app controls, and rechargeability.",
-      },
-      {
-        label: "Premium range",
-        range: "INR 1,40,000 to INR 2,50,000",
-        note: "AI features, enhanced speech-in-noise, and flagship technology.",
-      },
-    ],
-    trustPoints: [
-      "Clinic-based trial before purchase recommendation",
-      "Brand comparison support for Phonak, Signia, Widex, ReSound, and more",
-      "Post-fitting service reviews with practical counseling",
-      "Dedicated call and WhatsApp support for Dehradun patients",
-    ],
-    bilingualHighlights: [
-      "English: Get hearing aid recommendations based on your audiogram and daily listening environments.",
-      "Hindi (Roman): Apki hearing test report ke adhar par personal hearing aid sujhav diye jate hain.",
-      "English: Bring a family member and review trial options before final decision.",
-      "Hindi (Roman): Parivar ke sadasya ke saath trial options compare karke final decision lijiye.",
-    ],
-    faqs: [
-      {
-        question: "Do you offer hearing aid trials in Dehradun?",
-        answer:
-          "Yes. Trial availability depends on hearing profile and device category. We guide you through fit, comfort, and speech outcomes before final recommendation.",
-      },
-      {
-        question: "What is the starting hearing aid price at Audiosen?",
-        answer:
-          "Entry options generally start from around INR 18,000, while advanced and premium models vary by technology, style, and fitting needs.",
-      },
-      {
-        question: "Can I get hearing aid repair support from your Dehradun clinic?",
-        answer:
-          "Yes. We support cleaning, servicing, basic diagnostics, accessory replacement, and coordination for major repairs when needed.",
-      },
-    ],
-  },
-  {
-    slug: "audiologist-dehradun",
-    title: "Audiologist in Dehradun | Hearing Test and Hearing Care Consultation",
-    description:
-      "Book audiologist consultation in Dehradun for hearing tests, hearing loss assessment, tinnitus support, and hearing aid fitting guidance.",
-    heroEyebrow: "Audiologist Consultation in Dehradun",
-    heroTitle: "Audiologist in Dehradun for Hearing Tests, Diagnosis Guidance, and Care Plans",
-    heroSummary:
-      "Get a structured hearing evaluation and practical next steps for speech clarity, communication confidence, and long-term hearing care.",
-    heroSummaryHi:
-      "Dehradun mein audiologist se sunne ki jaanch, spasht salah aur lambi avadhi ki care planning payein.",
-    primaryIntent: "Best for searches like: audiologist near me, hearing test clinic in Dehradun",
-    treatmentList: [
-      "Pure Tone Audiometry and hearing threshold evaluation",
-      "Speech audiometry for speech understanding in quiet/noise",
-      "Tympanometry and middle ear function check",
-      "Tinnitus counseling and listening strategy guidance",
-      "Hearing aid candidacy and selection planning",
-      "Follow-up hearing care and adaptation counseling",
-    ],
-    pricing: [
-      {
-        label: "Screening consultation",
-        range: "INR 500 to INR 1,200",
-        note: "Initial symptom review and first-level hearing guidance.",
-      },
-      {
-        label: "Comprehensive hearing test",
-        range: "INR 1,200 to INR 3,000",
-        note: "Includes audiometry workflow based on clinical requirement.",
-      },
-      {
-        label: "Advanced follow-up care",
-        range: "Custom package",
-        note: "Depends on device fitting, counseling sessions, and service plan.",
-      },
-    ],
-    trustPoints: [
-      "Structured hearing test protocol with ear-specific review",
-      "Clear explanation of audiogram and practical next step",
-      "Family-inclusive counseling for better adoption",
-      "Care continuity from consultation to fitting and support",
-    ],
-    bilingualHighlights: [
-      "English: We explain your report in plain language and help you choose the right care path.",
-      "Hindi (Roman): Hum aapki report ko asaan bhasha mein samjha kar sahi care path batate hain.",
-      "English: If needed, we coordinate ENT and speech referral within your care plan.",
-      "Hindi (Roman): Zarurat par ENT aur speech referral ko bhi aapki plan mein include kiya jata hai.",
-    ],
-    faqs: [
-      {
-        question: "How long does a hearing test with an audiologist take?",
-        answer:
-          "Most evaluations take around 30 to 60 minutes based on test depth and case complexity.",
-      },
-      {
-        question: "Do I need to bring previous hearing reports?",
-        answer:
-          "Yes, if available. Previous audiograms and device history help us compare progression and optimize recommendations.",
-      },
-      {
-        question: "Can family members attend the consultation?",
-        answer:
-          "Yes. Family participation often improves understanding, communication habits, and long-term hearing aid adaptation.",
-      },
-    ],
-  },
-  {
-    slug: "ent-clinic-dehradun",
-    title: "ENT Clinic in Dehradun | Ear, Hearing, and ENT Consultation Support",
-    description:
-      "Connect with Audiosen's ENT consultation support in Dehradun for ear symptoms, hearing concerns, and coordinated hearing care follow-up.",
-    heroEyebrow: "ENT and Ear Care Support",
-    heroTitle: "ENT Consultation Support in Dehradun for Ear and Hearing-Related Problems",
-    heroSummary:
-      "If you have ear pain, discharge, sudden hearing changes, or recurring ear blockage, start with a structured ENT triage and hearing pathway.",
-    heroSummaryHi:
-      "Agar kan mein dard, discharge, achanak hearing change, ya baar-baar blockage ho to ENT triage se shuruaat karein.",
-    primaryIntent: "Best for searches like: ENT near me, ear clinic Dehradun, ear problem doctor",
-    treatmentList: [
-      "ENT symptom triage for ear pain, discharge, and blockage",
-      "Wax-related hearing reduction guidance",
-      "Post-infection hearing follow-up coordination",
-      "Ear pressure and eardrum function pathway",
-      "ENT to audiology referral handoff when hearing tests are needed",
-      "Follow-up counseling for chronic or recurring ear symptoms",
-    ],
-    pricing: [
-      {
-        label: "ENT review consultation",
-        range: "INR 700 to INR 1,500",
-        note: "Depends on case history and examination scope.",
-      },
-      {
-        label: "ENT plus hearing diagnostics pathway",
-        range: "INR 1,500 to INR 4,000",
-        note: "Includes ENT review and test recommendations where required.",
-      },
-      {
-        label: "Procedure or medication costs",
-        range: "As advised",
-        note: "Final cost depends on diagnosis and treatment protocol.",
-      },
-    ],
-    trustPoints: [
-      "Integrated workflow between ear-symptom review and hearing diagnostics",
-      "Urgency guidance for sudden or one-sided hearing changes",
-      "Clear referral route for medical and hearing rehabilitation needs",
-      "Documented follow-up plan after consultation",
-    ],
-    bilingualHighlights: [
-      "English: We help distinguish when an issue is primarily ENT, hearing, or both.",
-      "Hindi (Roman): Hum spasht karte hain ki samasya ENT ki hai, hearing ki hai, ya dono ki.",
-      "English: Early consultation can prevent delay in speech and hearing outcomes.",
-      "Hindi (Roman): Samay par janch se hearing aur speech outcomes mein deri se bacha ja sakta hai.",
-    ],
-    faqs: [
-      {
-        question: "Should I see ENT or audiologist first for ear-related hearing loss?",
-        answer:
-          "If you have pain, discharge, or sudden changes, start with ENT triage. For gradual hearing decline without acute symptoms, audiology testing can be the first step.",
-      },
-      {
-        question: "Do you support recurring ear blockage cases?",
-        answer:
-          "Yes. We evaluate symptom history and coordinate required ENT and hearing assessments to avoid repeated unmanaged episodes.",
-      },
-      {
-        question: "Can ENT and hearing tests be coordinated in one care path?",
-        answer:
-          "Yes. We use a coordinated pathway so diagnosis and hearing rehabilitation decisions are not delayed.",
-      },
-    ],
-  },
-  {
-    slug: "speech-therapy-dehradun",
-    title: "Speech Therapy in Dehradun | Speech and Language Support with Hearing Care",
-    description:
-      "Get speech therapy support in Dehradun for speech delay, articulation issues, and hearing-linked communication challenges.",
-    heroEyebrow: "Speech and Language Support",
-    heroTitle: "Speech Therapy in Dehradun with Hearing and ENT-Aware Care Planning",
-    heroSummary:
-      "For children and adults facing speech delay, unclear articulation, or hearing-linked speech challenges, get structured guidance and therapy planning.",
-    heroSummaryHi:
-      "Bachchon aur vayaskon mein speech delay, uccharan samasya ya hearing-linked bolne ki dikkat ke liye structured guidance milti hai.",
-    primaryIntent: "Best for searches like: speech therapy near me, speech delay therapy Dehradun",
-    treatmentList: [
-      "Speech delay screening and caregiver counseling",
-      "Articulation and pronunciation support plans",
-      "Fluency and communication confidence exercises",
-      "Hearing-linked speech development pathway",
-      "Home-practice routines for family reinforcement",
-      "Periodic progress review with adjustment of therapy goals",
-    ],
-    pricing: [
-      {
-        label: "Speech assessment",
-        range: "INR 800 to INR 1,800",
-        note: "Initial communication profile and therapy direction planning.",
-      },
-      {
-        label: "Therapy sessions",
-        range: "INR 700 to INR 2,000 per session",
-        note: "Depends on age, intensity, and therapy format.",
-      },
-      {
-        label: "Integrated speech plus hearing plan",
-        range: "Custom package",
-        note: "For cases requiring both speech and hearing rehabilitation support.",
-      },
-    ],
-    trustPoints: [
-      "Family-centered approach for practical daily carryover",
-      "Progress checkpoints with understandable milestones",
-      "Coordination with hearing test and ENT pathway when indicated",
-      "Age-appropriate communication strategy support",
-    ],
-    bilingualHighlights: [
-      "English: We provide practical home guidance so therapy continues beyond clinic sessions.",
-      "Hindi (Roman): Hum ghar par practice ke saaf nirdesh dete hain taki therapy ka fayda lagataar rahe.",
-      "English: For children with hearing concerns, speech and hearing care are coordinated together.",
-      "Hindi (Roman): Hearing concern wale bachchon ke liye speech aur hearing dono ka coordinated care plan banaya jata hai.",
-    ],
-    faqs: [
-      {
-        question: "When should I start speech therapy for a child?",
-        answer:
-          "Early signs such as delayed speech milestones, unclear words, or limited communication should be assessed as early as possible for better outcomes.",
-      },
-      {
-        question: "Can hearing loss affect speech development?",
-        answer:
-          "Yes. Hearing difficulties can impact speech clarity and language growth, so hearing assessment is often part of speech planning.",
-      },
-      {
-        question: "Do parents need to attend speech sessions?",
-        answer:
-          "Yes, especially for pediatric care. Caregiver participation improves consistency and progress between sessions.",
-      },
-    ],
-  },
-];
-
-export const localSeoBlogIdeas = [
-  {
-    href: "/blog#best-hearing-aid-price-dehradun",
-    title: "Best hearing aid price in Dehradun",
-    summary: "What affects final device cost, fitting value, and long-term service quality.",
-  },
-  {
-    href: "/blog#ent-vs-audiologist-dehradun",
-    title: "When to see ENT vs audiologist",
-    summary: "A practical guide to choosing the right first consultation for ear and hearing symptoms.",
-  },
-  {
-    href: "/blog#speech-delay-therapy-options-dehradun",
-    title: "Speech delay therapy options in Dehradun",
-    summary: "Assessment, therapy planning, caregiver role, and hearing-linked follow-up points.",
-  },
-];
-
 export const infoPages: Record<
   | "about"
   | "careers"
@@ -1141,10 +850,6 @@ export const infoPages: Record<
     ],
     bullets: [
       "Home",
-      "Hearing Aids Dehradun",
-      "Audiologist Dehradun",
-      "ENT Clinic Dehradun",
-      "Speech Therapy Dehradun",
       "About Us",
       "Careers",
       "Blog",
@@ -1264,6 +969,8 @@ export const serviceJourney = [
     description: "We fit, service, and support your hearing solution over time.",
   },
 ];
+
+
 
 
 

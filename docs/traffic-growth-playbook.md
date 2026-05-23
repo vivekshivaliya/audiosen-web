@@ -7,10 +7,6 @@
 3. Submit sitemap: `https://www.audiosen.com/sitemap.xml`.
 4. Verify all key pages are indexed:
    - `/`
-   - `/hearing-aids-dehradun`
-   - `/audiologist-dehradun`
-   - `/ent-clinic-dehradun`
-   - `/speech-therapy-dehradun`
    - `/brands`
    - `/brands/{slug}`
    - `/about`
@@ -22,7 +18,7 @@
    - clinic category, services, hours, phone, WhatsApp
    - photos, team, clinic interior
 2. Collect weekly reviews from real patients (ask after fitting sessions).
-3. Add city-intent pages in future (`/dehradun-hearing-aids`, `/hearing-test-dehradun`).
+3. Add city-intent pages in future only when there is unique local content and real service coverage.
 
 ## 3) Content engine
 
@@ -32,15 +28,15 @@
    - battery and maintenance guides
 2. Use FAQ blocks on service pages.
 3. Add internal links from blog to contact and brand pages.
-4. Publish and update high-intent local topics:
-   - "Best hearing aid price in Dehradun"
+4. Publish and update high-intent service topics:
+   - "Best hearing aid price and how to compare value"
    - "When to see ENT vs audiologist"
-   - "Speech delay therapy options in Dehradun"
+   - "Speech delay therapy options and early warning signs"
 
 ## 4) Paid + retargeting
 
 1. Run Google Search Ads on high-intent keywords:
-   - "hearing aids dehradun"
+   - "hearing aids near me"
    - "online hearing test india"
 2. Retarget site visitors with offer creatives:
    - "Free trial + audiologist consultation"

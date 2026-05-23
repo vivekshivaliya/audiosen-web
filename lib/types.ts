@@ -107,17 +107,6 @@ export interface SubscriptionPlan {
   coverage: string[];
 }
 
-export interface PriceBand {
-  label: string;
-  range: string;
-  note: string;
-}
-
-export interface LocalFaqItem {
-  question: string;
-  answer: string;
-}
-
 export interface ClinicianProfile {
   name: string;
   title: string;
@@ -125,24 +114,4 @@ export interface ClinicianProfile {
   registration: string;
   expertise: string;
   languages: string;
-}
-
-export interface LocalServicePageContent {
-  slug:
-    | "hearing-aids-dehradun"
-    | "audiologist-dehradun"
-    | "ent-clinic-dehradun"
-    | "speech-therapy-dehradun";
-  title: string;
-  description: string;
-  heroEyebrow: string;
-  heroTitle: string;
-  heroSummary: string;
-  heroSummaryHi: string;
-  primaryIntent: string;
-  treatmentList: string[];
-  pricing: PriceBand[];
-  trustPoints: string[];
-  bilingualHighlights: string[];
-  faqs: LocalFaqItem[];
 }

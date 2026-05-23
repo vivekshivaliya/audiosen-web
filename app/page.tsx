@@ -67,29 +67,6 @@ const offerHighlights = [
   "Priority callback for offer enquiries",
 ];
 
-const dehradunLocalLinks = [
-  {
-    href: "/hearing-aids-dehradun",
-    title: "Hearing Aids Dehradun",
-    description: "Local consultation, trial, fitting, and repair pathways.",
-  },
-  {
-    href: "/audiologist-dehradun",
-    title: "Audiologist Dehradun",
-    description: "Hearing tests, audiogram guidance, and follow-up planning.",
-  },
-  {
-    href: "/ent-clinic-dehradun",
-    title: "ENT Clinic Dehradun",
-    description: "Ear symptoms triage with coordinated hearing support.",
-  },
-  {
-    href: "/speech-therapy-dehradun",
-    title: "Speech Therapy Dehradun",
-    description: "Speech delay and language support for children and adults.",
-  },
-];
-
 export const metadata: Metadata = {
   alternates: {
     canonical: "/",
@@ -203,20 +180,6 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="premium-shell mt-8 p-5 sm:p-6">
-          <p className="premium-eyebrow">Dehradun Local Search Pages</p>
-          <h2 className="mt-2 font-display text-3xl font-semibold text-slate-900 sm:text-4xl">
-            Built for &quot;near me&quot; hearing, ENT, and speech searches
-          </h2>
-          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-            {dehradunLocalLinks.map((item) => (
-              <Link key={item.href} href={item.href} className="premium-card p-4 transition hover:-translate-y-0.5">
-                <p className="text-sm font-semibold text-slate-900">{item.title}</p>
-                <p className="mt-2 text-xs text-slate-600">{item.description}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
       </section>
 
       <section id="services" className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">

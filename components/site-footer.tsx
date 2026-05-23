@@ -100,18 +100,6 @@ export function SiteFooter() {
               <Link href="/hearing-test" className="hover:text-white">
                 Online Hearing Test
               </Link>
-              <Link href="/hearing-aids-dehradun" className="hover:text-white">
-                Hearing Aids Dehradun
-              </Link>
-              <Link href="/audiologist-dehradun" className="hover:text-white">
-                Audiologist Dehradun
-              </Link>
-              <Link href="/ent-clinic-dehradun" className="hover:text-white">
-                ENT Clinic Dehradun
-              </Link>
-              <Link href="/speech-therapy-dehradun" className="hover:text-white">
-                Speech Therapy Dehradun
-              </Link>
               <Link href="/#contact" className="hover:text-white">
                 Contact
               </Link>
