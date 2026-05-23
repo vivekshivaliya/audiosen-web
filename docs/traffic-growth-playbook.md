@@ -7,6 +7,10 @@
 3. Submit sitemap: `https://www.audiosen.com/sitemap.xml`.
 4. Verify all key pages are indexed:
    - `/`
+   - `/hearing-aids-dehradun`
+   - `/audiologist-dehradun`
+   - `/ent-clinic-dehradun`
+   - `/speech-therapy-dehradun`
    - `/brands`
    - `/brands/{slug}`
    - `/about`
@@ -28,6 +32,10 @@
    - battery and maintenance guides
 2. Use FAQ blocks on service pages.
 3. Add internal links from blog to contact and brand pages.
+4. Publish and update high-intent local topics:
+   - "Best hearing aid price in Dehradun"
+   - "When to see ENT vs audiologist"
+   - "Speech delay therapy options in Dehradun"
 
 ## 4) Paid + retargeting
 
@@ -45,3 +53,9 @@
    - before/after testimonials
    - clinician credentials
 3. Track conversions in GA4 and Google Ads.
+4. Monitor these GA4 events weekly:
+   - `click_call`
+   - `click_whatsapp`
+   - `cta_form_start`
+   - `contact_form_submit`
+   - `form_submit`

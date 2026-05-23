@@ -4,6 +4,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ContactForm } from "@/components/contact-form";
+import { trackEvent } from "@/lib/analytics";
 import { BOOK_SERVICE_POPUP_EVENT } from "@/lib/book-service-popup";
 
 const BOOK_SERVICE_POPUP_SEEN_KEY = "audiosen_book_service_popup_seen_v1";
@@ -20,6 +21,10 @@ export function BookServicePopup() {
       // Session storage can be unavailable in some privacy modes.
     }
 
+    trackEvent("popup_close", {
+      popup_name: "book_service",
+      page_path: typeof window !== "undefined" ? window.location.pathname : "unknown",
+    });
     setOpen(false);
   }, []);
 
@@ -45,13 +50,40 @@ export function BookServicePopup() {
 
     if (hasSeenPopup) return;
 
-    const timer = window.setTimeout(() => setOpen(true), 550);
+    let opened = false;
+    const openWithGuard = () => {
+      if (opened) return;
+      opened = true;
+      setOpen(true);
+      window.removeEventListener("scroll", handleScroll);
+    };
 
-    return () => window.clearTimeout(timer);
+    const handleScroll = () => {
+      const maxScrollable =
+        document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (maxScrollable <= 0) return;
+      const progress = window.scrollY / maxScrollable;
+      if (progress >= 0.35) {
+        openWithGuard();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    const timer = window.setTimeout(openWithGuard, 25000);
+
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
+
+    trackEvent("popup_open", {
+      popup_name: "book_service",
+      page_path: window.location.pathname,
+    });
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";

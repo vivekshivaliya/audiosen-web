@@ -7,6 +7,12 @@ type EnquiryRecord = {
   name: string;
   email: string;
   phone: string;
+  city: string;
+  language: string;
+  serviceNeeded: string;
+  preferredChannel: string;
+  preferredCallbackTime: string;
+  leadSource: string;
   message: string;
 };
 

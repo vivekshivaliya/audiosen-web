@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { contactContent } from "@/lib/content";
 import { trackEvent } from "@/lib/analytics";
 import {
@@ -14,6 +14,12 @@ type FormState = {
   name: string;
   email: string;
   phone: string;
+  city: string;
+  language: string;
+  serviceNeeded: string;
+  preferredChannel: string;
+  preferredCallbackTime: string;
+  leadSource: string;
   message: string;
   website: string;
 };
@@ -22,6 +28,12 @@ const initialState: FormState = {
   name: "",
   email: "",
   phone: "",
+  city: "Dehradun",
+  language: "English",
+  serviceNeeded: "Hearing aid consultation",
+  preferredChannel: "Call",
+  preferredCallbackTime: "Morning (9 AM - 12 PM)",
+  leadSource: "website_contact_form",
   message: "",
   website: "",
 };
@@ -33,6 +45,7 @@ type ContactFormProps = {
 type PrefillSource = "hearing-report";
 
 export function ContactForm({ surface = "shell" }: ContactFormProps) {
+  const hasTrackedStartRef = useRef(false);
   const [form, setForm] = useState<FormState>(initialState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -76,6 +89,16 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
     setForm((current) => ({ ...current, message: "" }));
   }
 
+  function trackFormStart() {
+    if (hasTrackedStartRef.current) return;
+    hasTrackedStartRef.current = true;
+    trackEvent("cta_form_start", {
+      form_name: "book_hearing_care_consultation",
+      lead_source: "website_contact_form",
+      page_path: typeof window !== "undefined" ? window.location.pathname : "unknown",
+    });
+  }
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
@@ -86,7 +109,13 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          leadSource:
+            typeof window !== "undefined"
+              ? `website_contact_form:${window.location.pathname}`
+              : form.leadSource,
+        }),
       });
 
       const payload = (await response.json()) as {
@@ -113,14 +142,25 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
         form_name: "book_hearing_care_consultation",
         report_prefill: prefillSource === "hearing-report" ? "yes" : "no",
         prefill_source: prefillSource || "manual",
+        preferred_channel: form.preferredChannel,
+        service_needed: form.serviceNeeded,
+        city: form.city || "not_provided",
+      });
+      trackEvent("form_submit", {
+        form_name: "book_hearing_care_consultation",
+        form_type: "lead_capture",
+        lead_source: "website_contact_form",
+        page_path: typeof window !== "undefined" ? window.location.pathname : "unknown",
       });
       trackEvent("generate_lead", {
         form_name: "book_hearing_care_consultation",
         lead_source: "website_contact_form",
+        preferred_channel: form.preferredChannel,
       });
       clearHearingTestSummary();
       setPrefillSource(null);
       setForm(initialState);
+      hasTrackedStartRef.current = false;
     } catch {
       setError("Network error. Please try again later.");
     } finally {
@@ -131,6 +171,7 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
   return (
     <form
       onSubmit={onSubmit}
+      onFocusCapture={trackFormStart}
       className={surface === "shell" ? "premium-shell p-6 sm:p-8" : ""}
     >
       <div className="grid gap-4">
@@ -147,14 +188,13 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
         </label>
 
         <label className="grid gap-2 text-sm font-medium text-slate-700">
-          Email address
+          Email address (optional)
           <input
             type="email"
-            required
             value={form.email}
             onChange={(event) => setForm({ ...form, email: event.target.value })}
             className="rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none ring-0 transition placeholder:text-slate-400 focus:border-sky-500"
-            placeholder="Email address"
+            placeholder="Email address (optional)"
           />
         </label>
 
@@ -162,11 +202,83 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
           Phone number
           <input
             type="tel"
+            required
             value={form.phone}
             onChange={(event) => setForm({ ...form, phone: event.target.value })}
             className="rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none ring-0 transition placeholder:text-slate-400 focus:border-sky-500"
-            placeholder="Phone number"
+            placeholder="Phone number (required)"
           />
+        </label>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="grid gap-2 text-sm font-medium text-slate-700">
+            City
+            <input
+              type="text"
+              value={form.city}
+              onChange={(event) => setForm({ ...form, city: event.target.value })}
+              className="rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none ring-0 transition placeholder:text-slate-400 focus:border-sky-500"
+              placeholder="City"
+            />
+          </label>
+          <label className="grid gap-2 text-sm font-medium text-slate-700">
+            Preferred language
+            <select
+              value={form.language}
+              onChange={(event) => setForm({ ...form, language: event.target.value })}
+              className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-0 transition focus:border-sky-500"
+            >
+              <option>English</option>
+              <option>Hindi</option>
+              <option>Both</option>
+            </select>
+          </label>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="grid gap-2 text-sm font-medium text-slate-700">
+            Service needed
+            <select
+              value={form.serviceNeeded}
+              onChange={(event) => setForm({ ...form, serviceNeeded: event.target.value })}
+              className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-0 transition focus:border-sky-500"
+            >
+              <option>Hearing aid consultation</option>
+              <option>Hearing test and diagnosis</option>
+              <option>Hearing aid fitting or tuning</option>
+              <option>Hearing aid repair</option>
+              <option>ENT consultation support</option>
+              <option>Speech therapy support</option>
+              <option>Tinnitus counseling</option>
+            </select>
+          </label>
+
+          <label className="grid gap-2 text-sm font-medium text-slate-700">
+            Preferred contact channel
+            <select
+              value={form.preferredChannel}
+              onChange={(event) => setForm({ ...form, preferredChannel: event.target.value })}
+              className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-0 transition focus:border-sky-500"
+            >
+              <option>Call</option>
+              <option>WhatsApp</option>
+              <option>Email</option>
+            </select>
+          </label>
+        </div>
+
+        <label className="grid gap-2 text-sm font-medium text-slate-700">
+          Preferred callback time
+          <select
+            value={form.preferredCallbackTime}
+            onChange={(event) => setForm({ ...form, preferredCallbackTime: event.target.value })}
+            className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-0 transition focus:border-sky-500"
+          >
+            <option>Morning (9 AM - 12 PM)</option>
+            <option>Afternoon (12 PM - 4 PM)</option>
+            <option>Evening (4 PM - 7 PM)</option>
+            <option>Anytime</option>
+          </select>
         </label>
 
         <label className="grid gap-2 text-sm font-medium text-slate-700">

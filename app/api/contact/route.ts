@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { clinicContact } from "@/lib/content";
 import { saveEnquiry } from "@/lib/enquiry-store";
 import { mailConfig, sendMail } from "@/lib/mailer";
 import { getClientKey, isRateLimited } from "@/lib/rate-limit";
@@ -27,7 +28,7 @@ function getMailErrorMessage(error: unknown): string {
     return "Gmail rejected the SMTP login. Use a Google-generated 16-character App Password for the Gmail account in the server .env file.";
   }
 
-  return "We could not process your request right now. Please call +91 9220440421.";
+  return `We could not process your request right now. Please call ${clinicContact.primaryCallDisplay}.`;
 }
 
 function escapeHtml(input: string): string {
@@ -66,7 +67,19 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { name, email, phone, message, website } = parsed.data;
+  const {
+    name,
+    email,
+    phone,
+    city,
+    language,
+    serviceNeeded,
+    preferredChannel,
+    preferredCallbackTime,
+    leadSource,
+    message,
+    website,
+  } = parsed.data;
 
   // Honeypot: treat as successful to avoid leaking bot checks.
   if (website && website.length > 0) {
@@ -77,31 +90,49 @@ export async function POST(request: NextRequest) {
     const mail = mailConfig();
     const submittedAt = new Date().toISOString();
     const safeName = escapeHtml(name);
-    const safeEmail = escapeHtml(email);
-    const safePhone = escapeHtml(phone || "N/A");
+    const safeEmail = escapeHtml(email || "N/A");
+    const safePhone = escapeHtml(phone);
+    const safeCity = escapeHtml(city || "N/A");
+    const safeLanguage = escapeHtml(language || "N/A");
+    const safeServiceNeeded = escapeHtml(serviceNeeded || "N/A");
+    const safePreferredChannel = escapeHtml(preferredChannel || "N/A");
+    const safePreferredCallbackTime = escapeHtml(preferredCallbackTime || "N/A");
+    const safeLeadSource = escapeHtml(leadSource || "N/A");
     const safeMessage = escapeHtml(message).replace(/\n/g, "<br/>");
 
     await saveEnquiry({
       submittedAt,
       ipKey,
       name,
-      email,
-      phone: phone || "N/A",
+      email: email || "N/A",
+      phone,
+      city: city || "N/A",
+      language: language || "N/A",
+      serviceNeeded: serviceNeeded || "N/A",
+      preferredChannel: preferredChannel || "N/A",
+      preferredCallbackTime: preferredCallbackTime || "N/A",
+      leadSource: leadSource || "N/A",
       message,
     });
 
     await sendMail({
       from: mail.from,
       to: mail.to,
-      replyTo: email,
+      replyTo: email || undefined,
       subject: `New Enquiry - ${name} (Audiosen Website)`,
       text: [
         "New enquiry received from audiosen website.",
         `Submitted at: ${submittedAt}`,
         `Source IP: ${ipKey}`,
         `Name: ${name}`,
-        `Email: ${email}`,
-        `Phone: ${phone || "N/A"}`,
+        `Email: ${email || "N/A"}`,
+        `Phone: ${phone}`,
+        `City: ${city || "N/A"}`,
+        `Language: ${language || "N/A"}`,
+        `Service Needed: ${serviceNeeded || "N/A"}`,
+        `Preferred Channel: ${preferredChannel || "N/A"}`,
+        `Preferred Callback Time: ${preferredCallbackTime || "N/A"}`,
+        `Lead Source: ${leadSource || "N/A"}`,
         "",
         "Message:",
         message,
@@ -113,12 +144,26 @@ export async function POST(request: NextRequest) {
         <p><strong>Name:</strong> ${safeName}</p>
         <p><strong>Email:</strong> ${safeEmail}</p>
         <p><strong>Phone:</strong> ${safePhone}</p>
+        <p><strong>City:</strong> ${safeCity}</p>
+        <p><strong>Language:</strong> ${safeLanguage}</p>
+        <p><strong>Service Needed:</strong> ${safeServiceNeeded}</p>
+        <p><strong>Preferred Channel:</strong> ${safePreferredChannel}</p>
+        <p><strong>Preferred Callback Time:</strong> ${safePreferredCallbackTime}</p>
+        <p><strong>Lead Source:</strong> ${safeLeadSource}</p>
         <p><strong>Message:</strong></p>
         <p>${safeMessage}</p>
       `,
     });
 
     try {
+      if (!email) {
+        return NextResponse.json({
+          ok: true,
+          message:
+            "Your enquiry has been saved successfully. Please keep your phone reachable for callback.",
+        });
+      }
+
       await sendMail({
         from: mail.from,
         to: email,
@@ -136,10 +181,13 @@ export async function POST(request: NextRequest) {
           "Your submitted details:",
           `Name: ${name}`,
           `Email: ${email}`,
-          `Phone: ${phone || "N/A"}`,
+          `Phone: ${phone}`,
+          `City: ${city || "N/A"}`,
+          `Preferred Callback: ${preferredCallbackTime || "N/A"}`,
+          `Preferred Channel: ${preferredChannel || "N/A"}`,
           `Message: ${message}`,
           "",
-          "Need help? Call us at +91 8383993592,(+91 9311279270 whatsapp support only).",
+          `Need help? Call us at ${clinicContact.primaryCallDisplay} (WhatsApp ${clinicContact.whatsappDisplay}).`,
           "",
           "Warm regards,",
           "Audiosen Hearing Care Solutions Team",
@@ -163,10 +211,11 @@ export async function POST(request: NextRequest) {
               <div style="margin-top: 14px; padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;">
                 <p style="margin: 0 0 8px;"><strong>Your submitted details:</strong></p>
                 <p style="margin: 0;">Name: ${safeName}<br/>Email: ${safeEmail}<br/>Phone: ${safePhone}</p>
+                <p style="margin: 8px 0 0;">City: ${safeCity}<br/>Preferred callback: ${safePreferredCallbackTime}<br/>Preferred channel: ${safePreferredChannel}</p>
                 <p style="margin: 8px 0 0;">Message:<br/>${safeMessage}</p>
               </div>
               <p style="margin-top: 16px;">
-                Need help immediately? Call us at <strong>+91 8383993592, (+91 9311279270 whatsapp support only)</strong>.
+                Need help immediately? Call us at <strong>${clinicContact.primaryCallDisplay}</strong> or WhatsApp <strong>${clinicContact.whatsappDisplay}</strong>.
               </p>
               <p style="margin-bottom: 0;">
                 Warm regards,<br/>

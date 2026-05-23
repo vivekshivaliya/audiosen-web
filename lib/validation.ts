@@ -2,11 +2,41 @@ import { z } from "zod";
 
 export const contactSchema = z.object({
   name: z.string().trim().min(2, "Name is required").max(120, "Name too long"),
-  email: z.string().trim().email("Valid email required"),
+  email: z
+    .string()
+    .trim()
+    .email("Valid email required")
+    .optional()
+    .or(z.literal("")),
   phone: z
     .string()
     .trim()
-    .max(30, "Phone too long")
+    .min(7, "Phone number is required")
+    .max(30, "Phone too long"),
+  city: z.string().trim().max(80, "City too long").optional().or(z.literal("")),
+  language: z.string().trim().max(40, "Language too long").optional().or(z.literal("")),
+  serviceNeeded: z
+    .string()
+    .trim()
+    .max(120, "Service value too long")
+    .optional()
+    .or(z.literal("")),
+  preferredChannel: z
+    .string()
+    .trim()
+    .max(40, "Preferred channel value too long")
+    .optional()
+    .or(z.literal("")),
+  preferredCallbackTime: z
+    .string()
+    .trim()
+    .max(60, "Preferred callback time value too long")
+    .optional()
+    .or(z.literal("")),
+  leadSource: z
+    .string()
+    .trim()
+    .max(60, "Lead source value too long")
     .optional()
     .or(z.literal("")),
   message: z

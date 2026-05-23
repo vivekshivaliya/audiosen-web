@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Manrope } from "next/font/google";
 import Script from "next/script";
 import { AnalyticsClickTracker } from "@/components/analytics-click-tracker";
 import { BookServicePopup } from "@/components/book-service-popup";
+import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { localBusinessJsonLd, siteMeta } from "@/lib/content";
@@ -73,7 +74,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sans.variable} ${display.variable} min-h-screen font-sans text-slate-900 antialiased`}>
+      <body className={`${sans.variable} ${display.variable} min-h-screen pb-20 font-sans text-slate-900 antialiased lg:pb-0`}>
         <AnalyticsClickTracker />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
@@ -100,6 +101,7 @@ export default function RootLayout({
           {children}
           <SiteFooter />
         </div>
+        <MobileCtaBar />
       </body>
     </html>
   );
