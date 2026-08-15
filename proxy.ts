@@ -7,6 +7,7 @@ export function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.protocol = "https:";
     url.hostname = "audiosen.com";
+    url.port = "";
     return NextResponse.redirect(url, 308);
   }
 
