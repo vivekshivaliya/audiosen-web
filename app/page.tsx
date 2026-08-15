@@ -77,8 +77,8 @@ export default function HomePage() {
   return (
     <main>
       <section id="home" className="sonic-page-section mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
-        <div className="premium-shell sonic-home-hero grid items-center gap-10 px-6 py-10 sm:px-10 lg:grid-cols-2 lg:py-14">
-          <Reveal>
+        <div className="premium-shell sonic-home-hero grid items-stretch gap-10 px-6 py-10 sm:px-10 lg:grid-cols-[minmax(0,1.02fr)_minmax(25rem,0.98fr)] lg:py-14">
+          <Reveal className="sonic-hero-copy">
             <div>
               <p className="premium-eyebrow mb-4">Hearing Care Services & Hearing Aid Solutions</p>
               <p className="offer-kicker">Limited Period Campaign · Every Device 50% Off</p>
@@ -120,58 +120,78 @@ export default function HomePage() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <div className="glass-panel sonic-product-stage p-5 sm:p-7">
-              <div className="grid gap-3 sm:grid-cols-[1.2fr_0.8fr]">
-                <div className="premium-card relative flex min-h-[360px] items-center justify-center overflow-hidden p-6">
-                  <span className="premium-chip absolute left-4 top-4">Phonak Infinio</span>
-                  <span className="offer-ribbon absolute right-4 top-4">Flat 50% Off</span>
-                  <Image
-                    src="/images/products/phonak/audeo-sphere-infinio.png"
-                    alt="Phonak Audeo Sphere Infinio premium hearing aid"
-                    width={900}
-                    height={900}
-                    className="max-h-[280px] w-full object-contain drop-shadow-2xl"
-                    priority
-                  />
-                  <p className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/90 px-3 py-2 text-center text-sm font-semibold text-slate-800 shadow-sm">
-                    Premium AI hearing aid for clearer speech
-                  </p>
+          <Reveal delay={0.1} className="sonic-hero-visual-wrap">
+            <div className="sonic-hero-visual">
+              <div className="sonic-human-card">
+                <Image
+                  src="/images/editorial/audiosen-hero-consultation-v3.webp"
+                  alt="An Indian audiologist fitting a modern hearing aid for an older Indian woman"
+                  fill
+                  sizes="(max-width: 1023px) 100vw, 44vw"
+                  className="sonic-human-image"
+                  priority
+                />
+                <div className="sonic-human-caption">
+                  <span>Personal hearing care</span>
+                  <strong>Thoughtful fitting for clearer everyday moments.</strong>
                 </div>
-                <div className="grid gap-3">
-                  <div className="premium-card relative flex min-h-[174px] items-center justify-center overflow-hidden p-5">
-                    <span className="premium-chip absolute left-3 top-3 text-[11px]">Signia IX</span>
-                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">50% Off</span>
+              </div>
+
+              <div className="sonic-care-orbit" aria-hidden="true">
+                <span />
+                <span />
+                <i />
+              </div>
+
+              <div className="sonic-trust-float">
+                <span className="sonic-live-dot" aria-hidden="true" />
+                <div>
+                  <small>Dehradun hearing care</small>
+                  <strong>Assessment · fitting · aftercare</strong>
+                </div>
+              </div>
+
+              <div className="sonic-hero-device-deck">
+                <div className="sonic-device-deck-heading">
+                  <div>
+                    <span>Latest premium hearing aids</span>
+                    <strong>Three advanced styles. One personal care journey.</strong>
+                  </div>
+                  <span className="offer-ribbon">Flat 50% Off</span>
+                </div>
+
+                <div className="sonic-mini-device-grid">
+                  <div className="sonic-mini-device">
+                    <Image
+                      src="/images/products/phonak/audeo-sphere-infinio.png"
+                      alt="Phonak Audeo Sphere Infinio premium hearing aid"
+                      width={180}
+                      height={180}
+                    />
+                    <span><strong>Phonak</strong><small>Infinio</small></span>
+                  </div>
+                  <div className="sonic-mini-device">
                     <Image
                       src="/images/products/signia/pure-chargego-bct-ix.png"
                       alt="Signia Pure Charge and Go BCT IX hearing aid"
-                      width={760}
-                      height={760}
-                      className="max-h-[118px] w-full object-contain drop-shadow-xl"
+                      width={180}
+                      height={180}
                     />
+                    <span><strong>Signia</strong><small>IX</small></span>
                   </div>
-                  <div className="premium-card relative flex min-h-[174px] items-center justify-center overflow-hidden p-5">
-                    <span className="premium-chip absolute left-3 top-3 text-[11px]">ReSound Vivia</span>
-                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">50% Off</span>
+                  <div className="sonic-mini-device">
                     <Image
                       src="/images/products/resound/vivia-grey.png"
                       alt="ReSound Vivia premium rechargeable hearing aid"
-                      width={760}
-                      height={760}
-                      className="max-h-[118px] w-full object-contain drop-shadow-xl"
+                      width={180}
+                      height={180}
                     />
+                    <span><strong>ReSound</strong><small>Vivia</small></span>
                   </div>
                 </div>
+
+                <p>Advanced rechargeable devices, discreet styles, fitting, repair, and support.</p>
               </div>
-              <p className="mt-4 text-center text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
-                Latest premium hearing aids
-              </p>
-              <p className="mt-2 text-center text-lg font-semibold text-slate-800">
-                Advanced rechargeable devices, discreet styles, fitting, repair, and support
-              </p>
-              <p className="mt-2 text-center text-sm font-bold uppercase tracking-[0.12em] text-rose-600">
-                Every hearing aid device is 50% off. Stock and campaign terms apply.
-              </p>
             </div>
           </Reveal>
         </div>
