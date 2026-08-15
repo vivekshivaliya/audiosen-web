@@ -48,7 +48,11 @@ function smtpHost(): string {
 function smtpPort(): number {
   const configured = firstDefined(["SMTP_PORT"]);
   if (configured) {
-    return Number(configured);
+    const port = Number(configured);
+    if (!Number.isInteger(port) || port < 1 || port > 65535) {
+      throw new Error("SMTP_PORT must be a valid TCP port number.");
+    }
+    return port;
   }
   return smtpHost() === "smtp.gmail.com" ? 465 : 587;
 }
@@ -96,15 +100,27 @@ function validateMailConfig() {
 }
 
 function createTransport(host: string, port: number, secure: boolean) {
+  const requireTls = host === "smtp.azurecomm.net" || port === 587;
+
   return nodemailer.createTransport({
     service: host === "smtp.gmail.com" ? "gmail" : undefined,
     host,
     port,
     secure,
+    requireTLS: requireTls,
+    connectionTimeout: 15_000,
+    greetingTimeout: 15_000,
+    socketTimeout: 30_000,
     auth: {
       user: smtpUser(),
       pass: smtpPass(),
     },
+    tls: requireTls
+      ? {
+          minVersion: "TLSv1.2",
+          servername: host,
+        }
+      : undefined,
   });
 }
 

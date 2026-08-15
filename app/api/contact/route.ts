@@ -16,7 +16,7 @@ function extractIp(request: NextRequest): string {
 function getMailErrorMessage(error: unknown): string {
   if (error instanceof Error) {
     if (error.message.includes("16-character App Password")) {
-      return error.message;
+      return "The email notification service is temporarily unavailable.";
     }
   }
 
@@ -25,7 +25,7 @@ function getMailErrorMessage(error: unknown): string {
     | undefined;
 
   if (candidate?.code === "EAUTH" || candidate?.responseCode === 535) {
-    return "Gmail rejected the SMTP login. Use a Google-generated 16-character App Password for the Gmail account in the server .env file.";
+    return "The email notification service could not authenticate.";
   }
 
   return `We could not process your request right now. Please call ${clinicContact.primaryCallDisplay}.`;
@@ -50,6 +50,8 @@ export async function POST(request: NextRequest) {
   }
 
   let payload: unknown;
+  let enquirySaved = false;
+
   try {
     payload = await request.json();
   } catch {
@@ -114,6 +116,7 @@ export async function POST(request: NextRequest) {
       leadSource: leadSource || "N/A",
       message,
     });
+    enquirySaved = true;
 
     await sendMail({
       from: mail.from,
@@ -239,13 +242,10 @@ export async function POST(request: NextRequest) {
     console.error("Contact API error:", error);
     const message = getMailErrorMessage(error);
 
-    if (
-      message.includes("App Password") ||
-      message.includes("Gmail rejected the SMTP login")
-    ) {
+    if (enquirySaved) {
       return NextResponse.json({
         ok: true,
-        warning: `${message} Your enquiry was still saved securely on the server.`,
+        warning: `${message} Your enquiry was saved securely and the team can still follow it up.`,
       });
     }
 
