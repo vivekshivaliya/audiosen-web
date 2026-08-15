@@ -12,6 +12,29 @@ const policyLinks = [
   { href: "/sitemap", label: "Sitemap" },
 ];
 
+const sitemapLinkMap: Record<string, string> = {
+  Home: "/",
+  "Hearing Aids Across India": "/hearing-aids-india",
+  "About Us": "/about",
+  Careers: "/careers",
+  Blog: "/blog",
+  Accessibility: "/accessibility",
+  "Hearing Aids in Dehradun": "/hearing-aids-dehradun",
+  "Hearing Test in Dehradun": "/hearing-test-dehradun",
+  "Hearing Aid Prices in Dehradun": "/hearing-aid-prices-dehradun",
+  "Hearing Aid Repair in Dehradun": "/hearing-aid-repair-dehradun",
+  "Home Hearing Care in Dehradun": "/home-hearing-care-dehradun",
+  "Online Hearing Test": "/hearing-test",
+  Services: "/#services",
+  "Hearing Aid Brands": "/#brands",
+  "Our Experts": "/about",
+  "Contact & Location": "/#contact",
+  Legal: "/legal",
+  "Privacy Policy": "/privacy-policy",
+  "Terms of Service": "/terms-of-service",
+  "Refund & Cancellation": "/refund-cancellation",
+};
+
 export function InfoPage({ content }: { content: InfoPageContent }) {
   const heroImage = content.image ?? "/images/contact-ear-check-hq.jpg";
   const heroAlt = content.imageAlt ?? `${content.title} visual`;
@@ -40,7 +63,15 @@ export function InfoPage({ content }: { content: InfoPageContent }) {
 
               {content.bullets?.length ? (
                 <ul className="sonic-info-list">
-                  {content.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+                  {content.bullets.map((bullet) => {
+                    const href = content.title === "Sitemap" ? sitemapLinkMap[bullet] : undefined;
+
+                    return (
+                      <li key={bullet}>
+                        {href ? <Link href={href} className="font-semibold text-sky-800 hover:underline">{bullet}</Link> : bullet}
+                      </li>
+                    );
+                  })}
                 </ul>
               ) : null}
             </article>

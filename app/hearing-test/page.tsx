@@ -5,11 +5,31 @@ import { HearingTest } from "@/components/hearing-test";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
-  title: "Online Hearing Test | Audiosen",
+  title: "Online Hearing Test India | Audiosen Sound Check",
   description:
-    "Take Audiosen's guided online hearing screening with setup checks, ear-by-ear tone testing, and a clear result summary.",
+    "Take Audiosen's private device-relative online hearing sound check in India, with setup checks, ear-by-ear tones, consistency feedback, and safe next steps.",
   alternates: {
     canonical: "/hearing-test",
+  },
+  openGraph: {
+    title: "Online Hearing Test India | Audiosen Sound Check",
+    description:
+      "A private device-relative sound check with ear-by-ear tones and clear guidance on when to arrange a clinical assessment.",
+    url: "https://audiosen.com/hearing-test",
+    type: "website",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/images/editorial/hearing-test-consultation-v2.webp",
+        alt: "An older Indian patient completing a hearing assessment with an audiology professional",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Online Hearing Test India | Audiosen Sound Check",
+    description: "A private online sound check with ear-by-ear tones and safe next-step guidance.",
+    images: ["/images/editorial/hearing-test-consultation-v2.webp"],
   },
 };
 
@@ -21,7 +41,7 @@ export default function HearingTestPage() {
           <div>
             <p className="premium-eyebrow">Audiosen Sound Check · device-relative</p>
             <h1 className="sonic-hero-title mt-4 font-display font-semibold leading-tight text-slate-900">
-              A calmer first step before a clinical hearing assessment
+              Online Hearing Sound Check for People Across India
             </h1>
             <p className="premium-prose mt-5 max-w-3xl text-base sm:text-lg">
               Check whether you notice a small set of ear-by-ear tones, get response-consistency feedback,

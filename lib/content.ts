@@ -9,11 +9,11 @@
 } from "@/lib/types";
 
 export const siteMeta = {
-  title: "Audiosen | Hearing Aid Centre in Dehradun & Hearing Care Services",
+  title: "Hearing Aids & Hearing Care Across India | Audiosen",
   description:
-    "Audiosen provides hearing aid sales, hearing tests, fitting, repair, maintenance, and complete hearing care support at Race Course Road, Dehradun.",
+    "Explore hearing aids, take an online hearing screening, and get consultation, fitting coordination, repair guidance, and aftercare support from Audiosen across India.",
   keywords:
-    "hearing aid centre Dehradun, hearing aids in Dehradun, hearing aid near Dehradun, hearing tests Dehradun, hearing aid fitting, hearing aid repair, Phonak, Signia, Widex, ReSound",
+    "hearing aids India, digital hearing aids, online hearing test India, audiology consultation, hearing aid fitting, hearing aid repair, Phonak, Signia, Widex, ReSound, Oticon, Starkey",
   canonicalUrl: "https://audiosen.com/",
   ogImage: "https://audiosen.com/og-image.jpg",
   logo: "https://audiosen.com/audiosen-company-logo.png",
@@ -45,13 +45,13 @@ export const clinicContact = {
 export const callHref = `tel:${clinicContact.primaryCallE164}`;
 
 export const whatsappHref = `https://wa.me/${clinicContact.whatsappE164.replace(/\D/g, "")}?text=${encodeURIComponent(
-  "Hello Audiosen team, I want to book a hearing consultation in Dehradun.",
+  "Hello Audiosen team, I want hearing-care guidance and service support in India.",
 )}`;
 
-export const localBusinessJsonLd = {
+export const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": ["MedicalBusiness", "LocalBusiness"],
-  "@id": "https://audiosen.com/#business",
+  "@type": "Organization",
+  "@id": "https://audiosen.com/#organization",
   name: clinicContact.company,
   alternateName: ["Audiosen", "Audiosen Hearing Care Solution"],
   url: "https://audiosen.com/",
@@ -59,10 +59,7 @@ export const localBusinessJsonLd = {
   image: "https://audiosen.com/og-image.jpg",
   telephone: clinicContact.primaryCallE164,
   email: clinicContact.email,
-  priceRange: "INR 2,000 - INR 2,50,000",
   description: siteMeta.description,
-  hasMap: clinicContact.mapUrl,
-  openingHours: "Mo-Sa 09:00-19:00",
   address: {
     "@type": "PostalAddress",
     streetAddress: clinicContact.streetAddress,
@@ -71,38 +68,10 @@ export const localBusinessJsonLd = {
     postalCode: clinicContact.postalCode,
     addressCountry: clinicContact.country,
   },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "09:00",
-      closes: "19:00",
-    },
-  ],
-  areaServed: ["Dehradun", "Rishikesh", "Haridwar", "Uttarakhand"],
-  makesOffer: [
-    {
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name: "Hearing aid sales and fitting in Dehradun",
-      },
-    },
-    {
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name: "Hearing test and consultation in Dehradun",
-      },
-    },
-    {
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name: "Hearing aid repair and maintenance",
-      },
-    },
-  ],
+  areaServed: {
+    "@type": "Country",
+    name: "India",
+  },
   contactPoint: [
     {
       "@type": "ContactPoint",
@@ -130,13 +99,62 @@ export const localBusinessJsonLd = {
     "Widex hearing aids",
     "ReSound hearing aids",
   ],
-  sameAs: ["https://audiosen.com/"],
+};
+
+export const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://audiosen.com/#website",
+  url: "https://audiosen.com/",
+  name: "Audiosen",
+  alternateName: "Audiosen Hearing Care Solutions",
+  inLanguage: "en-IN",
+  publisher: {
+    "@id": "https://audiosen.com/#organization",
+  },
+};
+
+export const dehradunClinicJsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["MedicalBusiness", "LocalBusiness"],
+  "@id": "https://audiosen.com/#dehradun-clinic",
+  name: clinicContact.company,
+  url: "https://audiosen.com/hearing-aids-dehradun",
+  logo: siteMeta.logo,
+  image: "https://audiosen.com/og-image.jpg",
+  telephone: clinicContact.primaryCallE164,
+  email: clinicContact.email,
+  priceRange: "INR 2,000 - INR 2,50,000",
+  hasMap: clinicContact.mapUrl,
+  parentOrganization: {
+    "@id": "https://audiosen.com/#organization",
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: clinicContact.streetAddress,
+    addressLocality: clinicContact.locality,
+    addressRegion: clinicContact.region,
+    postalCode: clinicContact.postalCode,
+    addressCountry: clinicContact.country,
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "09:00",
+      closes: "19:00",
+    },
+  ],
+  areaServed: {
+    "@type": "City",
+    name: "Dehradun",
+  },
 };
 
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
-  { label: "Dehradun", href: "/hearing-aids-dehradun" },
+  { label: "India", href: "/hearing-aids-india" },
   { label: "Online Test", href: "/hearing-test" },
   { label: "Solutions", href: "/#solutions" },
   { label: "Brands", href: "/#brands" },
@@ -147,12 +165,12 @@ export const navLinks = [
 ];
 
 export const heroContent: HeroContent = {
-  title: "Complete Hearing Care Services & Hearing Aid Solutions.",
+  title: "Hearing Aids & Complete Hearing Care Across India.",
   subtitle:
-    "We help people hear better with expert consultation, hearing tests, branded hearing aids, fitting, repair, and lifelong support.",
+    "We help people across India hear better with online guidance, hearing assessments, branded hearing aids, fitting coordination, repair support, and long-term aftercare.",
   ctaLabel: "Book Consultation ->",
   ctaHref: "#contact",
-  sideNote: "Service-first | sales + support + care",
+  sideNote: "Pan-India support | consultation + devices + aftercare",
 };
 
 export const hearingTestContent: HearingTestContent = {
@@ -774,7 +792,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
 export const footerContact = {
   company: clinicContact.company,
   copyright: "Copyright 2026 - Better hearing, better living",
-  location: `${clinicContact.formattedAddress}, India | Serving patients across India`,
+  location: `Serving customers across India | Dehradun clinic: ${clinicContact.formattedAddress}, India`,
   callDisplay: clinicContact.primaryCallDisplay,
   callHref,
   whatsappDisplay: clinicContact.whatsappDisplay,
@@ -833,9 +851,9 @@ export const infoPages: Record<
     image: "/images/editorial/hearing-test-consultation-v2.webp",
     imageAlt: "An Audiosen-style hearing consultation with an older Indian patient",
     paragraphs: [
-      "Audiosen is a service-based hearing care company focused on helping people hear better through consultation, hearing tests, branded hearing aid sales, fitting, repair, and ongoing support.",
-      "Our team provides practical hearing solutions for children, adults, and seniors with a patient-first approach and clear guidance.",
-      "Our mission: to make hearing care simple, trustworthy, and accessible for every person who needs support.",
+      "Audiosen is an India-focused hearing-care startup helping people hear better through consultation, hearing assessments, branded hearing aids, fitting coordination, repair guidance, and ongoing support.",
+      "Our team supports children, adults, seniors, and families across India through online guidance and location-appropriate care, with in-person clinic services available in Dehradun.",
+      "Our mission is to make trustworthy, understandable hearing care easier to access throughout India.",
     ],
   },
   careers: {
@@ -888,6 +906,7 @@ export const infoPages: Record<
     ],
     bullets: [
       "Home",
+      "Hearing Aids Across India",
       "About Us",
       "Careers",
       "Blog",

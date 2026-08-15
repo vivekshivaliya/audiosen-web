@@ -68,19 +68,19 @@ export function SiteFooter() {
           </div>
 
           <div className="space-y-2 text-sm">
-            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">Local Services</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">Across India</p>
             <div className="grid gap-2">
-              <Link href="/hearing-test-dehradun" className="hover:text-white">
-                Hearing Test in Dehradun
+              <Link href="/hearing-aids-india" className="hover:text-white">
+                Hearing Aids Across India
               </Link>
-              <Link href="/hearing-aid-prices-dehradun" className="hover:text-white">
-                Hearing Aid Prices
+              <Link href="/hearing-test" className="hover:text-white">
+                Online Hearing Test
               </Link>
-              <Link href="/hearing-aid-repair-dehradun" className="hover:text-white">
-                Hearing Aid Repair
+              <Link href="/#brands" className="hover:text-white">
+                Compare Hearing Aid Brands
               </Link>
-              <Link href="/home-hearing-care-dehradun" className="hover:text-white">
-                Home Hearing Care
+              <Link href="/#services" className="hover:text-white">
+                Hearing Care Services
               </Link>
             </div>
           </div>
@@ -116,7 +116,7 @@ export function SiteFooter() {
                 Hearing Solutions & Services
               </Link>
               <Link href="/hearing-aids-dehradun" className="hover:text-white">
-                Hearing Aids in Dehradun
+                Dehradun Clinic
               </Link>
               <Link href="/hearing-test" className="hover:text-white">
                 Online Hearing Test

@@ -4,6 +4,7 @@ import { ContactForm } from "@/components/contact-form";
 import {
   callHref,
   clinicContact,
+  dehradunClinicJsonLd,
   whatsappHref,
 } from "@/lib/content";
 import type { LocalServicePageContent } from "@/lib/local-service-pages";
@@ -27,7 +28,7 @@ export function LocalServicePage({ content }: LocalServicePageProps) {
         name: "Dehradun",
       },
       provider: {
-        "@id": "https://audiosen.com/#business",
+        "@id": "https://audiosen.com/#dehradun-clinic",
       },
     },
     {
@@ -66,6 +67,10 @@ export function LocalServicePage({ content }: LocalServicePageProps) {
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(dehradunClinicJsonLd) }}
+      />
       {structuredData.map((item, index) => (
         <script
           key={`${content.slug}-schema-${index}`}

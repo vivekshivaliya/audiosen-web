@@ -75,8 +75,8 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
-    relatedHref: "/hearing-test-dehradun",
-    relatedLabel: "Book a hearing test in Dehradun",
+    relatedHref: "/hearing-test",
+    relatedLabel: "Try the online hearing sound check",
     sources: [
       {
         label: "WHO: Deafness and hearing loss",
@@ -141,8 +141,8 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
-    relatedHref: "/hearing-aids-dehradun",
-    relatedLabel: "Explore hearing aids in Dehradun",
+    relatedHref: "/hearing-aids-india",
+    relatedLabel: "Explore hearing aids across India",
     sources: [
       {
         label: "NIDCD: Age-related hearing loss",
@@ -201,8 +201,8 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
-    relatedHref: "/hearing-test-dehradun",
-    relatedLabel: "Discuss a hearing assessment",
+    relatedHref: "/hearing-test",
+    relatedLabel: "Start with the online hearing sound check",
     sources: [
       {
         label: "WHO: Make Listening Safe",
@@ -261,8 +261,8 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
-    relatedHref: "/hearing-test-dehradun",
-    relatedLabel: "Plan a hearing assessment in Dehradun",
+    relatedHref: "/hearing-aids-india",
+    relatedLabel: "Plan hearing care anywhere in India",
     sources: [
       {
         label: "NIDCD: Age-related hearing loss",
@@ -317,8 +317,8 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
-    relatedHref: "/hearing-aid-prices-dehradun",
-    relatedLabel: "Compare hearing-aid options and costs",
+    relatedHref: "/hearing-aids-india",
+    relatedLabel: "Compare hearing-aid options and support",
     sources: [
       {
         label: "WHO: Hearing aid technology product specification",

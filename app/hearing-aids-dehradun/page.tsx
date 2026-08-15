@@ -6,6 +6,7 @@ import {
   brands,
   callHref,
   clinicContact,
+  dehradunClinicJsonLd,
   siteMeta,
   whatsappHref,
 } from "@/lib/content";
@@ -159,6 +160,10 @@ export const metadata: Metadata = {
 export default function HearingAidsDehradunPage() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(dehradunClinicJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

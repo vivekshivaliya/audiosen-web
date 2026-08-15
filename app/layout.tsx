@@ -6,7 +6,7 @@ import { BookServicePopup } from "@/components/book-service-popup";
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { localBusinessJsonLd, siteMeta } from "@/lib/content";
+import { organizationJsonLd, siteMeta, websiteJsonLd } from "@/lib/content";
 import "./globals.css";
 
 const googleAnalyticsId = "G-Q6H49XWK0S";
@@ -28,6 +28,10 @@ const display = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   applicationName: "Audiosen",
+  authors: [{ name: "Audiosen Hearing Care Solutions", url: "https://audiosen.com/about" }],
+  creator: "Audiosen Hearing Care Solutions",
+  publisher: "Audiosen Hearing Care Solutions",
+  category: "health",
   title: siteMeta.title,
   description: siteMeta.description,
   keywords: siteMeta.keywords,
@@ -74,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en-IN" data-scroll-behavior="smooth">
       <body className={`${sans.variable} ${display.variable} min-h-screen pb-20 font-sans text-slate-900 antialiased lg:pb-0`}>
         <AnalyticsClickTracker />
         <Script
@@ -96,10 +100,13 @@ export default function RootLayout({
           `}
         </Script>
         <div className="relative isolate overflow-hidden">
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
-          />
+          {[organizationJsonLd, websiteJsonLd].map((structuredData) => (
+            <script
+              key={structuredData["@id"]}
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+            />
+          ))}
           <div className="pointer-events-none absolute -top-40 left-1/2 h-[34rem] w-[44rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(9,92,153,0.2),transparent_70%)] blur-2xl" />
           <div className="pointer-events-none absolute right-[-12rem] top-1/3 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(14,138,143,0.16),transparent_72%)] blur-3xl" />
           <SiteHeader />

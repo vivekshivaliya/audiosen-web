@@ -67,20 +67,77 @@ const offerHighlights = [
   "Fitting guidance included",
 ];
 
+const nationwideSupportSteps = [
+  {
+    title: "Talk to the care team",
+    description: "Share your hearing needs, preferred language, location, current reports, and budget by phone, WhatsApp, or the enquiry form.",
+  },
+  {
+    title: "Plan the right assessment",
+    description: "We explain whether an online orientation, a local clinical hearing assessment, or an in-person clinic visit is the sensible next step.",
+  },
+  {
+    title: "Compare suitable options",
+    description: "Review appropriate hearing-aid styles, brands, features, support terms, and written pricing without choosing on appearance alone.",
+  },
+  {
+    title: "Coordinate fitting and aftercare",
+    description: "Audiosen helps coordinate device delivery, fitting support, adjustments, repair guidance, and follow-up based on your location.",
+  },
+];
+
+const nationalServiceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://audiosen.com/hearing-aids-india#service",
+  name: "Hearing aids and hearing-care support across India",
+  serviceType: "Hearing aid consultation, selection, fitting coordination, and aftercare",
+  url: "https://audiosen.com/hearing-aids-india",
+  areaServed: {
+    "@type": "Country",
+    name: "India",
+  },
+  provider: {
+    "@id": "https://audiosen.com/#organization",
+  },
+};
+
 export const metadata: Metadata = {
+  title: "Hearing Aids & Hearing Care Across India | Audiosen",
+  description:
+    "Explore hearing aids, take an online hearing screening, and get consultation, fitting coordination, repair guidance, and aftercare support across India.",
   alternates: {
     canonical: "/",
+  },
+  openGraph: {
+    title: "Hearing Aids & Hearing Care Across India | Audiosen",
+    description:
+      "Compare trusted hearing-aid brands and connect with Audiosen for hearing-care guidance and support across India.",
+    url: "https://audiosen.com/",
+    type: "website",
+    locale: "en_IN",
+    images: [{ url: "/og-image.jpg", alt: "Audiosen hearing care solutions across India" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hearing Aids & Hearing Care Across India | Audiosen",
+    description: "Hearing-aid guidance, online screening, fitting coordination, and aftercare support across India.",
+    images: ["/og-image.jpg"],
   },
 };
 
 export default function HomePage() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(nationalServiceJsonLd) }}
+      />
       <section id="home" className="sonic-page-section mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
         <div className="premium-shell sonic-home-hero grid items-stretch gap-10 px-6 py-10 sm:px-10 lg:grid-cols-[minmax(0,1.02fr)_minmax(25rem,0.98fr)] lg:py-14">
           <Reveal className="sonic-hero-copy">
             <div>
-              <p className="premium-eyebrow mb-4">Hearing Care Services & Hearing Aid Solutions</p>
+              <p className="premium-eyebrow mb-4">Pan-India Hearing Care & Hearing Aid Solutions</p>
               <p className="offer-kicker">Limited Period Campaign · Every Device 50% Off</p>
               <h1 className="sonic-hero-title font-display font-semibold leading-tight text-slate-900">
                 {heroContent.title}
@@ -95,8 +152,8 @@ export default function HomePage() {
                 <Link href="#brands" className="premium-button-secondary">
                   Explore Hearing Aids
                 </Link>
-                <Link href="/hearing-aids-dehradun" className="premium-button-secondary">
-                  Hearing aids in Dehradun
+                <Link href="/hearing-aids-india" className="premium-button-secondary">
+                  Hearing Care Across India
                 </Link>
               </div>
 
@@ -146,7 +203,7 @@ export default function HomePage() {
               <div className="sonic-trust-float">
                 <span className="sonic-live-dot" aria-hidden="true" />
                 <div>
-                  <small>Dehradun hearing care</small>
+                  <small>Pan-India hearing care</small>
                   <strong>Assessment · fitting · aftercare</strong>
                 </div>
               </div>
@@ -207,13 +264,52 @@ export default function HomePage() {
 
       </section>
 
+      <section id="india-support" className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="premium-section px-6 py-10 sm:px-8">
+          <Reveal>
+            <div className="grid items-end gap-5 lg:grid-cols-[1fr_auto]">
+              <div>
+                <p className="premium-eyebrow mb-4">Nationwide access, location-appropriate care</p>
+                <h2 className="max-w-4xl font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
+                  A clear hearing-care journey wherever you live in India
+                </h2>
+                <p className="premium-prose mt-4 max-w-3xl">
+                  Audiosen supports enquiries from across India. We combine online guidance with
+                  appropriate local assessment, device selection, fitting coordination, and
+                  ongoing service support based on your needs and location.
+                </p>
+              </div>
+              <Link href="/hearing-aids-india" className="premium-button-primary">
+                Explore Pan-India Services
+              </Link>
+            </div>
+          </Reveal>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {nationwideSupportSteps.map((step, index) => (
+              <Reveal key={step.title} delay={index * 0.04} className="premium-card h-full p-5">
+                <span className="premium-chip text-xs">Step {index + 1}</span>
+                <h3 className="mt-4 text-xl font-semibold text-slate-900">{step.title}</h3>
+                <p className="premium-prose mt-2 text-sm">{step.description}</p>
+              </Reveal>
+            ))}
+          </div>
+
+          <p className="mt-6 text-sm leading-relaxed text-slate-600">
+            Audiosen&apos;s physical clinic is in Dehradun. In-person and home-visit availability
+            varies by location; the team confirms the service pathway before booking.
+          </p>
+        </div>
+      </section>
+
       <section id="services" className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <Reveal>
           <h2 className="text-center font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
             Our Hearing Care Services
           </h2>
           <p className="premium-prose mx-auto mt-4 max-w-3xl text-center">
-            Everything you need for better hearing, from testing and fitting to ongoing care services.
+            Nationwide guidance for better hearing, from assessment planning and device selection
+            to fitting coordination and ongoing care.
           </p>
         </Reveal>
         <ServicesExplorer services={services} />

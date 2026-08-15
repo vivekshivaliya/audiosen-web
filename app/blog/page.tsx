@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Hearing Care Articles | Audiosen Blog",
     description:
-      "Practical hearing-care guidance for patients and families from Audiosen in Dehradun.",
+      "Practical hearing-care guidance from Audiosen for patients and families across India.",
     url: "https://audiosen.com/blog",
     type: "website",
     locale: "en_IN",

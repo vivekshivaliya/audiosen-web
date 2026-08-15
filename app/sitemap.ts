@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/accessibility", frequency: "yearly" as const, priority: 0.3 },
     { path: "/blog", frequency: "weekly" as const, priority: 0.8 },
     { path: "/careers", frequency: "monthly" as const, priority: 0.4 },
+    { path: "/hearing-aids-india", frequency: "weekly" as const, priority: 0.9 },
     { path: "/hearing-aids-dehradun", frequency: "weekly" as const, priority: 0.9 },
     { path: "/hearing-test", frequency: "monthly" as const, priority: 0.6 },
     { path: "/legal", frequency: "yearly" as const, priority: 0.2 },

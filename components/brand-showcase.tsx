@@ -32,21 +32,24 @@ export function BrandShowcase({ items }: { items: Brand[] }) {
         </p>
       </div>
 
-      <div className="mt-10 grid gap-4 md:grid-cols-4">
+      <div className="mt-10 grid gap-4 md:grid-cols-4" role="tablist" aria-label="Hearing aid brands">
         {items.map((brand) => {
           const selected = brand.slug === activeBrand.slug;
 
           return (
             <button
               key={brand.slug}
+              id={`brand-tab-${brand.slug}`}
               type="button"
+              role="tab"
               onClick={() => setActiveSlug(brand.slug)}
               className={`group min-h-36 rounded-[1.5rem] border p-5 text-left transition duration-300 ${
                 selected
                   ? "border-sky-700 bg-slate-950 text-white shadow-[0_22px_48px_-28px_rgba(8,68,119,0.7)]"
                   : "premium-card text-slate-900 hover:-translate-y-1"
               }`}
-              aria-pressed={selected}
+              aria-selected={selected}
+              aria-controls={`brand-panel-${brand.slug}`}
             >
               <span
                 className={`inline-flex h-11 w-28 items-center justify-center rounded-full px-4 ${
@@ -74,60 +77,73 @@ export function BrandShowcase({ items }: { items: Brand[] }) {
         })}
       </div>
 
-      <div className="premium-shell mt-8 overflow-hidden">
-        <div className="grid gap-6 bg-[#edf4fb] px-6 py-8 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-700">
-              {activeBrand.name}
-            </p>
-            <h3 className="mt-2 font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-              {activeBrand.summary}
-            </h3>
+      {items.map((brand) => {
+        const selected = brand.slug === activeBrand.slug;
+
+        return (
+          <div
+            key={brand.slug}
+            id={`brand-panel-${brand.slug}`}
+            role="tabpanel"
+            aria-labelledby={`brand-tab-${brand.slug}`}
+            hidden={!selected}
+            className="premium-shell mt-8 overflow-hidden"
+          >
+            <div className="grid gap-6 bg-[#edf4fb] px-6 py-8 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-700">
+                  {brand.name}
+                </p>
+                <h3 className="mt-2 font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
+                  {brand.summary}
+                </h3>
+              </div>
+              <p className="premium-prose text-sm lg:text-right">
+                {brand.position}
+              </p>
+            </div>
+
+            <div className="grid gap-5 p-5 sm:p-6 md:grid-cols-2 xl:grid-cols-3">
+              {brand.devices.map((device) => (
+                <article
+                  key={device.title}
+                  className="premium-card group flex h-full flex-col overflow-hidden rounded-[1.45rem] transition duration-300 hover:-translate-y-1"
+                >
+                  <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-50 to-sky-50">
+                    <span className="offer-ribbon absolute left-4 top-4 z-10">Flat 50% Off</span>
+                    <Image
+                      src={device.image}
+                      alt={device.imageAlt}
+                      fill
+                      sizes="(min-width: 1280px) 360px, (min-width: 768px) 45vw, 90vw"
+                      className="object-contain p-5 transition duration-300 group-hover:scale-[1.035]"
+                    />
+                  </div>
+
+                  <div className="flex flex-1 flex-col p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <h4 className="text-xl font-bold leading-snug text-slate-900">{device.title}</h4>
+                      <span className="premium-chip shrink-0 text-[11px]">
+                        {device.badge}
+                      </span>
+                    </div>
+
+                    <p className="premium-prose mt-3 text-sm">{device.description}</p>
+
+                    <ul className="mt-4 space-y-2 text-sm text-slate-700">
+                      {device.details.map((detail) => (
+                        <li key={detail} className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
+                          {detail}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
-          <p className="premium-prose text-sm lg:text-right">
-            {activeBrand.position}
-          </p>
-        </div>
-
-        <div className="grid gap-5 p-5 sm:p-6 md:grid-cols-2 xl:grid-cols-3">
-          {activeBrand.devices.map((device) => (
-            <article
-              key={device.title}
-              className="premium-card group flex h-full flex-col overflow-hidden rounded-[1.45rem] transition duration-300 hover:-translate-y-1"
-            >
-              <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-50 to-sky-50">
-                <span className="offer-ribbon absolute left-4 top-4 z-10">Flat 50% Off</span>
-                <Image
-                  src={device.image}
-                  alt={device.imageAlt}
-                  fill
-                  sizes="(min-width: 1280px) 360px, (min-width: 768px) 45vw, 90vw"
-                  className="object-contain p-5 transition duration-300 group-hover:scale-[1.035]"
-                />
-              </div>
-
-              <div className="flex flex-1 flex-col p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <h4 className="text-xl font-bold leading-snug text-slate-900">{device.title}</h4>
-                  <span className="premium-chip shrink-0 text-[11px]">
-                    {device.badge}
-                  </span>
-                </div>
-
-                <p className="premium-prose mt-3 text-sm">{device.description}</p>
-
-                <ul className="mt-4 space-y-2 text-sm text-slate-700">
-                  {device.details.map((detail) => (
-                    <li key={detail} className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
+        );
+      })}
     </section>
   );
 }
