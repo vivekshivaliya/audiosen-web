@@ -167,16 +167,16 @@ export async function POST(request: NextRequest) {
       await sendMail({
         from: mail.from,
         to: email,
-        subject: "Congratulations! Your Audiosen enquiry is confirmed",
+        subject: "Your Audiosen hearing-care enquiry is confirmed",
         text: [
           `Dear ${name},`,
           "",
-          "Congratulations. Your enquiry for a FREE hearing trial has been successfully received by Audiosen.",
+          "Your hearing-care enquiry has been successfully received by Audiosen.",
           "",
           "What happens next:",
           "1) Our audiology team will review your request.",
           "2) We will call you within 24 hours to schedule your appointment.",
-          "3) During your visit, you will get personalized guidance and trial recommendations.",
+          "3) We will explain the appropriate consultation, assessment, or service next step.",
           "",
           "Your submitted details:",
           `Name: ${name}`,
@@ -195,18 +195,18 @@ export async function POST(request: NextRequest) {
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto; color: #1f2937; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
             <div style="background: linear-gradient(135deg, #0a5c9e, #00a1ab); color: #ffffff; padding: 20px 24px;">
-              <h2 style="margin: 0; font-size: 22px;">Congratulations, ${safeName}!</h2>
+              <h2 style="margin: 0; font-size: 22px;">Thank you, ${safeName}!</h2>
               <p style="margin: 8px 0 0; font-size: 14px; opacity: 0.95;">Your Audiosen enquiry is confirmed.</p>
             </div>
             <div style="padding: 20px 24px; line-height: 1.6;">
               <p style="margin-top: 0;">
-                Thank you for contacting Audiosen. Your request for a <strong>FREE hearing trial</strong> has been successfully received.
+                Your hearing-care enquiry has been successfully received by Audiosen.
               </p>
               <p><strong>What happens next:</strong></p>
               <ol style="padding-left: 18px; margin-top: 6px;">
                 <li>Our audiology team will review your details.</li>
                 <li>We will call you within 24 hours to schedule your appointment.</li>
-                <li>You will get personalized guidance and hearing aid trial recommendations.</li>
+                <li>We will explain the appropriate consultation, assessment, or service next step.</li>
               </ol>
               <div style="margin-top: 14px; padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;">
                 <p style="margin: 0 0 8px;"><strong>Your submitted details:</strong></p>

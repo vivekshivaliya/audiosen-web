@@ -42,6 +42,29 @@ const fittingSteps = [
   },
 ];
 
+const relatedLocalServices = [
+  {
+    href: "/hearing-test-dehradun",
+    title: "Hearing Test in Dehradun",
+    description: "Understand clinic assessment options and how to prepare.",
+  },
+  {
+    href: "/hearing-aid-prices-dehradun",
+    title: "Hearing Aid Prices",
+    description: "Compare the factors behind device and fitting costs.",
+  },
+  {
+    href: "/hearing-aid-repair-dehradun",
+    title: "Hearing Aid Repair",
+    description: "Request cleaning, troubleshooting, maintenance, or repair guidance.",
+  },
+  {
+    href: "/home-hearing-care-dehradun",
+    title: "Home Hearing Care",
+    description: "Ask whether a home visit is suitable and available for the requested service.",
+  },
+];
+
 const faqs = [
   {
     question: "Where is Audiosen located in Dehradun?",
@@ -330,6 +353,23 @@ export default function HearingAidsDehradunPage() {
               Book a Dehradun hearing aid appointment
             </h2>
             <ContactForm />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="premium-section px-6 py-10 sm:px-8">
+          <p className="premium-eyebrow mb-4">Plan your next step</p>
+          <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
+            Local hearing-care information
+          </h2>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {relatedLocalServices.map((service) => (
+              <Link key={service.href} href={service.href} className="premium-card p-5">
+                <h3 className="text-lg font-semibold text-sky-900">{service.title}</h3>
+                <p className="premium-prose mt-2 text-sm">{service.description}</p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

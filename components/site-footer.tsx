@@ -15,7 +15,7 @@ export function SiteFooter() {
           </a>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
           <div className="space-y-2 text-sm leading-relaxed">
             <p className="font-display text-2xl text-white">{footerContact.company}</p>
             <p>{footerContact.copyright}</p>
@@ -68,6 +68,24 @@ export function SiteFooter() {
           </div>
 
           <div className="space-y-2 text-sm">
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">Local Services</p>
+            <div className="grid gap-2">
+              <Link href="/hearing-test-dehradun" className="hover:text-white">
+                Hearing Test in Dehradun
+              </Link>
+              <Link href="/hearing-aid-prices-dehradun" className="hover:text-white">
+                Hearing Aid Prices
+              </Link>
+              <Link href="/hearing-aid-repair-dehradun" className="hover:text-white">
+                Hearing Aid Repair
+              </Link>
+              <Link href="/home-hearing-care-dehradun" className="hover:text-white">
+                Home Hearing Care
+              </Link>
+            </div>
+          </div>
+
+          <div className="space-y-2 text-sm">
             <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">Legal</p>
             <div className="grid gap-2">
               <Link href="/legal" className="hover:text-white">
@@ -102,6 +120,9 @@ export function SiteFooter() {
               </Link>
               <Link href="/hearing-test" className="hover:text-white">
                 Online Hearing Test
+              </Link>
+              <Link href="/blog" className="hover:text-white">
+                Hearing Care Articles
               </Link>
               <Link href="/#contact" className="hover:text-white">
                 Contact

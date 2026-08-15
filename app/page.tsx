@@ -54,16 +54,16 @@ const subscriptionTerms = [
 ];
 
 const campaignOffer = {
-  headline: "Upto 50% Off on All Devices & Hearing Care Services",
+  headline: "Up to 50% Off Selected Devices & Hearing Care Services",
   subline:
-    "Limited-time campaign for consultations, fitting support, repairs, and branded hearing aid devices.",
-  ctaLabel: "Claim Upto 50% Off",
+    "Limited-time campaign on eligible products and services. Availability, eligibility, and written terms apply.",
+  ctaLabel: "Check Offer Eligibility",
   ctaHref: "#contact",
 };
 
 const offerHighlights = [
-  "All hearing aid devices included",
-  "All hearing care services included",
+  "Selected hearing aid models",
+  "Eligible hearing care services",
   "Priority callback for offer enquiries",
 ];
 
@@ -81,7 +81,7 @@ export default function HomePage() {
           <Reveal>
             <div>
               <p className="premium-eyebrow mb-4">Hearing Care Services & Hearing Aid Solutions</p>
-              <p className="offer-kicker">Limited Period Campaign - Upto 50% Off</p>
+              <p className="offer-kicker">Limited Period Campaign - Up to 50% Off</p>
               <h1 className="font-display text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
                 {heroContent.title}
               </h1>
@@ -123,7 +123,7 @@ export default function HomePage() {
               <div className="grid gap-3 sm:grid-cols-[1.2fr_0.8fr]">
                 <div className="premium-card relative flex min-h-[360px] items-center justify-center overflow-hidden p-6">
                   <span className="premium-chip absolute left-4 top-4">Phonak Infinio</span>
-                  <span className="offer-ribbon absolute right-4 top-4">Upto 50% Off</span>
+                  <span className="offer-ribbon absolute right-4 top-4">Ask About Offers</span>
                   <Image
                     src="/images/products/phonak/audeo-sphere-infinio.png"
                     alt="Phonak Audeo Sphere Infinio premium hearing aid"
@@ -139,7 +139,7 @@ export default function HomePage() {
                 <div className="grid gap-3">
                   <div className="premium-card relative flex min-h-[174px] items-center justify-center overflow-hidden p-5">
                     <span className="premium-chip absolute left-3 top-3 text-[11px]">Signia IX</span>
-                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">Upto 50% Off</span>
+                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">Ask About Offers</span>
                     <Image
                       src="/images/products/signia/pure-chargego-bct-ix.png"
                       alt="Signia Pure Charge and Go BCT IX hearing aid"
@@ -150,7 +150,7 @@ export default function HomePage() {
                   </div>
                   <div className="premium-card relative flex min-h-[174px] items-center justify-center overflow-hidden p-5">
                     <span className="premium-chip absolute left-3 top-3 text-[11px]">ReSound Vivia</span>
-                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">Upto 50% Off</span>
+                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">Ask About Offers</span>
                     <Image
                       src="/images/products/resound/vivia-grey.png"
                       alt="ReSound Vivia premium rechargeable hearing aid"
@@ -168,7 +168,7 @@ export default function HomePage() {
                 Advanced rechargeable devices, discreet styles, fitting, repair, and support
               </p>
               <p className="mt-2 text-center text-sm font-bold uppercase tracking-[0.12em] text-rose-600">
-                Every featured device is now at Upto 50% Off
+                Selected devices may be eligible for up to 50% off. Terms apply.
               </p>
             </div>
           </Reveal>
@@ -386,7 +386,7 @@ export default function HomePage() {
             </h2>
             <p className="premium-prose mx-auto mt-4 max-w-3xl">
               Take a simple hearing self-check, answer tone prompts for each ear, and get a clear
-              report with diagnosis suggestions for Audiosen Hearing Care Solutions.
+              screening guidance and decide whether to book a clinic-based evaluation.
             </p>
           </div>
         </Reveal>

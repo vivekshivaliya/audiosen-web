@@ -35,6 +35,21 @@ export function AnalyticsClickTracker() {
 
       if (normalizedHref.includes("wa.me") || normalizedHref.includes("whatsapp.com")) {
         trackEvent("click_whatsapp", baseParams);
+        return;
+      }
+
+      if (normalizedHref.startsWith("mailto:")) {
+        trackEvent("click_email", baseParams);
+        return;
+      }
+
+      if (normalizedHref.includes("google.com/maps") || normalizedHref.includes("maps.google")) {
+        trackEvent("click_directions", baseParams);
+        return;
+      }
+
+      if (normalizedHref === "/#contact" || normalizedHref.endsWith("#appointment")) {
+        trackEvent("book_appointment_click", baseParams);
       }
     }
 
