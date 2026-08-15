@@ -156,39 +156,39 @@ export const heroContent: HeroContent = {
 };
 
 export const hearingTestContent: HearingTestContent = {
-  title: "Online Hearing Screening",
-  subtitle: "An easy ear-by-ear tone check to help you decide when to book clinic diagnosis.",
+  title: "Audiosen Sound Check",
+  subtitle: "A private, device-relative ear-by-ear check that helps you choose a sensible next step.",
   helper:
-    "Use stereo headphones in a quiet room. Keep volume comfortable and answer honestly for each tone.",
-  readyStatus: "Ready when you are. Use headphones and set your device volume to a comfortable level.",
-  resultTitle: "Your Hearing Screening Report",
+    "Use stereo headphones in a quiet room. Keep your device volume comfortable—never turn it up to chase a tone.",
+  readyStatus: "Complete the safety and setup checks to begin.",
+  resultTitle: "Your Device Check Summary",
   disclaimer:
-    "This online screening is not a medical diagnosis. Please book a clinic-based hearing evaluation for confirmed results and treatment advice.",
+    "This browser check is not calibrated, cannot measure dB HL, and is not a medical diagnosis or audiogram. A clinic assessment is required to measure hearing levels and investigate causes.",
   checklist: [
     "Use headphones or earphones",
     "Sit in a quiet room",
-    "Keep volume comfortable",
+    "Stop if any sound feels uncomfortable",
   ],
   steps: [
     "Wear stereo headphones and sit in a quiet room",
-    "Run a quick sound check at comfortable volume",
-    "Test each ear and answer each tone with Yes/No",
-    "Review your report and confirm diagnosis at Audiosen Hearing Care Solutions",
+    "Set a comfortable reference sound—do not keep increasing it",
+    "Check four speech-related tone regions in each ear",
+    "Review device-relative observations and choose your next step",
   ],
   interpretationGuide: [
-    "PTA (Pure Tone Average) is the average of key speech frequencies (500, 1000, 2000 Hz).",
-    "Normal: up to 25 dB HL, Mild: 26-40 dB HL, Moderate: 41-60 dB HL, Severe: above 60 dB HL.",
-    "Reliability explains confidence in your responses. Low reliability means you should re-test before interpretation.",
-    "If you struggle in conversations, noisy places, or phone calls, book a full clinic evaluation even with a normal screen.",
+    "The tone count only describes what you noticed with this device, browser, headphones, room, and volume setting.",
+    "It does not label hearing as normal, mild, moderate, or severe and cannot calculate a clinical PTA.",
+    "Response consistency describes repeat and silent checks; low consistency means the result should not be interpreted.",
+    "Book a full clinic evaluation whenever everyday speech, calls, meetings, or background noise are difficult—even if every tone was noticed.",
   ],
   whoShouldNotRely: [
-    "Children should use a clinic-based pediatric hearing evaluation instead of this online screening.",
-    "Do not rely on this test if you have sudden hearing loss, ear pain, ear discharge, or active infection.",
-    "If you have persistent severe tinnitus, dizziness, or one-sided sudden change, seek urgent medical care first.",
+    "Children should use a clinic-based pediatric hearing evaluation instead of this browser check.",
+    "Do not continue if you have sudden hearing change, severe ear pain, discharge, injury, or active infection.",
+    "With significant dizziness, neurological symptoms, or a sudden one-sided change, seek urgent medical assessment first.",
   ],
   reportNotes: [
-    "Online results can vary depending on headphones, device volume, and room noise.",
-    "A full audiology test is recommended if you notice difficulty with speech, calls, meetings, or background noise.",
+    "Results vary with headphones, device volume, browser audio processing, and room noise.",
+    "A clinical audiology test is recommended if you notice difficulty with speech, calls, meetings, tinnitus, or background noise.",
   ],
 };
 
@@ -830,6 +830,8 @@ export const infoPages: Record<
 > = {
   about: {
     title: "About Audiosen",
+    image: "/images/editorial/hearing-test-consultation-v2.webp",
+    imageAlt: "An Audiosen-style hearing consultation with an older Indian patient",
     paragraphs: [
       "Audiosen is a service-based hearing care company focused on helping people hear better through consultation, hearing tests, branded hearing aid sales, fitting, repair, and ongoing support.",
       "Our team provides practical hearing solutions for children, adults, and seniors with a patient-first approach and clear guidance.",
@@ -838,6 +840,8 @@ export const infoPages: Record<
   },
   careers: {
     title: "Join the Audiosen Team",
+    image: "/images/editorial/hearing-care-careers-v2.webp",
+    imageAlt: "Indian hearing-care professionals collaborating around audiology equipment",
     paragraphs: [
       "We are looking for hearing care professionals, patient coordinators, and support team members.",
       "Send your CV to careersaudiosen@gmail.com with the subject line \"Application - [Position Name]\".",
@@ -861,6 +865,8 @@ export const infoPages: Record<
   },
   accessibility: {
     title: "Accessibility Commitment",
+    image: "/images/editorial/accessible-hearing-technology-v2.webp",
+    imageAlt: "An older Indian woman with a hearing aid using accessible phone controls with family support",
     paragraphs: [
       "Audiosen is committed to making hearing care accessible for everyone.",
       `If you need any special accommodation, please call us at ${clinicContact.primaryCallDisplay} or WhatsApp ${clinicContact.whatsappDisplay} before your visit.`,
@@ -874,6 +880,8 @@ export const infoPages: Record<
   },
   sitemap: {
     title: "Sitemap",
+    image: "/images/editorial/policy-trust-v2.webp",
+    imageAlt: "Organized policy documents representing clear website navigation and trust",
     paragraphs: [
       "Audiosen website map and key pages for hearing care services, support, and policies.",
       `Address: ${clinicContact.streetAddress}, ${clinicContact.locality}, ${clinicContact.region} ${clinicContact.postalCode}, India.`,
@@ -902,6 +910,8 @@ export const infoPages: Record<
   },
   legal: {
     title: "Legal Information",
+    image: "/images/editorial/policy-trust-v2.webp",
+    imageAlt: "Clear policy documents with a privacy lock and hearing technology",
     paragraphs: [
       "Effective date: May 1, 2026.",
       "This page provides a central reference to Audiosen's legal, privacy, and customer policy documents. These policies apply to visitors, customers, and users of our website and related digital services.",
@@ -916,6 +926,8 @@ export const infoPages: Record<
   },
   privacyPolicy: {
     title: "Privacy Policy",
+    image: "/images/editorial/policy-trust-v2.webp",
+    imageAlt: "Privacy documents and a frosted lock representing protected information",
     paragraphs: [
       "Effective date: May 1, 2026.",
       "Audiosen values your privacy. This Privacy Policy explains what information we collect through our website, how we use it, and the choices available to you.",
@@ -935,6 +947,8 @@ export const infoPages: Record<
   },
   termsOfService: {
     title: "Terms of Service",
+    image: "/images/editorial/policy-trust-v2.webp",
+    imageAlt: "Organized service terms beside a pen and hearing technology",
     paragraphs: [
       "Effective date: May 1, 2026.",
       "These Terms of Service govern use of the Audiosen website and related online interactions. If you do not agree with these terms, please do not use this website.",
@@ -954,6 +968,8 @@ export const infoPages: Record<
   },
   refundCancellation: {
     title: "Refund & Cancellation Policy",
+    image: "/images/editorial/policy-trust-v2.webp",
+    imageAlt: "Clear customer policy documents arranged in a trustworthy setting",
     paragraphs: [
       "Effective date: May 1, 2026.",
       "This policy applies to online and offline bookings, hearing care consultations, device services, and plan payments made to Audiosen.",

@@ -83,16 +83,17 @@ export interface HearingTestContent {
   reportNotes: string[];
 }
 
-export type HearingThreshold = number | "N/A";
-
 export type HearingTestReliability = "good" | "fair" | "low";
+
+export type DeviceHearingResult = "all-noticed" | "some-missed" | "several-missed" | "not-completed";
 
 export interface HearingTestSummary {
   completedAt: string;
-  leftPta: HearingThreshold;
-  rightPta: HearingThreshold;
-  leftSeverity: string;
-  rightSeverity: string;
+  leftResult: DeviceHearingResult;
+  rightResult: DeviceHearingResult;
+  leftDetected: number;
+  rightDetected: number;
+  totalPerEar: number;
   reliability: HearingTestReliability;
   reliabilityLabel: string;
   recommendation: string;

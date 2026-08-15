@@ -1,6 +1,6 @@
 import type { HearingTestSummary } from "@/lib/types";
 
-const HEARING_TEST_SUMMARY_KEY = "audiosen_hearing_test_summary_v1";
+const HEARING_TEST_SUMMARY_KEY = "audiosen_hearing_test_summary_v2";
 export const HEARING_TEST_SUMMARY_EVENT = "audiosen-hearing-summary-updated";
 
 function hasWindow(): boolean {
@@ -32,10 +32,6 @@ export function clearHearingTestSummary(): void {
   window.dispatchEvent(new Event(HEARING_TEST_SUMMARY_EVENT));
 }
 
-function formatThreshold(level: HearingTestSummary["leftPta"]): string {
-  return level === "N/A" ? "N/A" : `${level} dB HL`;
-}
-
 export function formatHearingTestSummaryForContact(summary: HearingTestSummary): string {
   const date = new Date(summary.completedAt);
   const dateLabel = Number.isNaN(date.getTime())
@@ -48,9 +44,10 @@ export function formatHearingTestSummaryForContact(summary: HearingTestSummary):
     "I completed your online hearing screening and I would like to book a consultation.",
     "",
     `Completed: ${dateLabel}`,
-    `Left ear PTA: ${formatThreshold(summary.leftPta)} (${summary.leftSeverity})`,
-    `Right ear PTA: ${formatThreshold(summary.rightPta)} (${summary.rightSeverity})`,
-    `Reliability: ${summary.reliabilityLabel}`,
+    `Left ear device check: ${summary.leftDetected}/${summary.totalPerEar} tones noticed`,
+    `Right ear device check: ${summary.rightDetected}/${summary.totalPerEar} tones noticed`,
+    `Response consistency: ${summary.reliabilityLabel}`,
+    "This was an uncalibrated browser screening, not a clinical audiogram or diagnosis.",
     "",
     "Key notes:",
     ...summary.notes.slice(0, 3).map((note) => `- ${note}`),

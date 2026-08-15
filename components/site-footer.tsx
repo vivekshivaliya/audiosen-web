@@ -3,9 +3,9 @@ import { footerContact } from "@/lib/content";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-20 border-t border-slate-800 bg-[#061126] text-slate-300">
+    <footer className="sonic-footer mt-20 text-slate-300">
       <div className="mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-700/70 bg-[#0b1b38] px-5 py-4">
+        <div className="sonic-footer-cta mb-8 flex flex-wrap items-center justify-between gap-4 px-5 py-5">
           <div>
             <p className="font-display text-2xl text-white">Better hearing starts with a clear plan.</p>
             <p className="mt-1 text-sm text-slate-300">Consultation, fitting, repair, and long-term support.</p>

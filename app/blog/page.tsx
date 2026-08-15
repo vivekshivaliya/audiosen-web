@@ -23,9 +23,9 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 pb-20 pt-14 sm:px-6 lg:px-8">
+    <main className="sonic-blog-page mx-auto w-full max-w-7xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
       <Reveal>
-        <section className="premium-shell relative overflow-hidden p-7 sm:p-10">
+        <section className="premium-shell sonic-blog-hero relative overflow-hidden p-7 sm:p-10">
           <div className="pointer-events-none absolute -left-16 -top-20 h-52 w-52 rounded-full bg-sky-200/35 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -right-16 h-56 w-56 rounded-full bg-teal-200/35 blur-3xl" />
           <p className="premium-eyebrow">Audiosen Hearing Blog</p>
@@ -40,16 +40,16 @@ export default function BlogPage() {
         </section>
       </Reveal>
 
-      <section className="mt-10 grid gap-6 md:grid-cols-2">
+      <section className="sonic-blog-grid mt-10 grid gap-6 md:grid-cols-2">
         {blogPosts.map((post, index) => (
           <Reveal key={post.slug} delay={Math.min(index * 0.03, 0.12)}>
-            <article className="premium-shell h-full overflow-hidden">
+            <article className={`premium-shell sonic-blog-card h-full overflow-hidden ${index === 0 ? "sonic-blog-featured" : ""}`}>
               <Image
                 src={post.image}
                 alt={post.imageAlt}
                 width={1200}
                 height={700}
-                className="h-56 w-full border-b border-slate-200 object-cover"
+                className="sonic-blog-image h-56 w-full object-cover"
               />
               <div className="p-6 sm:p-7">
                 <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-sky-700">

@@ -74,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={`${sans.variable} ${display.variable} min-h-screen pb-20 font-sans text-slate-900 antialiased lg:pb-0`}>
         <AnalyticsClickTracker />
         <Script

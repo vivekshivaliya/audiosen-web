@@ -6,7 +6,7 @@ import { callHref, clinicContact, whatsappHref } from "@/lib/content";
 
 export function MobileCtaBar() {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[70] border-t border-slate-200 bg-white/95 px-3 pb-[calc(0.55rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-14px_38px_-24px_rgba(15,23,42,0.6)] backdrop-blur lg:hidden">
+    <div className="sonic-mobile-cta fixed inset-x-0 bottom-0 z-[70] px-3 pb-[calc(0.55rem+env(safe-area-inset-bottom))] pt-2 lg:hidden">
       <div className="mx-auto grid w-full max-w-7xl grid-cols-3 gap-2">
         <a href={callHref} className="premium-button-primary px-2 py-2.5 text-xs">
           Call

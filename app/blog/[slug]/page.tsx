@@ -94,7 +94,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
   };
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-4 pb-20 pt-14 sm:px-6 lg:px-8">
+    <main className="sonic-article-page mx-auto w-full max-w-5xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -112,7 +112,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
         <span>{post.title}</span>
       </nav>
 
-      <article className="premium-shell overflow-hidden">
+      <article className="premium-shell sonic-article-shell overflow-hidden">
         <Image
           src={post.image}
           alt={post.imageAlt}

@@ -54,17 +54,17 @@ const subscriptionTerms = [
 ];
 
 const campaignOffer = {
-  headline: "Up to 50% Off Selected Devices & Hearing Care Services",
+  headline: "Flat 50% Off Every Hearing Aid Device",
   subline:
-    "Limited-time campaign on eligible products and services. Availability, eligibility, and written terms apply.",
-  ctaLabel: "Check Offer Eligibility",
-  ctaHref: "#contact",
+    "Every hearing aid device in the Audiosen range is now available at half price. Stock availability and written campaign terms apply.",
+  ctaLabel: "Explore All Half-Price Devices",
+  ctaHref: "#brands",
 };
 
 const offerHighlights = [
-  "Selected hearing aid models",
-  "Eligible hearing care services",
-  "Priority callback for offer enquiries",
+  "Every available model",
+  "All brands and technology levels",
+  "Fitting guidance included",
 ];
 
 export const metadata: Metadata = {
@@ -76,13 +76,13 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main>
-      <section id="home" className="mx-auto w-full max-w-7xl px-4 pb-12 pt-14 sm:px-6 lg:px-8">
-        <div className="premium-shell grid items-center gap-10 px-6 py-10 sm:px-10 lg:grid-cols-2 lg:py-14">
+      <section id="home" className="sonic-page-section mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
+        <div className="premium-shell sonic-home-hero grid items-center gap-10 px-6 py-10 sm:px-10 lg:grid-cols-2 lg:py-14">
           <Reveal>
             <div>
               <p className="premium-eyebrow mb-4">Hearing Care Services & Hearing Aid Solutions</p>
-              <p className="offer-kicker">Limited Period Campaign - Up to 50% Off</p>
-              <h1 className="font-display text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
+              <p className="offer-kicker">Limited Period Campaign · Every Device 50% Off</p>
+              <h1 className="sonic-hero-title font-display font-semibold leading-tight text-slate-900">
                 {heroContent.title}
               </h1>
               <p className="premium-prose mt-5 max-w-xl text-lg">{heroContent.subtitle}</p>
@@ -100,30 +100,32 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              <div className="offer-panel mt-8 p-5">
-                <p className="text-xs font-black uppercase tracking-[0.14em] text-amber-100">Mega Offer</p>
-                <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">{campaignOffer.headline}</h2>
-                <p className="mt-2 text-sm text-amber-50 sm:text-base">{campaignOffer.subline}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {offerHighlights.map((item) => (
-                    <span key={item} className="offer-pill">
-                      {item}
-                    </span>
-                  ))}
+              <div className="offer-panel sonic-offer-v2 mt-8 p-5">
+                <div className="sonic-discount-mark" aria-hidden="true">
+                  <strong>50</strong>
+                  <span>% off</span>
                 </div>
-                <Link href={campaignOffer.ctaHref} className="premium-button-secondary mt-4 border-white/60 bg-white text-rose-700">
-                  {campaignOffer.ctaLabel}
-                </Link>
+                <div className="sonic-offer-copy">
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-amber-100">Every device · one clear offer</p>
+                  <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">{campaignOffer.headline}</h2>
+                  <p className="mt-2 text-sm text-amber-50 sm:text-base">{campaignOffer.subline}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {offerHighlights.map((item) => <span key={item} className="offer-pill">{item}</span>)}
+                  </div>
+                  <Link href={campaignOffer.ctaHref} className="premium-button-secondary mt-4 border-white/60 bg-white text-rose-700">
+                    {campaignOffer.ctaLabel}
+                  </Link>
+                </div>
               </div>
             </div>
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div className="glass-panel p-5 sm:p-7">
+            <div className="glass-panel sonic-product-stage p-5 sm:p-7">
               <div className="grid gap-3 sm:grid-cols-[1.2fr_0.8fr]">
                 <div className="premium-card relative flex min-h-[360px] items-center justify-center overflow-hidden p-6">
                   <span className="premium-chip absolute left-4 top-4">Phonak Infinio</span>
-                  <span className="offer-ribbon absolute right-4 top-4">Ask About Offers</span>
+                  <span className="offer-ribbon absolute right-4 top-4">Flat 50% Off</span>
                   <Image
                     src="/images/products/phonak/audeo-sphere-infinio.png"
                     alt="Phonak Audeo Sphere Infinio premium hearing aid"
@@ -139,7 +141,7 @@ export default function HomePage() {
                 <div className="grid gap-3">
                   <div className="premium-card relative flex min-h-[174px] items-center justify-center overflow-hidden p-5">
                     <span className="premium-chip absolute left-3 top-3 text-[11px]">Signia IX</span>
-                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">Ask About Offers</span>
+                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">50% Off</span>
                     <Image
                       src="/images/products/signia/pure-chargego-bct-ix.png"
                       alt="Signia Pure Charge and Go BCT IX hearing aid"
@@ -150,7 +152,7 @@ export default function HomePage() {
                   </div>
                   <div className="premium-card relative flex min-h-[174px] items-center justify-center overflow-hidden p-5">
                     <span className="premium-chip absolute left-3 top-3 text-[11px]">ReSound Vivia</span>
-                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">Ask About Offers</span>
+                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">50% Off</span>
                     <Image
                       src="/images/products/resound/vivia-grey.png"
                       alt="ReSound Vivia premium rechargeable hearing aid"
@@ -168,7 +170,7 @@ export default function HomePage() {
                 Advanced rechargeable devices, discreet styles, fitting, repair, and support
               </p>
               <p className="mt-2 text-center text-sm font-bold uppercase tracking-[0.12em] text-rose-600">
-                Selected devices may be eligible for up to 50% off. Terms apply.
+                Every hearing aid device is 50% off. Stock and campaign terms apply.
               </p>
             </div>
           </Reveal>
@@ -176,7 +178,7 @@ export default function HomePage() {
 
         <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {providerHighlights.map((item, index) => (
-            <Reveal key={item.title} delay={0.04 + index * 0.05} className="premium-card p-5">
+            <Reveal key={item.title} delay={0.04 + index * 0.05} className="premium-card sonic-float-card p-5">
               <h2 className="text-lg font-semibold text-slate-900">{item.title}</h2>
               <p className="premium-prose mt-2 text-sm">{item.description}</p>
             </Reveal>
@@ -380,13 +382,13 @@ export default function HomePage() {
       <section id="hearingtest" className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <Reveal>
           <div className="text-center">
-            <p className="premium-eyebrow mb-4">Online Hearing Screening</p>
+            <p className="premium-eyebrow mb-4">Private Device-Relative Sound Check</p>
             <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
               Check Your Hearing Online
             </h2>
             <p className="premium-prose mx-auto mt-4 max-w-3xl">
-              Take a simple hearing self-check, answer tone prompts for each ear, and get a clear
-              screening guidance and decide whether to book a clinic-based evaluation.
+              Notice a small set of ear-by-ear tones, check response consistency, and decide whether
+              a calibrated clinic-based hearing evaluation is the right next step.
             </p>
           </div>
         </Reveal>
