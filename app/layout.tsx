@@ -11,6 +11,7 @@ import "./globals.css";
 
 const googleAnalyticsId = "G-Q6H49XWK0S";
 const googleAdsId = "AW-18110980849";
+const googleAdsenseClientId = "ca-pub-1685140658308649";
 
 const sans = Manrope({
   subsets: ["latin"],
@@ -79,6 +80,11 @@ export default function RootLayout({
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
           strategy="afterInteractive"
+        />
+        <Script
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${googleAdsenseClientId}`}
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
         />
         <Script id="google-analytics" strategy="afterInteractive">
           {`

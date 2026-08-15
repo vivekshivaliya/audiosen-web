@@ -3,7 +3,7 @@ import path from "node:path";
 
 function contentSecurityPolicy() {
   const isDev = process.env.NODE_ENV !== "production";
-  const analyticsScripts = "https://www.googletagmanager.com";
+  const analyticsScripts = "https://www.googletagmanager.com https://pagead2.googlesyndication.com";
   const analyticsConnect =
     "https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.googleadservices.com https://googleads.g.doubleclick.net";
 
@@ -29,6 +29,7 @@ function contentSecurityPolicy() {
 }
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   poweredByHeader: false,
   reactStrictMode: true,
   turbopack: {

@@ -9,11 +9,11 @@
 } from "@/lib/types";
 
 export const siteMeta = {
-  title: "Audiosen | Hearing Care Services & Hearing Aid Solutions",
+  title: "Audiosen | Hearing Aid Centre in Dehradun & Hearing Care Services",
   description:
-    "Audiosen provides hearing tests, hearing aid sales, fitting, repair, maintenance, and complete hearing care solutions with trusted brands and expert support.",
+    "Audiosen provides hearing aid sales, hearing tests, fitting, repair, maintenance, and complete hearing care support at Race Course Road, Dehradun.",
   keywords:
-    "hearing care services, hearing aid sales, hearing tests, hearing aid fitting, hearing aid repair, hearing aid maintenance, hearing solutions India, Phonak, Signia, Widex, ReSound",
+    "hearing aid centre Dehradun, hearing aids in Dehradun, hearing aid near Dehradun, hearing tests Dehradun, hearing aid fitting, hearing aid repair, Phonak, Signia, Widex, ReSound",
   canonicalUrl: "https://audiosen.com/",
   ogImage: "https://audiosen.com/og-image.jpg",
   logo: "https://audiosen.com/audiosen-company-logo.png",
@@ -22,7 +22,8 @@ export const siteMeta = {
 export const clinicContact = {
   company: "Audiosen Hearing Care Solutions",
   email: "support@audiosen.com",
-  streetAddress: "Audiosen Hearing Care Solutions",
+  streetAddress:
+    "Dwarka Clinics, 3rd Floor ENT Department, Race Course Road, near Punjab National Bank",
   locality: "Dehradun",
   region: "Uttarakhand",
   postalCode: "248001",
@@ -32,10 +33,13 @@ export const clinicContact = {
   whatsappDisplay: "+91 93112 79270",
   whatsappE164: "+919311279270",
   openingHoursText: "Mon-Sat 9:00 AM to 7:00 PM",
+  landmark: "near Punjab National Bank, Race Course Road",
+  formattedAddress:
+    "Audiosen Hearing Care Solutions, Dwarka Clinics, 3rd Floor ENT Department, Race Course Road, near Punjab National Bank, Dehradun, Uttarakhand 248001",
   mapEmbedUrl:
-    "https://maps.google.com/maps?q=Audiosen%20Hearing%20Care%20Solutions%20Dehradun&output=embed",
+    "https://maps.google.com/maps?q=Audiosen%20Hearing%20Care%20Solutions%20Dwarka%20Clinics%203rd%20Floor%20ENT%20Department%20Race%20Course%20Road%20near%20Punjab%20National%20Bank%20Dehradun%20Uttarakhand%20248001&output=embed",
   mapUrl:
-    "https://www.google.com/maps/search/?api=1&query=Audiosen+Hearing+Care+Solutions+Dehradun",
+    "https://www.google.com/maps/search/?api=1&query=Audiosen+Hearing+Care+Solutions+Dwarka+Clinics+Race+Course+Road+near+Punjab+National+Bank+Dehradun",
 };
 
 export const callHref = `tel:${clinicContact.primaryCallE164}`;
@@ -49,7 +53,7 @@ export const localBusinessJsonLd = {
   "@type": ["MedicalBusiness", "LocalBusiness"],
   "@id": "https://audiosen.com/#business",
   name: clinicContact.company,
-  alternateName: "Audiosen",
+  alternateName: ["Audiosen", "Audiosen Hearing Care Solution"],
   url: "https://audiosen.com/",
   logo: siteMeta.logo,
   image: "https://audiosen.com/og-image.jpg",
@@ -57,6 +61,8 @@ export const localBusinessJsonLd = {
   email: clinicContact.email,
   priceRange: "INR 2,000 - INR 2,50,000",
   description: siteMeta.description,
+  hasMap: clinicContact.mapUrl,
+  openingHours: "Mo-Sa 09:00-19:00",
   address: {
     "@type": "PostalAddress",
     streetAddress: clinicContact.streetAddress,
@@ -74,6 +80,29 @@ export const localBusinessJsonLd = {
     },
   ],
   areaServed: ["Dehradun", "Rishikesh", "Haridwar", "Uttarakhand"],
+  makesOffer: [
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Hearing aid sales and fitting in Dehradun",
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Hearing test and consultation in Dehradun",
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Hearing aid repair and maintenance",
+      },
+    },
+  ],
   contactPoint: [
     {
       "@type": "ContactPoint",
@@ -107,6 +136,7 @@ export const localBusinessJsonLd = {
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
+  { label: "Dehradun", href: "/hearing-aids-dehradun" },
   { label: "Online Test", href: "/hearing-test" },
   { label: "Solutions", href: "/#solutions" },
   { label: "Brands", href: "/#brands" },
@@ -643,8 +673,8 @@ export const brands = [
 export const rentalPlans = [
   {
     title: "Basic Hearing Aid Rental",
-    price: "?3,499 / month",
-    deposit: "?6,999 refundable deposit",
+    price: "3,499 / month",
+    deposit: "6,999 refundable deposit",
     minPeriod: "Minimum 30 days",
     bestFor: "First-time users, temporary support, mild hearing needs",
     includes: [
@@ -656,8 +686,8 @@ export const rentalPlans = [
   },
   {
     title: "Mid-Range Hearing Aid Rental",
-    price: "?5,999 / month",
-    deposit: "?11,999 refundable deposit",
+    price: "5,999 / month",
+    deposit: "11,999 refundable deposit",
     minPeriod: "Minimum 30 days",
     bestFor: "Regular daily use, better sound clarity, rechargeable options",
     includes: [
@@ -669,8 +699,8 @@ export const rentalPlans = [
   },
   {
     title: "Premium Hearing Aid Rental",
-    price: "?9,999 / month",
-    deposit: "?19,999 refundable deposit",
+    price: "9,999 / month",
+    deposit: "19,999 refundable deposit",
     minPeriod: "Minimum 90 days",
     bestFor: "AI hearing aids, rechargeable models, strong speech support",
     includes: [
@@ -744,7 +774,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
 export const footerContact = {
   company: clinicContact.company,
   copyright: "Copyright 2026 - Better hearing, better living",
-  location: `${clinicContact.company}, ${clinicContact.locality}, ${clinicContact.region} ${clinicContact.postalCode}, India | Serving patients across India`,
+  location: `${clinicContact.formattedAddress}, India | Serving patients across India`,
   callDisplay: clinicContact.primaryCallDisplay,
   callHref,
   whatsappDisplay: clinicContact.whatsappDisplay,
@@ -854,6 +884,7 @@ export const infoPages: Record<
       "Careers",
       "Blog",
       "Accessibility",
+      "Hearing Aids in Dehradun",
       "Online Hearing Test",
       "Services",
       "Hearing Aid Brands",

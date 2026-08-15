@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/accessibility",
     "/blog",
     "/careers",
+    "/hearing-aids-dehradun",
     "/hearing-test",
     "/legal",
     "/privacy-policy",

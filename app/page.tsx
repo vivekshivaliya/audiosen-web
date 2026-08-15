@@ -54,10 +54,10 @@ const subscriptionTerms = [
 ];
 
 const campaignOffer = {
-  headline: "50% OFF on All Devices & Hearing Care Services",
+  headline: "Upto 50% Off on All Devices & Hearing Care Services",
   subline:
     "Limited-time campaign for consultations, fitting support, repairs, and branded hearing aid devices.",
-  ctaLabel: "Claim 50% Offer",
+  ctaLabel: "Claim Upto 50% Off",
   ctaHref: "#contact",
 };
 
@@ -81,7 +81,7 @@ export default function HomePage() {
           <Reveal>
             <div>
               <p className="premium-eyebrow mb-4">Hearing Care Services & Hearing Aid Solutions</p>
-              <p className="offer-kicker">Limited Period Campaign - 50% OFF</p>
+              <p className="offer-kicker">Limited Period Campaign - Upto 50% Off</p>
               <h1 className="font-display text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
                 {heroContent.title}
               </h1>
@@ -94,6 +94,9 @@ export default function HomePage() {
                 </Link>
                 <Link href="#brands" className="premium-button-secondary">
                   Explore Hearing Aids
+                </Link>
+                <Link href="/hearing-aids-dehradun" className="premium-button-secondary">
+                  Hearing aids in Dehradun
                 </Link>
               </div>
 
@@ -120,7 +123,7 @@ export default function HomePage() {
               <div className="grid gap-3 sm:grid-cols-[1.2fr_0.8fr]">
                 <div className="premium-card relative flex min-h-[360px] items-center justify-center overflow-hidden p-6">
                   <span className="premium-chip absolute left-4 top-4">Phonak Infinio</span>
-                  <span className="offer-ribbon absolute right-4 top-4">50% OFF</span>
+                  <span className="offer-ribbon absolute right-4 top-4">Upto 50% Off</span>
                   <Image
                     src="/images/products/phonak/audeo-sphere-infinio.png"
                     alt="Phonak Audeo Sphere Infinio premium hearing aid"
@@ -136,7 +139,7 @@ export default function HomePage() {
                 <div className="grid gap-3">
                   <div className="premium-card relative flex min-h-[174px] items-center justify-center overflow-hidden p-5">
                     <span className="premium-chip absolute left-3 top-3 text-[11px]">Signia IX</span>
-                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">50% OFF</span>
+                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">Upto 50% Off</span>
                     <Image
                       src="/images/products/signia/pure-chargego-bct-ix.png"
                       alt="Signia Pure Charge and Go BCT IX hearing aid"
@@ -147,7 +150,7 @@ export default function HomePage() {
                   </div>
                   <div className="premium-card relative flex min-h-[174px] items-center justify-center overflow-hidden p-5">
                     <span className="premium-chip absolute left-3 top-3 text-[11px]">ReSound Vivia</span>
-                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">50% OFF</span>
+                    <span className="offer-ribbon absolute right-3 top-3 text-[11px]">Upto 50% Off</span>
                     <Image
                       src="/images/products/resound/vivia-grey.png"
                       alt="ReSound Vivia premium rechargeable hearing aid"
@@ -165,7 +168,7 @@ export default function HomePage() {
                 Advanced rechargeable devices, discreet styles, fitting, repair, and support
               </p>
               <p className="mt-2 text-center text-sm font-bold uppercase tracking-[0.12em] text-rose-600">
-                Every featured device is now at 50% OFF
+                Every featured device is now at Upto 50% Off
               </p>
             </div>
           </Reveal>

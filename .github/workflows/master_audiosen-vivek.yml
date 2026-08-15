@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Node.js app to Azure Web App - audiosen-vivek
 
 on:
@@ -13,41 +10,53 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js version
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '24.x'
+          node-version: "22.x"
+          cache: "npm"
 
-      - name: npm install, build, and test
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Prepare deployment package
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          rm -rf deployment-package
+          mkdir -p deployment-package/.next
+          cp -R .next/standalone/. deployment-package/
+          cp -R .next/static deployment-package/.next/static
+          cp -R public deployment-package/public
+          cd deployment-package
+          npm pkg set scripts.start="node server.js"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: deployment-package
+          include-hidden-files: true
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -55,11 +64,9 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9D72F3F4B1A347DD867BB14CCF42D0A2 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_84793071D05A45F5BF19569C4784A064 }}
 
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'audiosen-vivek'
-          slot-name: 'Production'
+          app-name: audiosen-vivek
+          slot-name: Production
           package: .
-          

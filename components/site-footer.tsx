@@ -97,6 +97,9 @@ export function SiteFooter() {
               <Link href="/#services" className="hover:text-white">
                 Hearing Solutions & Services
               </Link>
+              <Link href="/hearing-aids-dehradun" className="hover:text-white">
+                Hearing Aids in Dehradun
+              </Link>
               <Link href="/hearing-test" className="hover:text-white">
                 Online Hearing Test
               </Link>

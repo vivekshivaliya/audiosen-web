@@ -7,8 +7,8 @@ import { BOOK_SERVICE_POPUP_EVENT } from "@/lib/book-service-popup";
 import { navLinks } from "@/lib/content";
 
 const offerTapeItems = [
-  "50% OFF on all hearing aid devices",
-  "50% OFF on all hearing care services",
+  "Upto 50% Off on all hearing aid devices",
+  "Upto 50% Off on all hearing care services",
   "Limited-time campaign - book your slot now",
 ];
 

@@ -16,7 +16,7 @@ type EnquiryRecord = {
   message: string;
 };
 
-const dataDir = path.join(process.cwd(), "data");
+const dataDir = process.env.AUDIOSEN_DATA_DIR || path.join(process.cwd(), "data");
 const enquiryLogPath = path.join(dataDir, "enquiries.ndjson");
 
 export async function saveEnquiry(record: EnquiryRecord) {
