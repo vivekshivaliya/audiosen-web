@@ -6,7 +6,7 @@ import { BookServicePopup } from "@/components/book-service-popup";
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { siteMeta } from "@/lib/content";
+import { brandIdentity, siteMeta } from "@/lib/content";
 import "./globals.css";
 
 const sans = Manrope({
@@ -23,10 +23,10 @@ const display = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  applicationName: "Audiosen",
-  authors: [{ name: "Audiosen Hearing Care Solutions", url: "https://audiosen.com/about" }],
-  creator: "Audiosen Hearing Care Solutions",
-  publisher: "Audiosen Hearing Care Solutions",
+  applicationName: brandIdentity.shortName,
+  authors: [{ name: brandIdentity.organizationName, url: "https://audiosen.com/about" }],
+  creator: brandIdentity.organizationName,
+  publisher: brandIdentity.organizationName,
   category: "health",
   manifest: "/manifest.webmanifest",
   title: siteMeta.title,
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     title: siteMeta.title,
     description: siteMeta.description,
     url: siteMeta.canonicalUrl,
-    siteName: "Audiosen",
+    siteName: brandIdentity.shortName,
     type: "website",
     locale: "en_IN",
     images: [
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
         url: "/og-image-v2.webp",
         width: 1200,
         height: 630,
-        alt: "Audiosen hearing aids and hearing care across India",
+        alt: `${brandIdentity.shortName} hearing aids and hearing care across India`,
       },
     ],
   },

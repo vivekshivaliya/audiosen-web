@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { clinicContact } from "@/lib/content";
+import { brandIdentity, clinicContact } from "@/lib/content";
 import {
   EnquiryStorageConfigurationError,
   EnquiryStorageUnavailableError,
@@ -284,7 +284,7 @@ export async function POST(request: NextRequest) {
         `Need help? Call ${clinicContact.primaryCallDisplay} or WhatsApp ${clinicContact.whatsappDisplay}.`,
         "",
         "Warm regards,",
-        "Audiosen Hearing Care Solutions Team",
+        `${brandIdentity.organizationName} Team`,
       ].join("\n"),
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto; color: #1f2937; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
@@ -295,7 +295,7 @@ export async function POST(request: NextRequest) {
           <div style="padding: 20px 24px; line-height: 1.6;">
             <p>Your request has been securely received. Our team will contact you within 24 hours to discuss the most appropriate next step.</p>
             <p>Need help? Call <strong>${clinicContact.primaryCallDisplay}</strong> or WhatsApp <strong>${clinicContact.whatsappDisplay}</strong>.</p>
-            <p>Warm regards,<br/><strong>Audiosen Hearing Care Solutions Team</strong></p>
+            <p>Warm regards,<br/><strong>${brandIdentity.organizationName} Team</strong></p>
           </div>
         </div>
       `,

@@ -7,10 +7,23 @@
   SubscriptionPlan,
 } from "@/lib/types";
 
+export const brandIdentity = {
+  shortName: "Audiosen",
+  organizationName: "Audiosen Advance Hearing Solutions",
+  subtitle: "Advance Hearing Solutions",
+  previousOrganizationName: "Audiosen Hearing Care Solutions",
+} as const;
+
+const clinicStreetAddress =
+  "Dwarka Clinics, 3rd Floor ENT Department, Race Course Road, near Punjab National Bank";
+const clinicMapQuery = encodeURIComponent(
+  `${clinicStreetAddress}, Dehradun, Uttarakhand 248001, India`,
+);
+
 export const siteMeta = {
-  title: "Audiosen | Hearing Aids & Hearing Care Across India",
+  title: `${brandIdentity.shortName} | Hearing Aids & Hearing Care Across India`,
   description:
-    "Explore hearing aids, take an online hearing screening, and get consultation, fitting coordination, repair guidance, and aftercare support from Audiosen across India.",
+    `Explore hearing aids, take an online hearing screening, and get consultation, fitting coordination, repair guidance, and aftercare support from ${brandIdentity.shortName} across India.`,
   keywords:
     "hearing aids India, digital hearing aids, online hearing test India, audiology consultation, hearing aid fitting, hearing aid repair, Phonak, Signia, Widex, ReSound, Oticon, Starkey",
   canonicalUrl: "https://audiosen.com/",
@@ -19,10 +32,9 @@ export const siteMeta = {
 };
 
 export const clinicContact = {
-  company: "Audiosen Hearing Care Solutions",
+  company: brandIdentity.organizationName,
   email: "support@audiosen.com",
-  streetAddress:
-    "Dwarka Clinics, 3rd Floor ENT Department, Race Course Road, near Punjab National Bank",
+  streetAddress: clinicStreetAddress,
   locality: "Dehradun",
   region: "Uttarakhand",
   postalCode: "248001",
@@ -33,12 +45,9 @@ export const clinicContact = {
   whatsappE164: "+919311279270",
   openingHoursText: "Mon-Sat 9:00 AM to 7:00 PM",
   landmark: "near Punjab National Bank, Race Course Road",
-  formattedAddress:
-    "Audiosen Hearing Care Solutions, Dwarka Clinics, 3rd Floor ENT Department, Race Course Road, near Punjab National Bank, Dehradun, Uttarakhand 248001",
-  mapEmbedUrl:
-    "https://maps.google.com/maps?q=Audiosen%20Hearing%20Care%20Solutions%20Dwarka%20Clinics%203rd%20Floor%20ENT%20Department%20Race%20Course%20Road%20near%20Punjab%20National%20Bank%20Dehradun%20Uttarakhand%20248001&output=embed",
-  mapUrl:
-    "https://www.google.com/maps/search/?api=1&query=Audiosen+Hearing+Care+Solutions+Dwarka+Clinics+Race+Course+Road+near+Punjab+National+Bank+Dehradun",
+  formattedAddress: `${brandIdentity.organizationName}, ${clinicStreetAddress}, Dehradun, Uttarakhand 248001`,
+  mapEmbedUrl: `https://maps.google.com/maps?q=${clinicMapQuery}&output=embed`,
+  mapUrl: `https://www.google.com/maps/search/?api=1&query=${clinicMapQuery}`,
 };
 
 export const callHref = `tel:${clinicContact.primaryCallE164}`;
@@ -52,7 +61,7 @@ export const organizationJsonLd = {
   "@type": "Organization",
   "@id": "https://audiosen.com/#organization",
   name: clinicContact.company,
-  alternateName: ["Audiosen", "Audiosen Hearing Care Solution"],
+  alternateName: [brandIdentity.shortName, brandIdentity.previousOrganizationName],
   url: "https://audiosen.com/",
   logo: siteMeta.logo,
   image: siteMeta.ogImage,
@@ -104,8 +113,8 @@ export const websiteJsonLd = {
   "@type": "WebSite",
   "@id": "https://audiosen.com/#website",
   url: "https://audiosen.com/",
-  name: "Audiosen",
-  alternateName: "Audiosen Hearing Care Solutions",
+  name: brandIdentity.shortName,
+  alternateName: brandIdentity.organizationName,
   inLanguage: "en-IN",
   publisher: {
     "@id": "https://audiosen.com/#organization",

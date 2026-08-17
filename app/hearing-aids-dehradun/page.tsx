@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import {
+  brandIdentity,
   brands,
   callHref,
   clinicContact,
@@ -69,8 +70,7 @@ const relatedLocalServices = [
 const faqs = [
   {
     question: "Where is Audiosen located in Dehradun?",
-    answer:
-      "Audiosen Hearing Care Solutions is at Dwarka Clinics, 3rd Floor ENT Department, Race Course Road, near Punjab National Bank, Dehradun, Uttarakhand 248001.",
+    answer: `${brandIdentity.organizationName} is at Dwarka Clinics, 3rd Floor ENT Department, Race Course Road, near Punjab National Bank, Dehradun, Uttarakhand 248001.`,
   },
   {
     question: "Can I buy hearing aids near Dehradun from Audiosen?",
@@ -137,16 +137,15 @@ const breadcrumbJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: "Hearing Aid Near Dehradun | Audiosen Hearing Care Solutions",
-  description:
-    "Visit Audiosen Hearing Care Solutions at Dwarka Clinics, Race Course Road, Dehradun for hearing aids, hearing tests, fitting, repair, and support.",
+  title: `Hearing Aid Near Dehradun | ${brandIdentity.organizationName}`,
+  description: `Visit ${brandIdentity.organizationName} at Dwarka Clinics, Race Course Road, Dehradun for hearing aids, hearing tests, fitting, repair, and support.`,
   keywords:
     "hearing aid near Dehradun, hearing aids Dehradun, hearing aid centre Dehradun, hearing test Dehradun, hearing aid fitting Dehradun, hearing aid repair Dehradun",
   alternates: {
     canonical: "/hearing-aids-dehradun",
   },
   openGraph: {
-    title: "Hearing Aid Near Dehradun | Audiosen Hearing Care Solutions",
+    title: `Hearing Aid Near Dehradun | ${brandIdentity.organizationName}`,
     description:
       "Hearing aid consultation, fitting, repair, and hearing tests at Dwarka Clinics, Race Course Road, Dehradun.",
     url: pageUrl,
@@ -181,9 +180,9 @@ export default function HearingAidsDehradunPage() {
               Hearing Aid Centre Near Dehradun
             </h1>
             <p className="premium-prose mt-5 max-w-2xl text-lg">
-              Visit Audiosen Hearing Care Solutions for hearing aid consultation, fitting,
-              repair, and hearing care support at Dwarka Clinics, 3rd Floor ENT Department,
-              Race Course Road, near Punjab National Bank.
+              Visit {brandIdentity.organizationName} for hearing aid consultation, fitting,
+              repair, and hearing care support at Dwarka Clinics, 3rd Floor ENT Department, Race
+              Course Road, near Punjab National Bank.
             </p>
 
             <div className="mt-6 rounded-2xl border border-sky-100 bg-white/80 p-5 shadow-sm">
@@ -263,7 +262,7 @@ export default function HearingAidsDehradunPage() {
               <div key={service} className="premium-card p-5">
                 <h3 className="text-lg font-semibold text-slate-900">{service}</h3>
                 <p className="premium-prose mt-2 text-sm">
-                  Available through Audiosen Hearing Care Solutions in Dehradun.
+                  Available through {brandIdentity.organizationName} in Dehradun.
                 </p>
               </div>
             ))}
@@ -327,7 +326,7 @@ export default function HearingAidsDehradunPage() {
         <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr]">
           <div className="premium-shell overflow-hidden">
             <iframe
-              title="Audiosen Hearing Care Solutions map in Dehradun"
+              title={`${brandIdentity.organizationName} map in Dehradun`}
               src={clinicContact.mapEmbedUrl}
               className="h-80 w-full border-0"
               loading="lazy"

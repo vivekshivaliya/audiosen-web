@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
+import { brandIdentity } from "@/lib/content";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Audiosen Hearing Care Solutions",
-    short_name: "Audiosen",
+    name: brandIdentity.organizationName,
+    short_name: brandIdentity.shortName,
     description: "Hearing aids and hearing-care guidance across India.",
     start_url: "/",
     display: "standalone",

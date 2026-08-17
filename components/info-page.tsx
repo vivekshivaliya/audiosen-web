@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
+import { brandIdentity } from "@/lib/content";
 import type { InfoPageContent } from "@/lib/types";
 
 const policyLinks = [
@@ -58,7 +59,7 @@ export function InfoPage({ content }: { content: InfoPageContent }) {
             </div>
             <div className="sonic-info-visual">
               <Image src={heroImage} alt={heroAlt} width={1600} height={900} priority />
-              <span>Audiosen Hearing Care Solutions</span>
+              <span>{brandIdentity.organizationName}</span>
             </div>
           </div>
 

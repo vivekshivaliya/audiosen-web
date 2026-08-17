@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { infoPages } from "@/lib/content";
+import { brandIdentity, infoPages } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "About Audiosen | Audiosen Hearing Care Solutions",
-  description:
-    "Learn about Audiosen Hearing Care Solutions, our mission, and our hearing services for children, adults, seniors, and families across India.",
+  title: `About ${brandIdentity.shortName} | ${brandIdentity.organizationName}`,
+  description: `Learn about ${brandIdentity.organizationName}, our mission, and our hearing services for children, adults, seniors, and families across India.`,
   alternates: {
     canonical: "/about",
   },

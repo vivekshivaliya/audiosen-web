@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/info-page";
-import { infoPages } from "@/lib/content";
+import { brandIdentity, infoPages } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Accessibility | Audiosen Hearing Care Solutions",
+  title: `Accessibility | ${brandIdentity.organizationName}`,
   description:
     "Read Audiosen's accessibility commitment and support options for elderly, mobility-limited, and first-time hearing care visitors.",
   alternates: {

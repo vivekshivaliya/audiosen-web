@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import {
+  brandIdentity,
   callHref,
   clinicContact,
   dehradunClinicJsonLd,
@@ -90,7 +91,7 @@ export function LocalServicePage({ content }: LocalServicePageProps) {
 
             <div className="mt-6 rounded-2xl border border-sky-100 bg-white/80 p-5 shadow-sm">
               <p className="text-sm font-bold uppercase tracking-[0.14em] text-sky-800">
-                Audiosen Hearing Care Solutions
+                {brandIdentity.organizationName}
               </p>
               <p className="mt-2 text-base font-semibold leading-relaxed text-slate-900">
                 {clinicContact.formattedAddress}

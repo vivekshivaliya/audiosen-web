@@ -15,7 +15,7 @@
 ## 2) Local SEO (high intent)
 
 1. Verify the existing Google Business Profile with the exact NAP:
-   - Name: `Audiosen Hearing Care Solutions`
+   - Name: `Audiosen Advance Hearing Solutions`
    - Address: `Dwarka Clinics, 3rd Floor ENT Department, Race Course Road, near Punjab National Bank, Dehradun, Uttarakhand 248001`
    - Phone: `+91 83839 93592`
    - WhatsApp: `+91 93112 79270`
