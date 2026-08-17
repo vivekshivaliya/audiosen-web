@@ -8,6 +8,10 @@
 # production
 /build
 
+# local form submissions and development-only persistence
+/data/
+*.ndjson
+
 # misc
 .DS_Store
 *.pem
