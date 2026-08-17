@@ -37,7 +37,7 @@ export function SiteHeader() {
 
         <button
           type="button"
-          aria-label="Toggle navigation"
+          aria-label={open ? "Close navigation menu" : "Menu navigation"}
           aria-expanded={open}
           aria-controls="mobile-navigation"
           className="sonic-menu-button inline-flex min-h-11 min-w-11 items-center justify-center px-3 py-2 text-[11px] font-bold uppercase tracking-[0.14em] lg:hidden"

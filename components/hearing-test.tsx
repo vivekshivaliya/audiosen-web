@@ -529,7 +529,14 @@ export function HearingTest({ mode = "home", onComplete }: HearingTestProps) {
           <span>{currentTrial?.kind === "silent" ? "A response-quality check may include no sound." : hearingTestContent.helper}</span>
         </div>
 
-        <div className="sonic-progress" aria-label={`Progress ${progressPercent}%`}>
+        <div
+          className="sonic-progress"
+          role="progressbar"
+          aria-label="Hearing check progress"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={progressPercent}
+        >
           <span style={{ width: `${progressPercent}%` }} />
         </div>
         <p className="sonic-progress-label">{currentStep} of {trials.length} checks</p>
