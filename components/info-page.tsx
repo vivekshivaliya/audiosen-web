@@ -15,9 +15,17 @@ const policyLinks = [
 const sitemapLinkMap: Record<string, string> = {
   Home: "/",
   "Hearing Aids Across India": "/hearing-aids-india",
+  "Browse All Hearing Aids": "/hearing-aids",
+  "Hearing Aid Prices in India": "/hearing-aid-prices-india",
+  "Hearing Aid Types": "/hearing-aid-types",
+  "Hearing Aid Fitting & Aftercare": "/hearing-aid-fitting-aftercare",
+  "Hearing Aid Repair in India": "/hearing-aid-repair-india",
+  "Hearing Aid Cost Calculator": "/tools/hearing-aid-cost-calculator",
+  "Savings Offer Terms": "/offers/50-percent-off",
   "About Us": "/about",
   Careers: "/careers",
   Blog: "/blog",
+  "Editorial Policy": "/editorial-policy",
   Accessibility: "/accessibility",
   "Hearing Aids in Dehradun": "/hearing-aids-dehradun",
   "Hearing Test in Dehradun": "/hearing-test-dehradun",
@@ -27,8 +35,7 @@ const sitemapLinkMap: Record<string, string> = {
   "Online Hearing Test": "/hearing-test",
   Services: "/#services",
   "Hearing Aid Brands": "/#brands",
-  "Our Experts": "/about",
-  "Contact & Location": "/#contact",
+  "Contact & Location": "/contact",
   Legal: "/legal",
   "Privacy Policy": "/privacy-policy",
   "Terms of Service": "/terms-of-service",
@@ -83,7 +90,7 @@ export function InfoPage({ content }: { content: InfoPageContent }) {
                   <Link key={item.href} href={item.href}>{item.label}<span aria-hidden="true">↗</span></Link>
                 ))}
               </nav>
-              <Link href="/#contact" className="premium-button-primary">Ask a question</Link>
+              <Link href="/contact" className="premium-button-primary">Ask a question</Link>
             </aside>
           </div>
         </section>

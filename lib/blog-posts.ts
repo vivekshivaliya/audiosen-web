@@ -15,6 +15,19 @@ export type BlogPost = {
   publishedAt: string;
   updatedAt: string;
   readTime: string;
+  author: {
+    name: string;
+    role: string;
+    href: string;
+    schemaType: "Organization" | "Person";
+  };
+  reviewer: {
+    name: string;
+    professionalTitle: string;
+    profileHref: string;
+  } | null;
+  reviewedAt: string | null;
+  medicalDisclaimer: string;
   introduction: string;
   sections: BlogSection[];
   relatedHref: string;
@@ -24,6 +37,16 @@ export type BlogPost = {
     href: string;
   }>;
 };
+
+const editorialAuthor: BlogPost["author"] = {
+  name: "Audiosen Editorial Team",
+  role: "Written by",
+  href: "/editorial-policy",
+  schemaType: "Organization",
+};
+
+const generalMedicalDisclaimer =
+  "This article provides general education, not a diagnosis or individual treatment recommendation. Seek prompt medical care for sudden hearing loss, severe pain, discharge, injury, or significant dizziness.";
 
 export const blogPosts: BlogPost[] = [
   {
@@ -39,6 +62,10 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "2026-08-15",
     updatedAt: "2026-08-15",
     readTime: "5 min read",
+    author: editorialAuthor,
+    reviewer: null,
+    reviewedAt: null,
+    medicalDisclaimer: generalMedicalDisclaimer,
     introduction:
       "Many people notice hearing difficulty first in busy restaurants, family conversations, television, or phone calls. A professional assessment can establish a baseline, explain what may be happening, and identify whether medical or hearing-care follow-up is appropriate.",
     sections: [
@@ -101,6 +128,10 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "2026-08-15",
     updatedAt: "2026-08-15",
     readTime: "5 min read",
+    author: editorialAuthor,
+    reviewer: null,
+    reviewedAt: null,
+    medicalDisclaimer: generalMedicalDisclaimer,
     introduction:
       "Hearing aids can help many people, but the right starting point is understanding the hearing problem. These common signs suggest that a professional assessment may be worthwhile.",
     sections: [
@@ -167,6 +198,10 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "2026-08-15",
     updatedAt: "2026-08-15",
     readTime: "6 min read",
+    author: editorialAuthor,
+    reviewer: null,
+    reviewedAt: null,
+    medicalDisclaimer: generalMedicalDisclaimer,
     introduction:
       "Noise-induced hearing loss is preventable, but risk depends on both sound level and exposure time. Concerts, headphones, machinery, traffic, and power tools can all contribute when listening is too loud for too long.",
     sections: [
@@ -227,6 +262,10 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "2026-08-15",
     updatedAt: "2026-08-15",
     readTime: "5 min read",
+    author: editorialAuthor,
+    reviewer: null,
+    reviewedAt: null,
+    medicalDisclaimer: generalMedicalDisclaimer,
     introduction:
       "A person may not notice a gradual hearing change as quickly as their family does. Conversations go better when they focus on communication and independence rather than blame, age, or a predetermined product.",
     sections: [
@@ -283,6 +322,10 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "2026-08-15",
     updatedAt: "2026-08-15",
     readTime: "6 min read",
+    author: editorialAuthor,
+    reviewer: null,
+    reviewedAt: null,
+    medicalDisclaimer: generalMedicalDisclaimer,
     introduction:
       "Modern hearing aids may include rechargeable batteries, phone streaming, remote controls, automatic listening programs, directional microphones, and companion apps. The useful question is not which model has the longest feature list, but which features solve real listening problems for you.",
     sections: [

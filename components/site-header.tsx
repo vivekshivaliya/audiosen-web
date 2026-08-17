@@ -7,9 +7,9 @@ import { BOOK_SERVICE_POPUP_EVENT } from "@/lib/book-service-popup";
 import { navLinks } from "@/lib/content";
 
 const offerTapeItems = [
-  "Flat 50% off every hearing aid device",
-  "Every brand · every style · half price",
-  "Limited-time campaign · stock and written terms apply",
+  "Ask about current hearing-aid savings",
+  "A model-specific written quote confirms eligibility",
+  "Stock, fitting, warranty, validity, and exclusions apply",
 ];
 
 export function SiteHeader() {
@@ -22,12 +22,12 @@ export function SiteHeader() {
 
   return (
     <header className="site-header-sonic sticky top-0 z-50">
-      <div className="offer-marquee" role="region" aria-label="Limited time discount offer">
+      <div className="offer-marquee" role="region" aria-label="Hearing-aid savings information">
         <div className="offer-marquee-track">
           {offerTapeItems.map((item) => (
-            <span key={item} className="offer-marquee-item">
+            <Link key={item} href="/offers/50-percent-off" className="offer-marquee-item">
               {item}
-            </span>
+            </Link>
           ))}
         </div>
       </div>

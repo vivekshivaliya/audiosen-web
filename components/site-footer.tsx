@@ -10,8 +10,13 @@ export function SiteFooter() {
             <p className="font-display text-2xl text-white">Better hearing starts with a clear plan.</p>
             <p className="mt-1 text-sm text-slate-300">Consultation, fitting, repair, and long-term support.</p>
           </div>
-          <a href={footerContact.callHref} className="premium-button-primary text-sm">
-            Call {footerContact.callDisplay}
+          <a
+            href={footerContact.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="premium-button-primary text-sm"
+          >
+            WhatsApp Audiosen
           </a>
         </div>
 
@@ -64,6 +69,12 @@ export function SiteFooter() {
               <Link href="/accessibility" className="hover:text-white">
                 Accessibility
               </Link>
+              <Link href="/editorial-policy" className="hover:text-white">
+                Editorial Policy
+              </Link>
+              <Link href="/contact" className="hover:text-white">
+                Contact
+              </Link>
             </div>
           </div>
 
@@ -73,14 +84,17 @@ export function SiteFooter() {
               <Link href="/hearing-aids-india" className="hover:text-white">
                 Hearing Aids Across India
               </Link>
+              <Link href="/hearing-aids" className="hover:text-white">
+                Browse All Hearing Aids
+              </Link>
+              <Link href="/hearing-aid-prices-india" className="hover:text-white">
+                Hearing Aid Price Guide
+              </Link>
+              <Link href="/hearing-aid-types" className="hover:text-white">
+                Hearing Aid Types
+              </Link>
               <Link href="/hearing-test" className="hover:text-white">
                 Online Hearing Test
-              </Link>
-              <Link href="/#brands" className="hover:text-white">
-                Compare Hearing Aid Brands
-              </Link>
-              <Link href="/#services" className="hover:text-white">
-                Hearing Care Services
               </Link>
             </div>
           </div>
@@ -112,20 +126,20 @@ export function SiteFooter() {
               <Link href="/" className="hover:text-white">
                 Home
               </Link>
-              <Link href="/#services" className="hover:text-white">
-                Hearing Solutions & Services
+              <Link href="/hearing-aid-fitting-aftercare" className="hover:text-white">
+                Fitting & Aftercare
+              </Link>
+              <Link href="/hearing-aid-repair-india" className="hover:text-white">
+                Repair Support Guide
+              </Link>
+              <Link href="/tools/hearing-aid-cost-calculator" className="hover:text-white">
+                Cost Calculator
+              </Link>
+              <Link href="/offers/50-percent-off" className="hover:text-white">
+                Savings Offer Terms
               </Link>
               <Link href="/hearing-aids-dehradun" className="hover:text-white">
                 Dehradun Clinic
-              </Link>
-              <Link href="/hearing-test" className="hover:text-white">
-                Online Hearing Test
-              </Link>
-              <Link href="/blog" className="hover:text-white">
-                Hearing Care Articles
-              </Link>
-              <Link href="/#contact" className="hover:text-white">
-                Contact
               </Link>
             </div>
           </div>

@@ -1,5 +1,4 @@
 ﻿import type {
-  ClinicianProfile,
   FeatureItem,
   HearingTestContent,
   HeroContent,
@@ -9,13 +8,13 @@
 } from "@/lib/types";
 
 export const siteMeta = {
-  title: "Hearing Aids & Hearing Care Across India | Audiosen",
+  title: "Audiosen | Hearing Aids & Hearing Care Across India",
   description:
     "Explore hearing aids, take an online hearing screening, and get consultation, fitting coordination, repair guidance, and aftercare support from Audiosen across India.",
   keywords:
     "hearing aids India, digital hearing aids, online hearing test India, audiology consultation, hearing aid fitting, hearing aid repair, Phonak, Signia, Widex, ReSound, Oticon, Starkey",
   canonicalUrl: "https://audiosen.com/",
-  ogImage: "https://audiosen.com/og-image.jpg",
+  ogImage: "https://audiosen.com/og-image-v2.webp",
   logo: "https://audiosen.com/audiosen-company-logo.png",
 };
 
@@ -56,7 +55,7 @@ export const organizationJsonLd = {
   alternateName: ["Audiosen", "Audiosen Hearing Care Solution"],
   url: "https://audiosen.com/",
   logo: siteMeta.logo,
-  image: "https://audiosen.com/og-image.jpg",
+  image: siteMeta.ogImage,
   telephone: clinicContact.primaryCallE164,
   email: clinicContact.email,
   description: siteMeta.description,
@@ -89,11 +88,10 @@ export const organizationJsonLd = {
     },
   ],
   knowsAbout: [
-    "Hearing tests",
-    "Speech therapy",
-    "ENT consultation",
-    "Hearing aid fitting",
-    "Hearing aid repair",
+    "Hearing assessments",
+    "Hearing aid fitting coordination",
+    "Hearing aid repair guidance",
+    "Hearing aid aftercare",
     "Phonak hearing aids",
     "Signia hearing aids",
     "Widex hearing aids",
@@ -121,10 +119,9 @@ export const dehradunClinicJsonLd = {
   name: clinicContact.company,
   url: "https://audiosen.com/hearing-aids-dehradun",
   logo: siteMeta.logo,
-  image: "https://audiosen.com/og-image.jpg",
+  image: siteMeta.ogImage,
   telephone: clinicContact.primaryCallE164,
   email: clinicContact.email,
-  priceRange: "INR 2,000 - INR 2,50,000",
   hasMap: clinicContact.mapUrl,
   parentOrganization: {
     "@id": "https://audiosen.com/#organization",
@@ -153,15 +150,14 @@ export const dehradunClinicJsonLd = {
 
 export const navLinks = [
   { label: "Home", href: "/" },
+  { label: "Hearing Aids", href: "/hearing-aids" },
+  { label: "Prices", href: "/hearing-aid-prices-india" },
   { label: "Services", href: "/#services" },
-  { label: "India", href: "/hearing-aids-india" },
   { label: "Online Test", href: "/hearing-test" },
-  { label: "Solutions", href: "/#solutions" },
-  { label: "Brands", href: "/#brands" },
-  { label: "Rent", href: "/#rental" },
-  { label: "Subscription", href: "/#subscription" },
+  { label: "Guides", href: "/hearing-aid-types" },
+  { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const heroContent: HeroContent = {
@@ -801,39 +797,6 @@ export const footerContact = {
   mapUrl: clinicContact.mapUrl,
 };
 
-export const clinicianProfiles: ClinicianProfile[] = [
-  {
-    name: "Audiosen Audiology Team",
-    title: "Audiology and Hearing Aid Care",
-    credentials: "Clinical audiology team for diagnostics, fitting, and hearing rehabilitation.",
-    registration:
-      "Clinician registration numbers and licenses are verified at appointment and displayed at the clinic reception.",
-    expertise:
-      "Pure Tone Audiometry, Speech Audiometry, Hearing Aid Programming, Tinnitus Counseling",
-    languages: "English, Hindi",
-  },
-  {
-    name: "Audiosen ENT Consultant Desk",
-    title: "ENT Consultation Support",
-    credentials: "ENT consultation support for ear pathology, infection review, and referral planning.",
-    registration:
-      "Visiting doctor registration details are included on consultation documents and patient records.",
-    expertise:
-      "Ear pain, discharge, infection follow-up, wax management, medical ENT triage",
-    languages: "English, Hindi",
-  },
-  {
-    name: "Audiosen Speech and Language Team",
-    title: "Speech Therapy Guidance",
-    credentials: "Speech and language support team for children and adults requiring communication therapy plans.",
-    registration:
-      "Therapist qualification details are shared before treatment planning and are available at clinic desk.",
-    expertise:
-      "Speech delay screening, articulation support, fluency exercises, caregiver guidance",
-    languages: "English, Hindi",
-  },
-];
-
 export const infoPages: Record<
   | "about"
   | "careers"
@@ -907,9 +870,17 @@ export const infoPages: Record<
     bullets: [
       "Home",
       "Hearing Aids Across India",
+      "Browse All Hearing Aids",
+      "Hearing Aid Prices in India",
+      "Hearing Aid Types",
+      "Hearing Aid Fitting & Aftercare",
+      "Hearing Aid Repair in India",
+      "Hearing Aid Cost Calculator",
+      "Savings Offer Terms",
       "About Us",
       "Careers",
       "Blog",
+      "Editorial Policy",
       "Accessibility",
       "Hearing Aids in Dehradun",
       "Hearing Test in Dehradun",
@@ -919,7 +890,6 @@ export const infoPages: Record<
       "Online Hearing Test",
       "Services",
       "Hearing Aid Brands",
-      "Our Experts",
       "Contact & Location",
       "Legal",
       "Privacy Policy",
@@ -948,19 +918,22 @@ export const infoPages: Record<
     image: "/images/editorial/policy-trust-v2.webp",
     imageAlt: "Privacy documents and a frosted lock representing protected information",
     paragraphs: [
-      "Effective date: May 1, 2026.",
+      "Effective date: August 17, 2026.",
       "Audiosen values your privacy. This Privacy Policy explains what information we collect through our website, how we use it, and the choices available to you.",
-      "When you submit a contact or enquiry form, we may collect details such as your name, phone number, email address, city, hearing concern, and message content.",
-      "We use this information to respond to enquiries, provide hearing care guidance, schedule appointments, improve service quality, and maintain support records.",
-      "We do not sell your personal information. We may share information only with trusted service providers involved in website hosting, email delivery, payment processing, or lawful compliance requirements.",
-      "We apply reasonable technical and administrative safeguards to protect information, but no internet transmission or storage system can be guaranteed 100% secure.",
-      "You may request correction or deletion of your data, subject to legal and operational requirements. To request this, contact support@audiosen.com.",
-      "By using this website, you consent to this Privacy Policy and related processing for legitimate service purposes.",
+      "When you send an enquiry, we collect the details you choose to provide, including name, phone or WhatsApp number, city, the type of help requested, consent record, source page and campaign attribution. Email, preferred contact details, and additional message text are optional.",
+      "We use enquiry information to answer your request, coordinate the requested service, send operational confirmations, maintain follow-up records, prevent abuse, and understand whether an enquiry became a qualified appointment. Contact and hearing-related details are never sent to Google Analytics.",
+      "Enquiries are stored in Microsoft Azure Table Storage using the Audiosen App Service managed identity. Staff notifications and optional confirmation messages use configured email-delivery services. Website hosting, analytics, email, and payment providers process only the information needed for their role.",
+      "Optional Google Analytics stays off until you accept it. When enabled, Audiosen sends privacy-limited page paths and fixed interaction labels, excludes URL query strings, disables advertising signals, and does not send names, phone numbers, email addresses, cities, symptoms, hearing-test responses, or message text. You can change the choice at any time with the Analytics settings button.",
+      "Audiosen does not sell personal information. Information may be disclosed when needed to deliver a requested service, protect the website, comply with applicable law, or respond to a valid legal requirement.",
+      "Website enquiry records are reviewed for deletion or anonymisation after 24 months from the last meaningful interaction unless a longer period is needed for an active service, warranty, transaction, dispute, fraud prevention, or applicable legal requirement.",
+      "You may request access, correction, withdrawal of contact consent, or deletion of website enquiry data, subject to applicable record-keeping and operational requirements. Send the request from a verifiable contact channel to support@audiosen.com.",
+      "We apply reasonable technical and administrative safeguards, but no internet transmission or storage system can be guaranteed completely secure.",
     ],
     bullets: [
-      "Data collected: contact details, enquiry details, and basic usage diagnostics.",
-      "Data use: customer communication, service delivery, operations, and compliance.",
-      "Data retention: kept only as long as reasonably required for support and legal needs.",
+      "Required enquiry data: name, phone or WhatsApp, city, requested help, and explicit contact/privacy consent.",
+      "Optional data: email, contact preferences, additional message text, and campaign attribution identifiers.",
+      "Analytics: opt-in only, advertising signals disabled, and no contact or hearing-health content.",
+      "Enquiry retention default: review after 24 months from the last meaningful interaction, subject to stated exceptions.",
       "Contact for privacy concerns: support@audiosen.com.",
     ],
   },

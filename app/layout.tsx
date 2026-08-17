@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
-import Script from "next/script";
+import { AnalyticsConsent } from "@/components/analytics-consent";
 import { AnalyticsClickTracker } from "@/components/analytics-click-tracker";
 import { BookServicePopup } from "@/components/book-service-popup";
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { organizationJsonLd, siteMeta, websiteJsonLd } from "@/lib/content";
+import { siteMeta } from "@/lib/content";
 import "./globals.css";
-
-const googleAnalyticsId = "G-Q6H49XWK0S";
-const googleAdsId = "AW-18110980849";
-const googleAdsenseClientId = "ca-pub-1685140658308649";
 
 const sans = Manrope({
   subsets: ["latin"],
@@ -32,6 +28,7 @@ export const metadata: Metadata = {
   creator: "Audiosen Hearing Care Solutions",
   publisher: "Audiosen Hearing Care Solutions",
   category: "health",
+  manifest: "/manifest.webmanifest",
   title: siteMeta.title,
   description: siteMeta.description,
   keywords: siteMeta.keywords,
@@ -54,21 +51,29 @@ export const metadata: Metadata = {
     siteName: "Audiosen",
     type: "website",
     locale: "en_IN",
-    images: [{ url: siteMeta.ogImage }],
+    images: [
+      {
+        url: "/og-image-v2.webp",
+        width: 1200,
+        height: 630,
+        alt: "Audiosen hearing aids and hearing care across India",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteMeta.title,
     description: siteMeta.description,
-    images: [siteMeta.ogImage],
+    images: ["/og-image-v2.webp"],
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "512x512", type: "image/x-icon" },
-      { url: "/favicon.png", sizes: "512x512", type: "image/png" },
+      { url: "/favicon-v2.ico", type: "image/x-icon" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
     ],
-    shortcut: "/favicon.ico",
-    apple: "/favicon.png",
+    shortcut: "/favicon-v2.ico",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 
@@ -80,33 +85,9 @@ export default function RootLayout({
   return (
     <html lang="en-IN" data-scroll-behavior="smooth">
       <body className={`${sans.variable} ${display.variable} min-h-screen pb-20 font-sans text-slate-900 antialiased lg:pb-0`}>
+        <AnalyticsConsent />
         <AnalyticsClickTracker />
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
-          strategy="afterInteractive"
-        />
-        <Script
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${googleAdsenseClientId}`}
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${googleAnalyticsId}');
-            gtag('config', '${googleAdsId}');
-          `}
-        </Script>
         <div className="relative isolate overflow-hidden">
-          {[organizationJsonLd, websiteJsonLd].map((structuredData) => (
-            <script
-              key={structuredData["@id"]}
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-            />
-          ))}
           <div className="pointer-events-none absolute -top-40 left-1/2 h-[34rem] w-[44rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(9,92,153,0.2),transparent_70%)] blur-2xl" />
           <div className="pointer-events-none absolute right-[-12rem] top-1/3 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(14,138,143,0.16),transparent_72%)] blur-3xl" />
           <SiteHeader />

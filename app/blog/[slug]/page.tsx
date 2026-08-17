@@ -9,6 +9,14 @@ type BlogArticlePageProps = {
   params: Promise<{ slug: string }>;
 };
 
+function formatArticleDate(value: string) {
+  return new Intl.DateTimeFormat("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(`${value}T00:00:00Z`));
+}
+
 export function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }));
 }
@@ -55,10 +63,20 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     dateModified: post.updatedAt,
     mainEntityOfPage: pageUrl,
     author: {
-      "@type": "Organization",
-      name: "Audiosen",
-      url: "https://audiosen.com/",
+      "@type": post.author.schemaType,
+      name: post.author.name,
+      url: `https://audiosen.com${post.author.href}`,
     },
+    ...(post.reviewer
+      ? {
+          editor: {
+            "@type": "Person",
+            name: post.reviewer.name,
+            jobTitle: post.reviewer.professionalTitle,
+            url: `https://audiosen.com${post.reviewer.profileHref}`,
+          },
+        }
+      : {}),
     publisher: {
       "@type": "Organization",
       name: "Audiosen",
@@ -128,12 +146,44 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             <span aria-hidden="true">·</span>
             <span>{post.readTime}</span>
             <span aria-hidden="true">·</span>
-            <time dateTime={post.updatedAt}>Updated 15 August 2026</time>
+            <time dateTime={post.publishedAt}>Published {formatArticleDate(post.publishedAt)}</time>
+            <span aria-hidden="true">·</span>
+            <time dateTime={post.updatedAt}>Updated {formatArticleDate(post.updatedAt)}</time>
           </div>
           <h1 className="mt-4 font-display text-4xl font-semibold leading-tight text-slate-900 sm:text-6xl">
             {post.title}
           </h1>
           <p className="premium-prose mt-6 text-lg">{post.introduction}</p>
+
+          <div className="mt-7 grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-700 sm:grid-cols-2">
+            <p>
+              <span className="font-semibold text-slate-900">{post.author.role}:</span>{" "}
+              <Link
+                href={post.author.href}
+                className="font-semibold text-sky-800 underline decoration-sky-300 underline-offset-4"
+              >
+                {post.author.name}
+              </Link>
+            </p>
+            {post.reviewer && post.reviewedAt ? (
+              <p>
+                <span className="font-semibold text-slate-900">Clinically reviewed by:</span>{" "}
+                <Link
+                  href={post.reviewer.profileHref}
+                  className="font-semibold text-sky-800 underline decoration-sky-300 underline-offset-4"
+                >
+                  {post.reviewer.name}
+                </Link>{" "}
+                on <time dateTime={post.reviewedAt}>{formatArticleDate(post.reviewedAt)}</time>
+              </p>
+            ) : (
+              <p>
+                <span className="font-semibold text-slate-900">Clinical review status:</span>{" "}
+                No named clinical review is claimed until reviewer credentials and publication
+                consent are verified.
+              </p>
+            )}
+          </div>
 
           <div className="mt-10 space-y-10">
             {post.sections.map((section) => (
@@ -156,9 +206,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
           </div>
 
           <div className="mt-10 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-relaxed text-amber-950">
-            This article provides general education, not a diagnosis or individual treatment
-            recommendation. Seek prompt medical care for sudden hearing loss, severe pain,
-            discharge, injury, or significant dizziness.
+            {post.medicalDisclaimer}
           </div>
 
           <section className="mt-10 border-t border-slate-200 pt-8">

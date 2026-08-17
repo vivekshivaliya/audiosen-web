@@ -10,13 +10,21 @@ import {
   brands,
   contactContent,
   heroContent,
+  organizationJsonLd,
   providerHighlights,
   rentalPlans,
   rentalTerms,
   services,
   solutionAreas,
   subscriptionPlans,
+  websiteJsonLd,
+  whatsappHref,
 } from "@/lib/content";
+
+const featuredBrands = brands.map((brand) => ({
+  ...brand,
+  devices: brand.devices.slice(0, 2),
+}));
 
 const rentalSpotlightDevices = [
   {
@@ -54,17 +62,17 @@ const subscriptionTerms = [
 ];
 
 const campaignOffer = {
-  headline: "Flat 50% Off Every Hearing Aid Device",
+  headline: "Request Current Hearing Aid Savings",
   subline:
-    "Every hearing aid device in the Audiosen range is now available at half price. Stock availability and written campaign terms apply.",
-  ctaLabel: "Explore All Half-Price Devices",
-  ctaHref: "#brands",
+    "Potential savings vary by device and are confirmed only in a model-specific written quote. Eligibility, stock, fitting, warranty, validity, and exclusions apply.",
+  ctaLabel: "Read the Offer Terms",
+  ctaHref: "/offers/50-percent-off",
 };
 
 const offerHighlights = [
-  "Every available model",
-  "All brands and technology levels",
-  "Fitting guidance included",
+  "Model-specific written quote",
+  "Eligibility and stock confirmed",
+  "Fitting and warranty stated clearly",
 ];
 
 const nationwideSupportSteps = [
@@ -103,50 +111,71 @@ const nationalServiceJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: "Hearing Aids & Hearing Care Across India | Audiosen",
+  title: "Audiosen | Hearing Aids & Hearing Care Across India",
   description:
     "Explore hearing aids, take an online hearing screening, and get consultation, fitting coordination, repair guidance, and aftercare support across India.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Hearing Aids & Hearing Care Across India | Audiosen",
+    title: "Audiosen | Hearing Aids & Hearing Care Across India",
     description:
       "Compare trusted hearing-aid brands and connect with Audiosen for hearing-care guidance and support across India.",
     url: "https://audiosen.com/",
+    siteName: "Audiosen",
     type: "website",
     locale: "en_IN",
-    images: [{ url: "/og-image.jpg", alt: "Audiosen hearing care solutions across India" }],
+    images: [
+      {
+        url: "/og-image-v2.webp",
+        width: 1200,
+        height: 630,
+        alt: "Audiosen hearing aids and hearing care across India",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hearing Aids & Hearing Care Across India | Audiosen",
+    title: "Audiosen | Hearing Aids & Hearing Care Across India",
     description: "Hearing-aid guidance, online screening, fitting coordination, and aftercare support across India.",
-    images: ["/og-image.jpg"],
+    images: ["/og-image-v2.webp"],
   },
 };
 
 export default function HomePage() {
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(nationalServiceJsonLd) }}
-      />
+      {[organizationJsonLd, websiteJsonLd, nationalServiceJsonLd].map((structuredData) => (
+        <script
+          key={structuredData["@id"]}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      ))}
       <section id="home" className="sonic-page-section mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
         <div className="premium-shell sonic-home-hero grid items-stretch gap-10 px-6 py-10 sm:px-10 lg:grid-cols-[minmax(0,1.02fr)_minmax(25rem,0.98fr)] lg:py-14">
-          <Reveal className="sonic-hero-copy">
+          <div className="sonic-hero-copy">
             <div>
               <p className="premium-eyebrow mb-4">Pan-India Hearing Care & Hearing Aid Solutions</p>
-              <p className="offer-kicker">Limited Period Campaign · Every Device 50% Off</p>
-              <h1 className="sonic-hero-title font-display font-semibold leading-tight text-slate-900">
-                {heroContent.title}
+              <Link href="/offers/50-percent-off" className="offer-kicker">
+                Ask about current device savings · written terms apply
+              </Link>
+              <h1 className="sonic-hero-title font-semibold leading-tight text-slate-900">
+                Audiosen: Hearing Aids &amp; Complete Hearing Care Across India
               </h1>
               <p className="premium-prose mt-5 max-w-xl text-lg">{heroContent.subtitle}</p>
               <div className="premium-chip mt-6">{heroContent.sideNote}</div>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link href={heroContent.ctaHref} className="premium-button-primary">
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="premium-button-primary"
+                >
+                  Chat With a Hearing Care Advisor
+                </a>
+                <Link href={heroContent.ctaHref} className="premium-button-secondary">
                   {heroContent.ctaLabel}
                 </Link>
                 <Link href="#brands" className="premium-button-secondary">
@@ -158,12 +187,12 @@ export default function HomePage() {
               </div>
 
               <div className="offer-panel sonic-offer-v2 mt-8 p-5">
-                <div className="sonic-discount-mark" aria-hidden="true">
-                  <strong>50</strong>
-                  <span>% off</span>
+                <div className="sonic-discount-mark" aria-label="Request a model-specific written quote">
+                  <strong>?</strong>
+                  <span>written quote</span>
                 </div>
                 <div className="sonic-offer-copy">
-                  <p className="text-xs font-black uppercase tracking-[0.14em] text-amber-100">Every device · one clear offer</p>
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-amber-100">Current savings · model-specific eligibility</p>
                   <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">{campaignOffer.headline}</h2>
                   <p className="mt-2 text-sm text-amber-50 sm:text-base">{campaignOffer.subline}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -175,7 +204,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-          </Reveal>
+          </div>
 
           <Reveal delay={0.1} className="sonic-hero-visual-wrap">
             <div className="sonic-hero-visual">
@@ -214,7 +243,9 @@ export default function HomePage() {
                     <span>Latest premium hearing aids</span>
                     <strong>Three advanced styles. One personal care journey.</strong>
                   </div>
-                  <span className="offer-ribbon">Flat 50% Off</span>
+                  <Link href="/offers/50-percent-off" className="offer-ribbon">
+                    Written savings terms
+                  </Link>
                 </div>
 
                 <div className="sonic-mini-device-grid">
@@ -224,6 +255,7 @@ export default function HomePage() {
                       alt="Phonak Audeo Sphere Infinio premium hearing aid"
                       width={180}
                       height={180}
+                      sizes="42px"
                     />
                     <span><strong>Phonak</strong><small>Infinio</small></span>
                   </div>
@@ -233,6 +265,7 @@ export default function HomePage() {
                       alt="Signia Pure Charge and Go BCT IX hearing aid"
                       width={180}
                       height={180}
+                      sizes="42px"
                     />
                     <span><strong>Signia</strong><small>IX</small></span>
                   </div>
@@ -242,6 +275,7 @@ export default function HomePage() {
                       alt="ReSound Vivia premium rechargeable hearing aid"
                       width={180}
                       height={180}
+                      sizes="42px"
                     />
                     <span><strong>ReSound</strong><small>Vivia</small></span>
                   </div>
@@ -339,7 +373,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <BrandShowcase items={brands} />
+      <BrandShowcase items={featuredBrands} />
 
       <section id="rental" className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="mb-8 text-center">
@@ -347,6 +381,10 @@ export default function HomePage() {
           <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">Rent Hearing Products</h2>
           <p className="premium-prose mx-auto mt-4 max-w-3xl">
             Affordable short-term hearing aid rental plans with fitting, support, and clear terms.
+          </p>
+          <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">
+            Published figures are indicative. Confirm the current device, monthly price, deposit,
+            eligibility, stock, inclusions, and signed rental terms in writing before payment.
           </p>
         </div>
 
@@ -451,6 +489,10 @@ export default function HomePage() {
             <p className="premium-prose mx-auto mt-4 max-w-3xl">
               Choose a care plan for regular hearing support, fitting reviews, and maintenance.
               Payment is done in physical mode only at the clinic.
+            </p>
+            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">
+              Confirm the current plan price, eligibility, included services, exclusions, and
+              signed terms in writing at the clinic before payment.
             </p>
           </div>
         </Reveal>

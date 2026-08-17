@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { brands } from "@/lib/content";
 
@@ -22,7 +23,9 @@ export function BrandShowcase({ items }: { items: Brand[] }) {
     <section id="brands" className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
       <div className="text-center">
         <p className="premium-eyebrow mb-4">Premium Hearing Aid Brands</p>
-        <p className="offer-kicker">Flat 50% off every hearing aid device</p>
+        <Link href="/offers/50-percent-off" className="offer-kicker">
+          Ask about current savings · written terms apply
+        </Link>
         <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
           Choose a Brand. Explore Its Latest Devices.
         </h2>
@@ -110,7 +113,12 @@ export function BrandShowcase({ items }: { items: Brand[] }) {
                   className="premium-card group flex h-full flex-col overflow-hidden rounded-[1.45rem] transition duration-300 hover:-translate-y-1"
                 >
                   <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-50 to-sky-50">
-                    <span className="offer-ribbon absolute left-4 top-4 z-10">Flat 50% Off</span>
+                    <Link
+                      href="/offers/50-percent-off"
+                      className="offer-ribbon absolute left-4 top-4 z-10"
+                    >
+                      Written savings terms
+                    </Link>
                     <Image
                       src={device.image}
                       alt={device.imageAlt}
