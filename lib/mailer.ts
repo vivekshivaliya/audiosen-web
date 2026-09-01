@@ -4,7 +4,7 @@ import {
   type EmailMessage,
 } from "@azure/communication-email";
 import { DefaultAzureCredential } from "@azure/identity";
-import nodemailer from "nodemailer";
+import nodemailer from "nodemailer9";
 
 const PATIENT_SUPPORT_ADDRESS = "support@audiosen.com";
 const AZURE_MANAGED_SENDER = /^[a-z0-9._%+-]+@[a-f0-9-]+\.azurecomm\.net$/i;
