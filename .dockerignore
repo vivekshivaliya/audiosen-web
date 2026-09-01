@@ -1,6 +1,17 @@
 node_modules
 .next
 npm-debug.log
+*.log
+*.ndjson
+data
+coverage
+playwright-report
+test-results
+.lighthouseci
+azure-functions/node_modules
+azure-functions/dist
+azure-functions/.generated
+azure-functions/local.settings.json
 .git
 .gitignore
 .env

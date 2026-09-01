@@ -20,7 +20,7 @@ export const contactSchema = z.object({
       },
       "Enter a valid phone or WhatsApp number",
     ),
-  city: z.string().trim().min(2, "City is required").max(80, "City too long"),
+  city: z.string().trim().max(80, "City too long").optional().or(z.literal("")),
   language: z.string().trim().max(40, "Language too long").optional().or(z.literal("")),
   serviceNeeded: z
     .string()
@@ -45,7 +45,7 @@ export const contactSchema = z.object({
     .max(60, "Lead source value too long")
     .optional()
     .or(z.literal("")),
-  message: z.string().trim().max(4000, "Message is too long").optional().or(z.literal("")),
+  message: z.string().trim().min(2, "Message is required").max(4000, "Message is too long"),
   consent: z.boolean().refine((value) => value, {
     message: "Please consent to being contacted about this request",
   }),
@@ -61,30 +61,11 @@ export const contactSchema = z.object({
   wbraid: z.string().trim().max(300, "Google braid value too long").optional().or(z.literal("")),
   msclkid: z.string().trim().max(300, "Microsoft click ID too long").optional().or(z.literal("")),
   fbclid: z.string().trim().max(300, "Meta click ID too long").optional().or(z.literal("")),
+  turnstileToken: z.preprocess(
+    (value) => (typeof value === "string" && value.trim() === "" ? undefined : value),
+    z.string().trim().min(20, "Complete bot verification before sending this request.").max(2048).optional(),
+  ),
   website: z.string().trim().optional().or(z.literal("")),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;
-
-export const paymentOrderSchema = z.object({
-  planId: z.enum(["six_months", "one_year"]),
-});
-
-export const paymentVerifySchema = z.object({
-  planId: z.enum(["six_months", "one_year"]),
-  razorpayOrderId: z
-    .string()
-    .trim()
-    .min(8, "Invalid order id")
-    .max(120, "Invalid order id"),
-  razorpayPaymentId: z
-    .string()
-    .trim()
-    .min(8, "Invalid payment id")
-    .max(120, "Invalid payment id"),
-  razorpaySignature: z
-    .string()
-    .trim()
-    .min(8, "Invalid signature")
-    .max(200, "Invalid signature"),
-});

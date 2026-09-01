@@ -1,0 +1,13 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "FUNCTIONS_NODE_BLOCK_ON_ENTRY_POINT_ERROR": "true",
+    "EMAIL_OUTBOX_WORKER_ENABLED": "false",
+    "EMAIL_OUTBOX_TIMER_SCHEDULE": "0 * * * * *",
+    "DATABASE_URL": "postgresql://replace-with-a-local-fixture-database",
+    "AZURE_COMMUNICATION_EMAIL_ENDPOINT": "https://replace.communication.azure.com",
+    "AZURE_COMMUNICATION_EMAIL_SENDER": "support@audiosen.com"
+  }
+}

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getVerifiedExpertProfile, verifiedExpertProfiles } from "@/lib/trust-content";
+import { StructuredData } from "@/lib/structured-data";
 
 type ExpertPageProps = {
   params: Promise<{ slug: string }>;
@@ -35,6 +36,12 @@ export async function generateMetadata({ params }: ExpertPageProps): Promise<Met
       type: "profile",
       locale: "en_IN",
       images: [{ url: profile.profileImage.src, alt: profile.profileImage.alt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${profile.name} | Audiosen`,
+      description: `${profile.professionalTitle} — verified profile, qualifications, registration, languages, and scope.`,
+      images: [profile.profileImage.src],
     },
   };
 }
@@ -92,12 +99,7 @@ export default async function ExpertPage({ params }: ExpertPageProps) {
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-        }}
-      />
+      <StructuredData data={structuredData} />
 
       <nav aria-label="Breadcrumb" className="mb-6 text-sm text-slate-600">
         <Link href="/" className="hover:text-sky-800">

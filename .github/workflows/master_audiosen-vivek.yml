@@ -1,35 +1,176 @@
-name: Build and deploy Node.js app to Azure Web App - audiosen-vivek
+name: Validate, stage, and promote Audiosen
 
 on:
+  pull_request:
+    branches: [master]
   push:
-    branches:
-      - master
+    branches: [master]
   workflow_dispatch:
+    inputs:
+      promote_production:
+        description: "After staging checks pass, request the protected production slot swap"
+        required: true
+        default: false
+        type: boolean
+
+concurrency:
+  group: audiosen-${{ github.workflow }}-${{ github.ref }}
+  # A later push must never cancel a protected slot swap halfway through.
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "22.23.2"
+  NEXT_TELEMETRY_DISABLED: "1"
+  AZURE_RESOURCE_GROUP: "audiosen-rg1"
+  AZURE_APP_SERVICE_PLAN: "ASP-audiosenrg1-aba0"
+  AZURE_WEBAPP_NAME: "audiosen-vivek"
+  AZURE_STAGING_SLOT_NAME: "seo-staging"
+  # Azure can assign a regionalized default hostname. Record the exact value
+  # returned by `az webapp show --slot seo-staging`, never infer it from names.
+  AZURE_STAGING_URL: ${{ vars.AZURE_STAGING_URL }}
+  AZURE_PRODUCTION_URL: "https://audiosen.com"
+  PUBLIC_ENQUIRIES_ENABLED: "false"
+  TURNSTILE_REQUIRED: "false"
+  # NEXT_PUBLIC values are compiled into the immutable artifact that is later
+  # slot-swapped. These non-secret repository variables must authorize both
+  # the protected staging host and the production hosts.
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
+  NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: ${{ vars.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
+  ALLOW_NDJSON_ENQUIRY_FALLBACK: "false"
 
 jobs:
-  build:
+  secret-scan:
+    name: Secret history scan
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out full history
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Scan Git history with pinned Gitleaks
+        run: |
+          mkdir -p test-results
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE:/repo" \
+            ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:b109bc5f8f76a38196a3e413704fc5b9e3c32360bce4e4b603bd6f45b3721dbb \
+            git /repo --redact=100 --no-banner --report-format=sarif --report-path=/repo/test-results/gitleaks.sarif
+
+      - name: Upload redacted secret-scan report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: gitleaks-${{ github.run_id }}
+          path: test-results/gitleaks.sarif
+          if-no-files-found: ignore
+          retention-days: 7
+
+  quality:
+    name: Build and full quality gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: audiosen_ci
+          POSTGRES_USER: audiosen_ci
+          POSTGRES_PASSWORD: audiosen_ci_only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U audiosen_ci -d audiosen_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      DATABASE_URL: postgresql://audiosen_ci:audiosen_ci_only@127.0.0.1:5432/audiosen_ci
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "22.x"
-          cache: "npm"
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
 
-      - name: Install dependencies
+      - name: Clean install
         run: npm ci
 
-      - name: Build
+      - name: Dependency vulnerability gate
+        run: npm audit --audit-level=high
+
+      - name: Validate independently deployable email worker
+        run: |
+          npm ci --prefix azure-functions
+          npm --prefix azure-functions run verify
+          npm --prefix azure-functions audit --audit-level=high
+
+      - name: Generate Prisma client
+        run: npm run prisma:generate
+
+      - name: Validate Prisma schema
+        run: npx prisma validate
+
+      - name: Apply and verify committed migrations
+        run: |
+          npx prisma migrate deploy
+          npx prisma migrate status
+
+      - name: Check migration drift and database safeguards
+        run: npm run qa:migration
+
+      - name: Scan contact content and analytics fields
+        run: npm run qa:content
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit and component tests
+        run: npm test
+
+      - name: Testing Library and axe accessibility smoke
+        run: npm run test:a11y:unit
+
+      - name: Production build
         run: npm run build
 
-      - name: Prepare deployment package
+      - name: Enforce lazy 3D bundle budget
+        run: npm run qa:bundle
+
+      - name: Install Playwright browser engines
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Critical flows across browser and viewport matrix
+        run: npm run test:e2e
+
+      - name: Browser accessibility gate
+        run: npm run test:a11y:e2e
+
+      - name: Same-origin broken-link crawler
+        run: npm run test:links
+
+      - name: JSON-LD schema gate
+        run: npm run test:schema
+
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./.lighthouserc.cjs
+          uploadArtifacts: true
+          temporaryPublicStorage: false
+
+      - name: Prepare standalone deployment package
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
-          rm -rf deployment-package
           mkdir -p deployment-package/.next
           cp -R .next/standalone/. deployment-package/
           cp -R .next/static deployment-package/.next/static
@@ -37,36 +178,461 @@ jobs:
           cd deployment-package
           npm pkg set scripts.start="node server.js"
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
+      - name: Record deployment package checksums
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          find deployment-package -type f -print0 \
+            | sort -z \
+            | xargs -0 sha256sum > deployment-package.sha256
+
+      - name: Upload tested deployment artifact
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v7
         with:
-          name: node-app
-          path: deployment-package
+          name: audiosen-standalone-${{ github.sha }}
+          path: |
+            deployment-package
+            deployment-package.sha256
           include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 3
 
-  deploy:
+      - name: Upload test diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: quality-diagnostics-${{ github.run_id }}
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+          retention-days: 7
+
+  deploy-staging:
+    name: Deploy tested artifact to Azure staging
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: [quality, secret-scan]
     runs-on: ubuntu-latest
-    needs: build
+    timeout-minutes: 20
     permissions:
-      id-token: write
       contents: read
-
+      id-token: write
+    environment:
+      name: staging
+      url: ${{ vars.AZURE_STAGING_URL }}
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: node-app
+      - name: Validate Azure staging configuration
+        env:
+          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          test -n "$AZURE_CLIENT_ID"
+          test -n "$AZURE_TENANT_ID"
+          test -n "$AZURE_SUBSCRIPTION_ID"
+          CONFIGURED_STAGING_HOST="${AZURE_STAGING_URL#https://}"
+          case "$CONFIGURED_STAGING_HOST" in
+            *.azurewebsites.net) ;;
+            *) echo "AZURE_STAGING_URL must be the slot's exact HTTPS azurewebsites.net origin"; exit 1 ;;
+          esac
+          if [[ "$CONFIGURED_STAGING_HOST" == */* ]]; then
+            echo "AZURE_STAGING_URL must not contain a path or trailing slash"
+            exit 1
+          fi
 
-      - name: Login to Azure
-        uses: azure/login@v2
+      - name: Download tested application artifact
+        uses: actions/download-artifact@v7
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0AC0DE5A927F473AACF9458C20922DA1 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9D72F3F4B1A347DD867BB14CCF42D0A2 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_84793071D05A45F5BF19569C4784A064 }}
+          name: audiosen-standalone-${{ github.sha }}
+          path: release-artifact
 
-      - name: Deploy to Azure Web App
+      - name: Verify downloaded artifact byte-for-byte
+        working-directory: release-artifact
+        run: sha256sum --check deployment-package.sha256
+
+      - name: Login to Azure with OIDC
+        uses: azure/login@v3
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Require the approved S1 plan and true SEO slot
+        shell: bash
+        run: |
+          PLAN_ID="$(az webapp show \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --name "$AZURE_WEBAPP_NAME" \
+            --query serverFarmId \
+            --output tsv)"
+          PLAN_NAME="${PLAN_ID##*/}"
+          if [[ "${PLAN_NAME,,}" != "${AZURE_APP_SERVICE_PLAN,,}" ]]; then
+            echo "Web app uses plan '$PLAN_NAME'; expected '$AZURE_APP_SERVICE_PLAN'"
+            exit 1
+          fi
+
+          PLAN_SKU="$(az appservice plan show --ids "$PLAN_ID" --query sku.name --output tsv)"
+          if [[ "$PLAN_SKU" != "S1" ]]; then
+            echo "App Service plan must be Standard S1 before a slot deployment; found '$PLAN_SKU'"
+            exit 1
+          fi
+
+          SLOT_HOST="$(az webapp show \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --name "$AZURE_WEBAPP_NAME" \
+            --slot "$AZURE_STAGING_SLOT_NAME" \
+            --query defaultHostName \
+            --output tsv)"
+          if [[ "https://${SLOT_HOST,,}" != "${AZURE_STAGING_URL,,}" ]]; then
+            echo "AZURE_STAGING_URL does not match the true slot host 'https://$SLOT_HOST'"
+            exit 1
+          fi
+          echo "AZURE_STAGING_HOST=$SLOT_HOST" >> "$GITHUB_ENV"
+
+      - name: Pin staging-only noindex safeguards before deployment
+        run: |
+          az webapp config appsettings set \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --name "$AZURE_WEBAPP_NAME" \
+            --slot "$AZURE_STAGING_SLOT_NAME" \
+            --settings \
+              AUDIOSEN_STAGING_DEPLOYMENT=true \
+              AUDIOSEN_STAGING_HOST="$AZURE_STAGING_HOST" \
+              PUBLIC_ENQUIRIES_ENABLED=false \
+              CATALOG_STAGING_PREVIEW_ENABLED=false \
+            --slot-settings \
+              AUDIOSEN_STAGING_DEPLOYMENT \
+              AUDIOSEN_STAGING_HOST \
+              PUBLIC_ENQUIRIES_ENABLED \
+              CATALOG_STAGING_PREVIEW_ENABLED \
+            --output none
+
+      - name: Deploy exact tested artifact to SEO staging slot
         uses: azure/webapps-deploy@v3
         with:
           app-name: audiosen-vivek
-          slot-name: Production
-          package: .
+          slot-name: seo-staging
+          package: release-artifact/deployment-package
+
+      - name: Logout from Azure
+        if: always()
+        run: az logout
+
+  verify-staging:
+    name: Staging smoke and ZAP baseline
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    environment:
+      name: staging
+      url: ${{ vars.AZURE_STAGING_URL }}
+    env:
+      PLAYWRIGHT_TEST_BASE_URL: ${{ vars.AZURE_STAGING_URL }}
+    steps:
+      - name: Check out test definitions
+        uses: actions/checkout@v6
+
+      - name: Validate staging URL
+        run: |
+          test "$PLAYWRIGHT_TEST_BASE_URL" = "$AZURE_STAGING_URL"
+
+      - name: Wait for staging health
+        run: |
+          for attempt in $(seq 1 30); do
+            HEALTH_BODY="$(curl --fail --silent --show-error --max-redirs 0 "$PLAYWRIGHT_TEST_BASE_URL/api/health" || true)"
+            if printf '%s' "$HEALTH_BODY" | grep -q '"deployment":"staging"'; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo "Staging health did not become ready"
+              exit 1
+            fi
+            sleep 10
+          done
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install smoke-test dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run non-mutating staging smoke
+        run: npm run test:smoke
+
+      - name: Run OWASP ZAP baseline
+        uses: zaproxy/action-baseline@v0.15.0
+        with:
+          target: ${{ vars.AZURE_STAGING_URL }}
+          allow_issue_writing: false
+          fail_action: true
+          artifact_name: zap-staging-${{ github.run_id }}
+          cmd_options: "-m 5"
+
+      - name: Upload staging smoke diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: staging-smoke-${{ github.run_id }}
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+          retention-days: 7
+
+  promote-production:
+    name: Protected production slot swap
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master' && inputs.promote_production == true
+    needs: verify-staging
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      id-token: write
+    # Configure required reviewers and prevent self-review on this GitHub environment.
+    environment:
+      name: production
+      url: https://audiosen.com
+    steps:
+      - name: Validate production promotion configuration
+        env:
+          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          test -n "$AZURE_CLIENT_ID"
+          test -n "$AZURE_TENANT_ID"
+          test -n "$AZURE_SUBSCRIPTION_ID"
+
+      - name: Login to Azure with OIDC
+        uses: azure/login@v3
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Pin production indexing safeguards
+        run: |
+          SLOT_HOST="$(az webapp show \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --name "$AZURE_WEBAPP_NAME" \
+            --slot "$AZURE_STAGING_SLOT_NAME" \
+            --query defaultHostName \
+            --output tsv)"
+          if [[ "https://${SLOT_HOST,,}" != "${AZURE_STAGING_URL,,}" ]]; then
+            echo "AZURE_STAGING_URL does not match the true slot host 'https://$SLOT_HOST'"
+            exit 1
+          fi
+          az webapp config appsettings set \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --name "$AZURE_WEBAPP_NAME" \
+            --settings \
+              AUDIOSEN_STAGING_DEPLOYMENT=false \
+              AUDIOSEN_STAGING_HOST="$SLOT_HOST" \
+            --slot-settings \
+              AUDIOSEN_STAGING_DEPLOYMENT \
+              AUDIOSEN_STAGING_HOST \
+            --output none
+
+      - name: Swap verified staging slot into production
+        run: |
+          az webapp deployment slot swap \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --name "$AZURE_WEBAPP_NAME" \
+            --slot "$AZURE_STAGING_SLOT_NAME" \
+            --target-slot production
+
+          PRODUCTION_ORIGIN="${AZURE_PRODUCTION_URL%/}"
+          STAGING_ORIGIN="${AZURE_STAGING_URL%/}"
+          PROD_CHECK_DIR="$(mktemp -d)"
+          trap 'rm -rf -- "$PROD_CHECK_DIR"' EXIT
+
+          rollback_production() {
+            echo "Production verification failed after swap; swapping slots back"
+            az webapp deployment slot swap \
+              --resource-group "$AZURE_RESOURCE_GROUP" \
+              --name "$AZURE_WEBAPP_NAME" \
+              --slot "$AZURE_STAGING_SLOT_NAME" \
+              --target-slot production
+          }
+
+          verify_production() {
+            if ! curl --fail --silent --show-error --retry 8 --retry-all-errors --retry-delay 10 \
+              -H "Cache-Control: no-cache" \
+              "$PRODUCTION_ORIGIN/api/health" > "$PROD_CHECK_DIR/health.json"; then
+              echo "Production health endpoint failed after swap"
+              return 1
+            fi
+            if ! grep -Eq '"deployment"[[:space:]]*:[[:space:]]*"production"' "$PROD_CHECK_DIR/health.json"; then
+              echo "Production health endpoint does not identify the production deployment"
+              return 1
+            fi
+
+            HOME_STATUS="$(
+              curl --fail --silent --show-error --retry 8 --retry-all-errors --retry-delay 10 \
+                -H "Cache-Control: no-cache" \
+                --dump-header "$PROD_CHECK_DIR/home.headers" \
+                --output "$PROD_CHECK_DIR/home.html" \
+                --write-out '%{http_code}' \
+                "$PRODUCTION_ORIGIN/"
+            )" || return 1
+            if [ "$HOME_STATUS" != "200" ]; then
+              echo "Production homepage returned HTTP $HOME_STATUS instead of 200"
+              return 1
+            fi
+            tr -d '\r' < "$PROD_CHECK_DIR/home.headers" > "$PROD_CHECK_DIR/home.headers.normalized"
+            if grep -Eiq '^x-robots-tag:.*noindex' "$PROD_CHECK_DIR/home.headers.normalized"; then
+              echo "Production homepage returned an X-Robots-Tag noindex directive"
+              return 1
+            fi
+            if grep -Eiq '<meta[^>]+content=[^>]*noindex' "$PROD_CHECK_DIR/home.html"; then
+              echo "Production homepage rendered a meta noindex directive"
+              return 1
+            fi
+
+            ROBOTS_STATUS="$(
+              curl --fail --silent --show-error --retry 8 --retry-all-errors --retry-delay 10 \
+                -H "Cache-Control: no-cache" \
+                --output "$PROD_CHECK_DIR/robots.txt" \
+                --write-out '%{http_code}' \
+                "$PRODUCTION_ORIGIN/robots.txt"
+            )" || return 1
+            if [ "$ROBOTS_STATUS" != "200" ]; then
+              echo "Production robots.txt returned HTTP $ROBOTS_STATUS instead of 200"
+              return 1
+            fi
+            tr -d '\r' < "$PROD_CHECK_DIR/robots.txt" > "$PROD_CHECK_DIR/robots.normalized"
+            if ! grep -Eiq '^allow:[[:space:]]*/[[:space:]]*$' "$PROD_CHECK_DIR/robots.normalized"; then
+              echo "Production robots.txt does not explicitly allow the site root"
+              return 1
+            fi
+            if grep -Eiq '^disallow:[[:space:]]*/[[:space:]]*$' "$PROD_CHECK_DIR/robots.normalized"; then
+              echo "Production robots.txt blocks the entire site"
+              return 1
+            fi
+            if ! grep -Eiq '^sitemap:[[:space:]]*https://audiosen\.com/sitemap\.xml[[:space:]]*$' "$PROD_CHECK_DIR/robots.normalized"; then
+              echo "Production robots.txt does not advertise the canonical sitemap"
+              return 1
+            fi
+
+            SITEMAP_STATUS="$(
+              curl --fail --silent --show-error --retry 8 --retry-all-errors --retry-delay 10 \
+                -H "Cache-Control: no-cache" \
+                --dump-header "$PROD_CHECK_DIR/sitemap.headers" \
+                --output "$PROD_CHECK_DIR/sitemap.xml" \
+                --write-out '%{http_code}' \
+                "$PRODUCTION_ORIGIN/sitemap.xml"
+            )" || return 1
+            if [ "$SITEMAP_STATUS" != "200" ]; then
+              echo "Production sitemap returned HTTP $SITEMAP_STATUS instead of 200"
+              return 1
+            fi
+            tr -d '\r' < "$PROD_CHECK_DIR/sitemap.headers" > "$PROD_CHECK_DIR/sitemap.headers.normalized"
+            if ! grep -Eiq '^content-type:[[:space:]]*(application|text)/xml([;[:space:]]|$)' "$PROD_CHECK_DIR/sitemap.headers.normalized"; then
+              echo "Production sitemap does not return an XML content type"
+              return 1
+            fi
+            if ! grep -Fq '<urlset' "$PROD_CHECK_DIR/sitemap.xml" || \
+              ! grep -Fq 'http://www.sitemaps.org/schemas/sitemap/0.9' "$PROD_CHECK_DIR/sitemap.xml" || \
+              ! grep -Fq '<loc>https://audiosen.com/hearing-aids-dehradun</loc>' "$PROD_CHECK_DIR/sitemap.xml"; then
+              echo "Production sitemap is missing valid sitemap XML or the Dehradun hearing-aids URL"
+              return 1
+            fi
+
+            REDIRECT_STATUS="$(
+              curl --silent --show-error --retry 8 --retry-all-errors --retry-delay 10 \
+                -H "Cache-Control: no-cache" \
+                --max-redirs 0 \
+                --dump-header "$PROD_CHECK_DIR/home-care-redirect.headers" \
+                --output /dev/null \
+                --write-out '%{http_code}' \
+                "$PRODUCTION_ORIGIN/home-hearing-care-dehradun"
+            )" || return 1
+            if [ "$REDIRECT_STATUS" != "308" ]; then
+              echo "Legacy Dehradun home-care URL returned HTTP $REDIRECT_STATUS instead of 308"
+              return 1
+            fi
+            REDIRECT_LOCATION="$(
+              awk 'tolower($1) == "location:" { sub(/^[^:]+:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit }' \
+                "$PROD_CHECK_DIR/home-care-redirect.headers"
+            )"
+            case "$REDIRECT_LOCATION" in
+              /home-hearing-care|https://audiosen.com/home-hearing-care|"$PRODUCTION_ORIGIN/home-hearing-care") ;;
+              *)
+                echo "Legacy Dehradun home-care URL redirects to unexpected location: $REDIRECT_LOCATION"
+                return 1
+                ;;
+            esac
+
+            return 0
+          }
+
+          verify_staging_after_swap() {
+            STAGING_STATUS="$(
+              curl --silent --show-error --retry 8 --retry-all-errors --retry-delay 10 \
+                -H "Cache-Control: no-cache" \
+                --max-redirs 0 \
+                --dump-header "$PROD_CHECK_DIR/staging-home.headers" \
+                --output "$PROD_CHECK_DIR/staging-home.html" \
+                --write-out '%{http_code}' \
+                "$STAGING_ORIGIN/"
+            )" || return 1
+            tr -d '\r' < "$PROD_CHECK_DIR/staging-home.headers" > "$PROD_CHECK_DIR/staging-home.headers.normalized"
+
+            case "$STAGING_STATUS" in
+              301|302|307|308)
+                STAGING_LOCATION="$(
+                  awk 'tolower($1) == "location:" { sub(/^[^:]+:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit }' \
+                    "$PROD_CHECK_DIR/staging-home.headers"
+                )"
+                case "$STAGING_LOCATION" in
+                  https://audiosen.com|https://audiosen.com/*) return 0 ;;
+                  *)
+                    echo "Staging redirects to unexpected location after swap: $STAGING_LOCATION"
+                    return 1
+                    ;;
+                esac
+                ;;
+              200)
+                if ! grep -Eiq '^x-robots-tag:.*noindex' "$PROD_CHECK_DIR/staging-home.headers.normalized"; then
+                  echo "Staging homepage lost its X-Robots-Tag noindex safeguard after swap"
+                  return 1
+                fi
+                if ! curl --fail --silent --show-error --retry 8 --retry-all-errors --retry-delay 10 \
+                  -H "Cache-Control: no-cache" \
+                  "$STAGING_ORIGIN/robots.txt" > "$PROD_CHECK_DIR/staging-robots.txt"; then
+                  echo "Staging robots.txt failed after swap"
+                  return 1
+                fi
+                if ! grep -Eiq '^disallow:[[:space:]]*/[[:space:]]*$' "$PROD_CHECK_DIR/staging-robots.txt" || \
+                  grep -Eiq '^sitemap:' "$PROD_CHECK_DIR/staging-robots.txt"; then
+                  echo "Staging robots.txt is indexable or advertises a sitemap after swap"
+                  return 1
+                fi
+                return 0
+                ;;
+              *)
+                echo "Staging homepage returned unexpected HTTP $STAGING_STATUS after swap"
+                return 1
+                ;;
+            esac
+          }
+
+          if ! verify_production || ! verify_staging_after_swap; then
+            if ! rollback_production; then
+              echo "Automatic production rollback failed"
+            fi
+            exit 1
+          fi
+
+      - name: Logout from Azure
+        if: always()
+        run: az logout

@@ -1,7 +1,14 @@
 import Link from "next/link";
+import { ApprovedBusinessProfileCopy } from "@/components/approved-business-location";
 import { footerContact } from "@/lib/content";
 
-export function SiteFooter() {
+export function SiteFooter({
+  catalogSurfaceEnabled,
+  offerSurfaceEnabled,
+}: {
+  catalogSurfaceEnabled: boolean;
+  offerSurfaceEnabled: boolean;
+}) {
   return (
     <footer className="sonic-footer mt-20 text-slate-300">
       <div className="mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
@@ -24,8 +31,9 @@ export function SiteFooter() {
           <div className="space-y-2 text-sm leading-relaxed">
             <p className="font-display text-2xl text-white">{footerContact.company}</p>
             <p>{footerContact.copyright}</p>
-            <p>Hearing solutions, hearing care products, and aftercare services</p>
+            <p>Hearing and communication care guidance for every age</p>
             <p>{footerContact.location}</p>
+            <ApprovedBusinessProfileCopy inverse compact />
             <p>
               <a href={footerContact.callHref} className="font-semibold text-slate-200 hover:text-white">
                 Call: {footerContact.callDisplay}
@@ -41,15 +49,9 @@ export function SiteFooter() {
                 WhatsApp: {footerContact.whatsappDisplay}
               </a>
             </p>
-            <p className="text-slate-200">{footerContact.gmail}</p>
             <p>
-              <a
-                href={footerContact.mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-slate-200 hover:text-white"
-              >
-                View on Google Maps
+              <a href={`mailto:${footerContact.gmail}`} className="font-semibold text-slate-200 hover:text-white">
+                {footerContact.gmail}
               </a>
             </p>
           </div>
@@ -79,23 +81,32 @@ export function SiteFooter() {
           </div>
 
           <div className="space-y-2 text-sm">
-            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">Across India</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">Explore</p>
             <div className="grid gap-2">
-              <Link href="/hearing-aids-india" className="hover:text-white">
-                Hearing Aids Across India
+              <Link href={catalogSurfaceEnabled ? "/hearing-aids" : "/hearing-aids-india"} className="hover:text-white">
+                Hearing Aids
               </Link>
-              <Link href="/hearing-aids" className="hover:text-white">
-                Browse All Hearing Aids
+              {catalogSurfaceEnabled ? (
+                <>
+                  <Link href="/compare-hearing-aids" className="hover:text-white">
+                    Compare Hearing Aids
+                  </Link>
+                  <Link href="/find-my-hearing-aid" className="hover:text-white">
+                    Hearing Aid Finder
+                  </Link>
+                </>
+              ) : null}
+              <Link href="/services" className="hover:text-white">
+                Hearing Services
               </Link>
-              <Link href="/hearing-aid-prices-india" className="hover:text-white">
-                Hearing Aid Price Guide
+              <Link href="/speech-language-services" className="hover:text-white">
+                Speech & Language Services
               </Link>
-              <Link href="/hearing-aid-types" className="hover:text-white">
-                Hearing Aid Types
-              </Link>
-              <Link href="/hearing-test" className="hover:text-white">
-                Online Hearing Test
-              </Link>
+              {offerSurfaceEnabled ? (
+                <Link href="/offers" className="hover:text-white">
+                  Approved Offers
+                </Link>
+              ) : null}
             </div>
           </div>
 
@@ -129,17 +140,17 @@ export function SiteFooter() {
               <Link href="/hearing-aid-fitting-aftercare" className="hover:text-white">
                 Fitting & Aftercare
               </Link>
-              <Link href="/hearing-aid-repair-india" className="hover:text-white">
-                Repair Support Guide
+              <Link href="/hearing-aid-repair" className="hover:text-white">
+                Repair Enquiry
               </Link>
-              <Link href="/tools/hearing-aid-cost-calculator" className="hover:text-white">
-                Cost Calculator
+              <Link href="/home-hearing-care" className="hover:text-white">
+                Home Hearing Care
               </Link>
-              <Link href="/offers/50-percent-off" className="hover:text-white">
-                Savings Offer Terms
+              <Link href="/book-consultation" className="hover:text-white">
+                Book Consultation
               </Link>
-              <Link href="/hearing-aids-dehradun" className="hover:text-white">
-                Dehradun Clinic
+              <Link href="/search" className="hover:text-white">
+                Search
               </Link>
             </div>
           </div>

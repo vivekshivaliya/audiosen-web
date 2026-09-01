@@ -1,12 +1,35 @@
-import type { Metadata } from "next";
 import { brandIdentity, infoPages } from "@/lib/content";
+import { ApprovedBusinessProfileCopy } from "@/components/approved-business-location";
+import { createPageMetadata } from "@/lib/page-metadata";
+import { StructuredData } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
-  title: `About ${brandIdentity.shortName} | ${brandIdentity.organizationName}`,
-  description: `Learn about ${brandIdentity.organizationName}, our mission, and our hearing services for children, adults, seniors, and families across India.`,
-  alternates: {
-    canonical: "/about",
-  },
+const pagePath = "/about";
+
+export const metadata = createPageMetadata({
+  title: `About ${brandIdentity.shortName} | Dehradun Care & India Guidance`,
+  description: `Learn about ${brandIdentity.organizationName}, Dehradun clinic care, and bounded hearing guidance and coordination for enquiries across India.`,
+  path: pagePath,
+  image: infoPages.about.image,
+  imageAlt: infoPages.about.imageAlt,
+});
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://audiosen.com/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "About Audiosen",
+      item: `https://audiosen.com${pagePath}`,
+    },
+  ],
 };
 
 export default function AboutPage() {
@@ -14,6 +37,7 @@ export default function AboutPage() {
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-14 sm:px-6 lg:px-8">
+      <StructuredData data={breadcrumbJsonLd} />
       <section className="premium-shell p-8 sm:p-10">
         <p className="premium-eyebrow mb-4">
             About Our Company
@@ -49,6 +73,11 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
+
+        <section aria-labelledby="about-location-title" className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
+          <h2 id="about-location-title" className="text-xl font-semibold text-slate-900">Clinic information</h2>
+          <ApprovedBusinessProfileCopy />
+        </section>
       </section>
     </main>
   );

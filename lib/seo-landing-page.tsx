@@ -3,12 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { callHref, clinicContact, whatsappHref } from "@/lib/content";
 import type { SeoLandingPageContent } from "@/lib/seo-landing-pages";
+import { StructuredData } from "@/lib/structured-data";
 
 const siteUrl = "https://audiosen.com";
-
-function serializeJsonLd(value: unknown) {
-  return JSON.stringify(value).replace(/</g, "\\u003c");
-}
 
 export function createSeoLandingMetadata(content: SeoLandingPageContent): Metadata {
   const pageUrl = `${siteUrl}/${content.slug}`;
@@ -98,10 +95,7 @@ export function SeoLandingPage({ content }: { content: SeoLandingPageContent }) 
 
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serializeJsonLd(structuredData) }}
-      />
+      <StructuredData data={structuredData} />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
         <nav aria-label="Breadcrumb" className="mb-6 text-sm text-slate-600">
@@ -161,7 +155,7 @@ export function SeoLandingPage({ content }: { content: SeoLandingPageContent }) 
                 Audiosen · India-wide enquiries
               </p>
               <p className="mt-1 text-sm font-semibold">
-                Online guidance and coordination · Verified physical clinic in Dehradun
+                Online guidance and coordination · In-person details confirmed before booking
               </p>
             </div>
           </div>

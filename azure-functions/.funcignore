@@ -1,0 +1,11 @@
+.git*
+.vscode/
+local.settings.json
+local.settings.example.json
+.generated/
+tests/
+src/
+scripts/
+tsconfig.json
+README.md
+node_modules/.cache/

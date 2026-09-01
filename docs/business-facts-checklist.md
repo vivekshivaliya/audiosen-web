@@ -5,10 +5,13 @@ Do not publish a medical, professional, price, warranty, discount, trial, dealer
 ## 1. Business identity
 
 - [ ] Exact legal entity name
-- [ ] Exact public-facing name used on exterior signage
+- [x] Exact public-facing name used on exterior signage: `Audiosen` (owner-confirmed 2026-08-31)
 - [ ] Business registration details
 - [ ] GST number and invoice name, if applicable
-- [ ] Confirmed clinic address, pin code, phone, WhatsApp, email, and opening hours
+- [x] Clinic address and pin code: `7, 11, Ram Vihar St, near ONGC Hospital, Dehradun, Uttarakhand 248001`
+- [x] Public phone and WhatsApp: `+91 89230 92563`
+- [x] Public email: `support@audiosen.com`
+- [ ] Opening hours (remain unpublished until the owner verifies them)
 - [ ] Google Business Profile URL
 - [ ] Direct Google review-request URL
 - [ ] Official Facebook, Instagram, LinkedIn, YouTube, and other profile URLs

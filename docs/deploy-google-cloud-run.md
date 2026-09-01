@@ -32,22 +32,22 @@ gcloud run deploy audiosen-web `
   --source . `
   --allow-unauthenticated `
   --port 8080 `
-  --set-env-vars "SMTP_HOST=smtp.gmail.com,SMTP_PORT=465,SMTP_SECURE=true,SMTP_USER=vivekshivaliya@gmail.com,MAIL_FROM=Audiosen <vivekshivaliya@gmail.com>,MAIL_TO=vivekshivaliya@gmail.com" `
-  --set-secrets "SMTP_PASS=SMTP_PASS:latest"
+  --set-env-vars "AZURE_COMMUNICATION_EMAIL_SENDER=support@audiosen.com" `
+  --set-secrets "AZURE_COMMUNICATION_EMAIL_CONNECTION_STRING=AZURE_COMMUNICATION_EMAIL_CONNECTION_STRING:latest"
 ```
 
-## 5) Store SMTP password securely
+## 5) Store the ACS fallback credential securely
 
 ```powershell
-echo -n "YOUR_GMAIL_APP_PASSWORD" | gcloud secrets create SMTP_PASS --data-file=-
-gcloud secrets add-iam-policy-binding SMTP_PASS --member="serviceAccount:YOUR_PROJECT_NUMBER-compute@developer.gserviceaccount.com" --role="roles/secretmanager.secretAccessor"
+echo -n "YOUR_ACS_CONNECTION_STRING" | gcloud secrets create AZURE_COMMUNICATION_EMAIL_CONNECTION_STRING --data-file=-
+gcloud secrets add-iam-policy-binding AZURE_COMMUNICATION_EMAIL_CONNECTION_STRING --member="serviceAccount:YOUR_PROJECT_NUMBER-compute@developer.gserviceaccount.com" --role="roles/secretmanager.secretAccessor"
 gcloud services enable secretmanager.googleapis.com
 ```
 
 If secret already exists, use:
 
 ```powershell
-echo -n "YOUR_GMAIL_APP_PASSWORD" | gcloud secrets versions add SMTP_PASS --data-file=-
+echo -n "YOUR_ACS_CONNECTION_STRING" | gcloud secrets versions add AZURE_COMMUNICATION_EMAIL_CONNECTION_STRING --data-file=-
 ```
 
 ## 6) Map custom domain
@@ -63,5 +63,6 @@ Then add the DNS records shown by Google.
 - Open Cloud Run URL
 - Submit contact form
 - Confirm:
-  - enquiry mail reaches `vivekshivaliya@gmail.com`
+  - staff enquiry mail reaches `vivekshivaliya10@gmail.com`
   - patient mail reaches submitted patient address
+  - patient-facing messages show the verified sender `support@audiosen.com`

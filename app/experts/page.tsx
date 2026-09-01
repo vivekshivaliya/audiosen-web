@@ -1,21 +1,41 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import { createPageMetadata } from "@/lib/page-metadata";
+import { StructuredData } from "@/lib/structured-data";
 import { verifiedExpertProfiles } from "@/lib/trust-content";
 
-export const metadata: Metadata = {
+const expertsArePublished = verifiedExpertProfiles.length > 0;
+
+export const metadata = createPageMetadata({
   title: "Verified Hearing-Care Experts | Audiosen",
   description:
     "Audiosen publishes professional profiles only after verifying identity, qualifications, registration information, role, and publication consent.",
-  alternates: { canonical: "/experts" },
+  path: "/experts",
+  image: "/images/editorial/hearing-care-careers-v2.webp",
+  imageAlt: "Hearing-care professionals collaborating around audiology equipment",
   robots: {
-    index: verifiedExpertProfiles.length > 0,
+    index: expertsArePublished,
     follow: true,
   },
+});
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://audiosen.com/" },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Experts",
+      item: "https://audiosen.com/experts",
+    },
+  ],
 };
 
 export default function ExpertsPage() {
   return (
     <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <StructuredData data={breadcrumbJsonLd} />
       <nav aria-label="Breadcrumb" className="mb-6 text-sm text-slate-600">
         <Link href="/" className="hover:text-sky-800">
           Home

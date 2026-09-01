@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
+import { isCatalogStagingPreviewEnabled } from "@/lib/catalog/launch";
 import { brandIdentity } from "@/lib/content";
+import { StructuredData } from "@/lib/structured-data";
 import type { InfoPageContent } from "@/lib/types";
 
 const policyLinks = [
@@ -17,12 +19,10 @@ const sitemapLinkMap: Record<string, string> = {
   Home: "/",
   "Hearing Aids Across India": "/hearing-aids-india",
   "Browse All Hearing Aids": "/hearing-aids",
-  "Hearing Aid Prices in India": "/hearing-aid-prices-india",
   "Hearing Aid Types": "/hearing-aid-types",
   "Hearing Aid Fitting & Aftercare": "/hearing-aid-fitting-aftercare",
   "Hearing Aid Repair in India": "/hearing-aid-repair-india",
   "Hearing Aid Cost Calculator": "/tools/hearing-aid-cost-calculator",
-  "Savings Offer Terms": "/offers/50-percent-off",
   "About Us": "/about",
   Careers: "/careers",
   Blog: "/blog",
@@ -30,27 +30,57 @@ const sitemapLinkMap: Record<string, string> = {
   Accessibility: "/accessibility",
   "Hearing Aids in Dehradun": "/hearing-aids-dehradun",
   "Hearing Test in Dehradun": "/hearing-test-dehradun",
-  "Hearing Aid Prices in Dehradun": "/hearing-aid-prices-dehradun",
   "Hearing Aid Repair in Dehradun": "/hearing-aid-repair-dehradun",
-  "Home Hearing Care in Dehradun": "/home-hearing-care-dehradun",
+  "Home Hearing Care in Dehradun": "/home-hearing-care",
   "Online Hearing Test": "/hearing-test",
   Services: "/#services",
   "Hearing Aid Brands": "/#brands",
-  "Contact & Location": "/contact",
+  "Contact Audiosen": "/contact",
   Legal: "/legal",
   "Privacy Policy": "/privacy-policy",
   "Terms of Service": "/terms-of-service",
   "Refund & Cancellation": "/refund-cancellation",
 };
 
-export function InfoPage({ content }: { content: InfoPageContent }) {
+export function InfoPage({
+  content,
+  canonicalPath,
+}: {
+  content: InfoPageContent;
+  canonicalPath: `/${string}`;
+}) {
   const heroImage = content.image ?? "/images/contact-ear-check-hq.jpg";
   const heroAlt = content.imageAlt ?? `${content.title} visual`;
+  const catalogStagingPreviewEnabled = isCatalogStagingPreviewEnabled();
+  const visibleBullets = content.bullets?.filter(
+    (bullet) => catalogStagingPreviewEnabled || bullet !== "Browse All Hearing Aids",
+  );
+  const pageUrl = `https://audiosen.com${canonicalPath}`;
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://audiosen.com/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: content.title,
+        item: pageUrl,
+      },
+    ],
+  };
 
   return (
-    <main className="sonic-info-page mx-auto w-full max-w-6xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
-      <Reveal>
-        <section className="premium-shell sonic-info-shell">
+    <>
+      <StructuredData data={breadcrumbJsonLd} />
+      <main className="sonic-info-page mx-auto w-full max-w-6xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
+        <Reveal>
+          <section className="premium-shell sonic-info-shell">
           <div className="sonic-info-hero">
             <div className="sonic-info-copy">
               <p className="premium-eyebrow">Audiosen · clear information</p>
@@ -69,9 +99,9 @@ export function InfoPage({ content }: { content: InfoPageContent }) {
                 {content.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               </div>
 
-              {content.bullets?.length ? (
+              {visibleBullets?.length ? (
                 <ul className="sonic-info-list">
-                  {content.bullets.map((bullet) => {
+                  {visibleBullets.map((bullet) => {
                     const href = content.title === "Sitemap" ? sitemapLinkMap[bullet] : undefined;
 
                     return (
@@ -94,8 +124,9 @@ export function InfoPage({ content }: { content: InfoPageContent }) {
               <Link href="/contact" className="premium-button-primary">Ask a question</Link>
             </aside>
           </div>
-        </section>
-      </Reveal>
-    </main>
+          </section>
+        </Reveal>
+      </main>
+    </>
   );
 }

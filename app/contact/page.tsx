@@ -1,19 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  ApprovedBusinessDirectionsCard,
+  ApprovedBusinessProfileCopy,
+} from "@/components/approved-business-location";
 import { ContactForm } from "@/components/contact-form";
 import { callHref, clinicContact, whatsappHref } from "@/lib/content";
+import { StructuredData } from "@/lib/structured-data";
 
 const pageUrl = "https://audiosen.com/contact";
 
 export const metadata: Metadata = {
-  title: "Contact Audiosen | Hearing Care Across India",
+  title: "Contact Audiosen | Dehradun Care & India Guidance",
   description:
     "Contact Audiosen by WhatsApp, phone, email, or secure enquiry form for hearing-aid guidance and location-based support across India.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Contact Audiosen | Hearing Care Across India",
+    title: "Contact Audiosen | Dehradun Care & India Guidance",
     description:
-      "Start a hearing-care enquiry online from anywhere in India or contact the verified Audiosen clinic in Dehradun.",
+      "Contact Audiosen by WhatsApp, phone, email, or secure enquiry form for hearing-aid guidance and location-based support across India.",
     url: pageUrl,
     siteName: "Audiosen",
     type: "website",
@@ -21,14 +26,15 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/images/editorial/audiosen-hero-consultation-v3.webp",
-        alt: "An Indian hearing-care professional supporting an older adult",
+        alt: "An older Indian adult discussing a small hearing device during a consultation",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Audiosen | Hearing Care Across India",
-    description: "WhatsApp, call, email, or send a hearing-care enquiry to Audiosen.",
+    title: "Contact Audiosen | Dehradun Care & India Guidance",
+    description:
+      "Contact Audiosen by WhatsApp, phone, email, or secure enquiry form for hearing-aid guidance and location-based support across India.",
     images: ["/images/editorial/audiosen-hero-consultation-v3.webp"],
   },
 };
@@ -78,7 +84,7 @@ const contactOptions = [
   {
     title: "Call Audiosen",
     description:
-      "Use the main phone line for appointment questions, device guidance, fitting support, repair enquiries, or clinic directions.",
+      "Use the main phone line for appointment questions, device guidance, fitting support, repair enquiries, or confirmed location details.",
     label: clinicContact.primaryCallDisplay,
     href: callHref,
     external: false,
@@ -96,12 +102,7 @@ const contactOptions = [
 export default function ContactPage() {
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-        }}
-      />
+      <StructuredData data={structuredData} />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
         <nav aria-label="Breadcrumb" className="mb-6 text-sm text-slate-600">
@@ -117,7 +118,7 @@ export default function ContactPage() {
             <div>
               <p className="premium-eyebrow">Audiosen hearing-care enquiries</p>
               <h1 className="mt-4 font-display text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
-                Contact Audiosen Across India
+                Contact Audiosen for Dehradun Care or India-Wide Guidance
               </h1>
               <p className="premium-prose mt-5 max-w-3xl text-lg">
                 Start with a private conversation about hearing aids, assessment planning, fitting,
@@ -141,21 +142,10 @@ export default function ContactPage() {
 
             <aside className="rounded-2xl border border-sky-100 bg-white/85 p-6 shadow-sm">
               <p className="text-xs font-bold uppercase tracking-[0.14em] text-sky-800">
-                Verified physical clinic
+                Location confirmation
               </p>
               <h2 className="mt-3 text-2xl font-semibold text-slate-900">{clinicContact.company}</h2>
-              <address className="premium-prose mt-3 not-italic">{clinicContact.formattedAddress}</address>
-              <p className="mt-3 text-sm text-slate-600">
-                {clinicContact.openingHoursText}. Confirm appointment and service availability before travelling.
-              </p>
-              <a
-                href={clinicContact.mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 inline-flex font-semibold text-sky-800 underline decoration-sky-300 underline-offset-4"
-              >
-                Open directions in Google Maps
-              </a>
+              <ApprovedBusinessProfileCopy compact />
             </aside>
           </div>
         </div>
@@ -178,6 +168,15 @@ export default function ContactPage() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="mx-auto grid w-full max-w-7xl gap-7 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-center lg:px-8">
+        <div>
+          <p className="premium-eyebrow">Clinic information</p>
+          <h2 className="mt-3 font-display text-4xl font-semibold text-slate-950">Plan an in-person visit with confirmed details</h2>
+          <ApprovedBusinessProfileCopy />
+        </div>
+        <ApprovedBusinessDirectionsCard />
       </section>
 
       <section className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">

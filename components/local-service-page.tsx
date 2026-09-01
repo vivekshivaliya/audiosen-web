@@ -10,6 +10,7 @@ import {
 } from "@/lib/content";
 import type { LocalServicePageContent } from "@/lib/local-service-pages";
 import { localServicePageList } from "@/lib/local-service-pages";
+import { StructuredData } from "@/lib/structured-data";
 
 type LocalServicePageProps = {
   content: LocalServicePageContent;
@@ -29,7 +30,7 @@ export function LocalServicePage({ content }: LocalServicePageProps) {
         name: "Dehradun",
       },
       provider: {
-        "@id": "https://audiosen.com/#dehradun-clinic",
+        "@id": "https://audiosen.com/#organization",
       },
     },
     {
@@ -68,17 +69,7 @@ export function LocalServicePage({ content }: LocalServicePageProps) {
 
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(dehradunClinicJsonLd) }}
-      />
-      {structuredData.map((item, index) => (
-        <script
-          key={`${content.slug}-schema-${index}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
-        />
-      ))}
+      <StructuredData data={[dehradunClinicJsonLd, ...structuredData]} />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-14 sm:px-6 lg:px-8">
         <div className="premium-shell grid items-center gap-8 px-6 py-10 sm:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-14">
@@ -91,13 +82,14 @@ export function LocalServicePage({ content }: LocalServicePageProps) {
 
             <div className="mt-6 rounded-2xl border border-sky-100 bg-white/80 p-5 shadow-sm">
               <p className="text-sm font-bold uppercase tracking-[0.14em] text-sky-800">
-                {brandIdentity.organizationName}
+                In-person service enquiries
               </p>
               <p className="mt-2 text-base font-semibold leading-relaxed text-slate-900">
-                {clinicContact.formattedAddress}
+                {brandIdentity.organizationName} confirms the service location directly with each booking.
               </p>
               <p className="mt-2 text-sm text-slate-600">
-                Open {clinicContact.openingHoursText}. Please confirm availability before visiting.
+                Please call or message before travelling. No walk-in address or opening hours are
+                published until those details are verified.
               </p>
             </div>
 
@@ -112,14 +104,6 @@ export function LocalServicePage({ content }: LocalServicePageProps) {
                 className="premium-button-secondary"
               >
                 Ask on WhatsApp
-              </a>
-              <a
-                href={clinicContact.mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="premium-button-secondary"
-              >
-                Get directions
               </a>
             </div>
           </div>
@@ -217,7 +201,15 @@ export function LocalServicePage({ content }: LocalServicePageProps) {
               Hearing aids in Dehradun
             </Link>
             {relatedPages.map((page) => (
-              <Link key={page.slug} href={`/${page.slug}`} className="premium-card p-4 font-semibold text-sky-800">
+              <Link
+                key={page.slug}
+                href={
+                  page.slug === "home-hearing-care-dehradun"
+                    ? "/home-hearing-care"
+                    : `/${page.slug}`
+                }
+                className="premium-card p-4 font-semibold text-sky-800"
+              >
                 {page.title}
               </Link>
             ))}

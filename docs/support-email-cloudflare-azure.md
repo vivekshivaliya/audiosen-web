@@ -4,11 +4,17 @@ This setup gives Audiosen a professional support address without running an
 inbound mail server:
 
 - Incoming: `support@audiosen.com` -> Cloudflare Email Routing -> verified owner inbox.
-- Outgoing: website or approved mail client -> Azure Communication Services SMTP.
-- Public sender: `Audiosen Support <support@audiosen.com>`.
+- Outgoing website mail: PostgreSQL outbox worker -> Azure Communication Services Email SDK.
+- Public sender: `support@audiosen.com`.
 
 Azure Communication Services Email is outbound-only. Cloudflare Email Routing
 forwards messages but does not provide a mailbox or outbound SMTP service.
+
+As observed on 2026-08-22, live DNS has not been cut over: `audiosen.com` still has an MX to
+`mail.audiosen.com`, the mail host still resolves to the legacy Mailcow server, apex SPF remains
+`v=spf1 mx a -all`, and DMARC remains `p=none`. Treat the instructions below as a controlled
+migration, not as the current production state. Confirm whether the old host contains active or
+historical mail before changing MX records or decommissioning it.
 
 ## Current Azure resources
 
@@ -48,34 +54,32 @@ created. Do not publish Azure's SPF value as a second SPF record.
 6. Remove the old apex MX record that points to `mail.audiosen.com`.
 7. Keep all mail-related DNS records DNS-only.
 
-## Azure outbound SMTP
+## Azure outbound email
 
 After the Azure domain shows verified for Domain, SPF, DKIM, and DKIM2:
 
 1. Connect the email domain to `audiosen-comms`.
-2. Create a Microsoft Entra application and client secret.
-3. Assign the least-privilege Azure Communication Email SMTP role.
-4. Create an SMTP Username linked to the Entra application.
-5. Create or approve `support@audiosen.com` as a MailFrom sender.
-6. Configure the Azure Web App with these settings:
+2. Enable the Web App's managed identity.
+3. Assign that identity the minimum Azure Communication Services email-send role on `audiosen-comms`.
+4. Create or approve `support@audiosen.com` as a MailFrom sender.
+5. Configure the Azure Web App with these settings:
 
 ```text
-SMTP_HOST=smtp.azurecomm.net
-SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=<Azure SMTP Username>
-SMTP_PASS=<Entra client-secret value>
-MAIL_FROM=Audiosen Support <support@audiosen.com>
-MAIL_TO=<verified forwarding inbox>
+AZURE_COMMUNICATION_EMAIL_ENDPOINT=https://<resource>.communication.azure.com
+AZURE_COMMUNICATION_EMAIL_SENDER=support@audiosen.com
+# Set only for a user-assigned identity:
+AZURE_CLIENT_ID=<managed-identity-client-id>
 ```
 
-Store the SMTP password only in Azure App Service configuration or Key Vault.
-Never commit it to Git.
+If managed identity cannot be used in a local or emergency environment, load
+`AZURE_COMMUNICATION_EMAIL_CONNECTION_STRING` from the platform secret store.
+Never commit it to Git. The staff recipient remains fixed in application code
+as `vivekshivaliya10@gmail.com`.
 
 ## Verification checklist
 
 - Receive an external test at `support@audiosen.com` in the destination inbox.
-- Send an Azure SMTP test from `support@audiosen.com` to an unrelated inbox.
+- Run the outbox worker and send an Azure Communication Services Email test from `support@audiosen.com` to an unrelated inbox.
 - Confirm SPF, DKIM, and DMARC pass in the received message headers.
 - Submit the website contact form and confirm both the owner notification and
   customer confirmation arrive.

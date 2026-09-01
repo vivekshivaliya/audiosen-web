@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HearingAidCostCalculator } from "./cost-calculator";
 import { whatsappHref } from "@/lib/content";
+import { StructuredData } from "@/lib/structured-data";
 
 const pageUrl = "https://audiosen.com/tools/hearing-aid-cost-calculator";
 
@@ -11,9 +12,9 @@ export const metadata: Metadata = {
     "Add device, assessment, fitting, accessories, aftercare, delivery, and discount amounts from a written quote to compare hearing-aid total cost.",
   alternates: { canonical: "/tools/hearing-aid-cost-calculator" },
   openGraph: {
-    title: "Hearing Aid Total-Cost Calculator | Audiosen",
+    title: "Hearing Aid Cost Calculator | Quote Planner | Audiosen",
     description:
-      "A private arithmetic tool for organising the amounts in a written hearing-aid quote.",
+      "Add device, assessment, fitting, accessories, aftercare, delivery, and discount amounts from a written quote to compare hearing-aid total cost.",
     url: pageUrl,
     siteName: "Audiosen",
     type: "website",
@@ -24,6 +25,13 @@ export const metadata: Metadata = {
         alt: "An Indian family reviewing hearing-aid choices and costs",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hearing Aid Cost Calculator | Quote Planner | Audiosen",
+    description:
+      "Add device, assessment, fitting, accessories, aftercare, delivery, and discount amounts from a written quote to compare hearing-aid total cost.",
+    images: ["/images/editorial/hearing-aid-guidance-v2.webp"],
   },
 };
 
@@ -79,12 +87,7 @@ const checklist = [
 export default function HearingAidCostCalculatorPage() {
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-        }}
-      />
+      <StructuredData data={structuredData} />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
         <nav aria-label="Breadcrumb" className="mb-6 text-sm text-slate-600">

@@ -2,6 +2,39 @@ type AnalyticsValue = string | number | boolean | null | undefined;
 
 type AnalyticsParams = Record<string, AnalyticsValue>;
 
+export const ANALYTICS_EVENT_NAMES = [
+  "call_click",
+  "whatsapp_click",
+  "book_consultation",
+  "hearing_aid_view",
+  "hearing_aid_compare",
+  "request_price",
+  "hearing_aid_trial",
+  "hearing_aid_finder_start",
+  "hearing_aid_finder_complete",
+  "home_visit_request",
+  "repair_enquiry",
+  "speech_consultation",
+  "offer_claim",
+  "contact_submit",
+  "google_directions_click",
+  "google_review_click",
+  "form_start",
+  "hearing_test_start",
+  "hearing_test_complete",
+  "hearing_test_report_book_click",
+  "popup_open",
+  "popup_close",
+] as const;
+
+export type AnalyticsEventName = (typeof ANALYTICS_EVENT_NAMES)[number];
+
+const analyticsEventNames = new Set<string>(ANALYTICS_EVENT_NAMES);
+
+export function isAnalyticsEventName(value: string): value is AnalyticsEventName {
+  return analyticsEventNames.has(value);
+}
+
 export type AnalyticsConsentChoice = "granted" | "denied";
 
 export const ANALYTICS_CONSENT_STORAGE_KEY = "audiosen_analytics_consent_v1";
@@ -9,19 +42,52 @@ const ANALYTICS_CONSENT_EVENT = "audiosen:analytics-consent-change";
 
 const analyticsParamAllowlist = new Set([
   "channel_priority",
+  "cta_location",
   "cta_source",
   "form_name",
   "form_type",
   "lead_source",
   "page_path",
+  "page_type",
   "popup_name",
+  "brand_slug",
+  "product_slug",
+  "comparison_count",
+  "journey",
   "preferred_channel",
+  "result_model",
   "test_variant",
 ]);
 
-const analyticsEventAliases: Record<string, string> = {
-  cta_form_start: "form_start",
-};
+const analyticsExcludedPathPrefixes = ["/admin", "/thank-you"] as const;
+
+export function isAnalyticsExcludedPath(pathname: string): boolean {
+  const normalizedPath = pathname.split(/[?#]/, 1)[0].replace(/\/+$/, "") || "/";
+  return analyticsExcludedPathPrefixes.some(
+    (prefix) => normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`),
+  );
+}
+
+export function pageHasNoindexDirective(): boolean {
+  if (typeof document === "undefined") return true;
+
+  return Array.from(
+    document.querySelectorAll<HTMLMetaElement>(
+      'meta[name="robots"], meta[name="googlebot"]',
+    ),
+  ).some((meta) =>
+    meta.content
+      .toLowerCase()
+      .split(",")
+      .map((directive) => directive.trim())
+      .includes("noindex"),
+  );
+}
+
+export function analyticsAllowedOnCurrentPage(): boolean {
+  if (typeof window === "undefined") return false;
+  return !isAnalyticsExcludedPath(window.location.pathname) && !pageHasNoindexDirective();
+}
 
 declare global {
   interface Window {
@@ -85,10 +151,11 @@ export function subscribeToAnalyticsConsent(onChange: () => void): () => void {
   return () => window.removeEventListener(ANALYTICS_CONSENT_EVENT, onChange);
 }
 
-export function trackEvent(eventName: string, params: AnalyticsParams = {}): void {
+export function trackEvent(eventName: AnalyticsEventName, params: AnalyticsParams = {}): void {
   if (typeof window === "undefined") return;
+  if (!analyticsAllowedOnCurrentPage()) return;
   if (readAnalyticsConsent() !== "granted") return;
   if (typeof window.gtag !== "function") return;
 
-  window.gtag("event", analyticsEventAliases[eventName] ?? eventName, sanitizeParams(params));
+  window.gtag("event", eventName, sanitizeParams(params));
 }

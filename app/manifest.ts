@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: brandIdentity.organizationName,
     short_name: brandIdentity.shortName,
-    description: "Hearing aids and hearing-care guidance across India.",
+    description: "Hearing and communication care guidance from Audiosen.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

@@ -30,7 +30,7 @@ export const localServicePages = {
     eyebrow: "Clinic hearing assessment",
     title: "Hearing Test in Dehradun",
     introduction:
-      "A clinic hearing assessment helps clarify what you are noticing and which next step is appropriate. Audiosen provides hearing-test guidance and hearing-care support at Race Course Road, Dehradun.",
+      "A clinic hearing assessment helps clarify what you are noticing and which next step is appropriate. Audiosen provides hearing-test guidance and hearing-care support in Dehradun, with in-person details confirmed before booking.",
     image: "/images/contact-audiologist-doctor.jpg",
     imageAlt: "Clinic hearing assessment equipment in Dehradun",
     highlights: [
@@ -109,7 +109,7 @@ export const localServicePages = {
     title: "Hearing Aid Prices in Dehradun",
     introduction:
       "There is no single hearing-aid price that suits every person. Cost depends on the hearing profile, device style, technology, warranty, fitting needs, and after-sales support. Audiosen helps you compare suitable options and request a clear quote.",
-    image: "/images/products/real-oticon-top-view.jpg",
+    image: "/images/editorial/hearing-aid-guidance-v2.webp",
     imageAlt: "Modern hearing aid discussed during a price consultation in Dehradun",
     highlights: [
       {
@@ -172,9 +172,9 @@ export const localServicePages = {
           "Not automatically. Suitability, professional fitting, realistic expectations, and follow-up adjustments are as important as the technology level.",
       },
       {
-        question: "Are rental or care plans available?",
+        question: "How do I confirm the complete payable amount?",
         answer:
-          "Audiosen lists rental and care-plan options subject to assessment, approval, stock, device suitability, and the applicable written terms.",
+          "Request a written quote that identifies the device, included services, accessories, warranty, taxes, and payment terms before purchase.",
       },
     ],
   },
@@ -182,12 +182,12 @@ export const localServicePages = {
     slug: "hearing-aid-repair-dehradun",
     metaTitle: "Hearing Aid Repair in Dehradun | Audiosen",
     metaDescription:
-      "Request hearing aid cleaning, troubleshooting, maintenance, adjustment, or repair guidance at Audiosen on Race Course Road, Dehradun.",
+      "Request hearing aid cleaning, troubleshooting, maintenance, adjustment, or repair guidance from Audiosen in Dehradun. In-person details are confirmed before booking.",
     eyebrow: "Device care and troubleshooting",
     title: "Hearing Aid Repair in Dehradun",
     introduction:
       "Weak sound, feedback, charging problems, intermittent performance, or physical damage can have different causes. Audiosen helps inspect the device, explain the likely next step, and coordinate appropriate service support.",
-    image: "/images/products/real-oticon-top-view.jpg",
+    image: "/images/editorial/hearing-aid-guidance-v2.webp",
     imageAlt: "Hearing aid maintenance and repair service in Dehradun",
     highlights: [
       {
@@ -254,6 +254,36 @@ export const localServicePages = {
         answer:
           "Do not open the casing or use direct heat. Switch the device off, keep it dry, and ask for professional guidance to avoid additional damage.",
       },
+    ],
+  },
+  hearingAidFitting: {
+    slug: "hearing-aid-fitting-dehradun",
+    metaTitle: "Hearing Aid Fitting in Dehradun | Audiosen",
+    metaDescription:
+      "Arrange hearing-aid fitting, programming, orientation, and aftercare support in Dehradun with Audiosen. Call before travelling to confirm your appointment.",
+    eyebrow: "Fitting and aftercare",
+    title: "Hearing Aid Fitting in Dehradun",
+    introduction:
+      "A hearing aid works best when the style, settings, handling, and follow-up are discussed around the person using it. Audiosen provides fitting and aftercare guidance in Dehradun, with appointments confirmed in advance.",
+    image: "/images/editorial/hearing-aid-guidance-v2.webp",
+    imageAlt: "Hearing aid fitting and follow-up discussion in Dehradun",
+    highlights: [
+      { title: "Device orientation", description: "Learn how to insert, remove, charge or change batteries, clean the device, and use its everyday controls." },
+      { title: "Programming discussion", description: "Discuss listening goals and any comfort concerns so appropriate adjustments can be considered during follow-up." },
+      { title: "Communication practice", description: "Try common listening situations such as conversation, calls, and television, then share what feels difficult." },
+      { title: "Aftercare plan", description: "Understand cleaning, storage, scheduled review, and when to seek service support for a change in performance." },
+    ],
+    steps: [
+      { title: "Bring your hearing information", description: "Bring your current audiogram, hearing aids, charger, accessories, and any earlier fitting notes where available." },
+      { title: "Discuss daily listening", description: "Explain the places and conversations that matter most, including noise, phone use, and family communication." },
+      { title: "Learn safe handling", description: "Review device care, charging or battery routines, feedback, and basic troubleshooting before leaving." },
+      { title: "Arrange follow-up", description: "Plan a review if comfort, sound quality, handling, or hearing needs change after fitting." },
+    ],
+    faqs: [
+      { question: "Do I need an audiogram for fitting?", answer: "A recent hearing assessment helps guide a fitting discussion. Bring any existing audiogram and contact Audiosen if you are unsure whether a new assessment is needed." },
+      { question: "How many fitting visits are needed?", answer: "Needs differ. Some people need follow-up adjustments while they become accustomed to new amplification. The team can discuss an appropriate review plan." },
+      { question: "Can I get help with my current hearing aids?", answer: "Bring the devices, charger or batteries, accessories, and model details. The available support depends on the brand, model, condition, and service history." },
+      { question: "What if sound is uncomfortable after fitting?", answer: "Do not try to alter the device yourself. Note when the issue occurs and contact the team for safe guidance or a follow-up appointment." },
     ],
   },
   homeHearingCare: {

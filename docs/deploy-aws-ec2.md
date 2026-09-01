@@ -72,16 +72,11 @@ nano .env
 Paste values based on `.env.example`:
 
 ```bash
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
-SMTP_SECURE=true
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_gmail_app_password
-MAIL_FROM=Audiosen <your_email@gmail.com>
-MAIL_TO=your_email@gmail.com
-RAZORPAY_KEY_ID=rzp_live_or_test_key
-RAZORPAY_KEY_SECRET=your_razorpay_secret
+AZURE_COMMUNICATION_EMAIL_CONNECTION_STRING=load_from_your_secret_store
+AZURE_COMMUNICATION_EMAIL_SENDER=support@audiosen.com
 ```
+
+The support address must be a verified sender on the connected Azure Communication Services Email domain. The connection string is the non-Azure-host fallback; keep it in a secret store, not source control. The private staff inbox is fixed server-side and never used as the patient-facing sender.
 
 Save: `Ctrl+O`, Enter, `Ctrl+X`.
 

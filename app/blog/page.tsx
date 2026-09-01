@@ -1,29 +1,32 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import { blogPosts } from "@/lib/blog-posts";
+import { createPageMetadata } from "@/lib/page-metadata";
+import { StructuredData } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Hearing Care Articles | Audiosen Blog",
   description:
     "Read practical Audiosen guides about hearing tests, hearing-aid decisions, noise protection, family communication, and modern device features.",
-  alternates: {
-    canonical: "/blog",
-  },
-  openGraph: {
-    title: "Hearing Care Articles | Audiosen Blog",
-    description:
-      "Practical hearing-care guidance from Audiosen for patients and families across India.",
-    url: "https://audiosen.com/blog",
-    type: "website",
-    locale: "en_IN",
-  },
+  path: "/blog",
+  image: "/images/editorial/hearing-aid-guidance-v2.webp",
+  imageAlt: "An Indian family reviewing hearing-care guidance together",
+});
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://audiosen.com/" },
+    { "@type": "ListItem", position: 2, name: "Blog", item: "https://audiosen.com/blog" },
+  ],
 };
 
 export default function BlogPage() {
   return (
     <main className="sonic-blog-page mx-auto w-full max-w-7xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
+      <StructuredData data={breadcrumbJsonLd} />
       <Reveal>
         <section className="premium-shell sonic-blog-hero relative overflow-hidden p-7 sm:p-10">
           <div className="pointer-events-none absolute -left-16 -top-20 h-52 w-52 rounded-full bg-sky-200/35 blur-3xl" />

@@ -1,21 +1,16 @@
-import type { Metadata } from "next";
 import { LocalServicePage } from "@/components/local-service-page";
 import { localServicePages } from "@/lib/local-service-pages";
+import { createPageMetadata } from "@/lib/page-metadata";
 
 const content = localServicePages.hearingAidPrices;
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: content.metaTitle,
   description: content.metaDescription,
-  alternates: { canonical: `/${content.slug}` },
-  openGraph: {
-    title: content.metaTitle,
-    description: content.metaDescription,
-    url: `https://audiosen.com/${content.slug}`,
-    type: "website",
-    locale: "en_IN",
-  },
-};
+  path: `/${content.slug}`,
+  image: content.image,
+  imageAlt: content.imageAlt,
+});
 
 export default function HearingAidPricesDehradunPage() {
   return <LocalServicePage content={content} />;

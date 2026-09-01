@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { StructuredData } from "@/lib/structured-data";
 import { clinicContact } from "@/lib/content";
 
 const pageUrl = "https://audiosen.com/editorial-policy";
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Editorial Policy | Audiosen",
     description:
-      "Audiosen's standards for accurate, transparent, useful, and responsibly reviewed hearing-care information.",
+      "Read how Audiosen creates, reviews, sources, labels, corrects, and updates hearing-care, product, price, and promotional website content.",
     url: pageUrl,
     siteName: "Audiosen",
     type: "website",
@@ -23,6 +24,13 @@ export const metadata: Metadata = {
         alt: "A professional reviewing Audiosen policy and trust information",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Editorial Policy | Audiosen",
+    description:
+      "Read how Audiosen creates, reviews, sources, labels, corrects, and updates hearing-care, product, price, and promotional website content.",
+    images: ["/images/editorial/policy-trust-v2.webp"],
   },
 };
 
@@ -124,12 +132,7 @@ const structuredData = {
 export default function EditorialPolicyPage() {
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-        }}
-      />
+      <StructuredData data={structuredData} />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
         <nav aria-label="Breadcrumb" className="mb-6 text-sm text-slate-600">

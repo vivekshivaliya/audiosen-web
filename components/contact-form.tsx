@@ -1,8 +1,9 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { contactContent } from "@/lib/content";
+import { useRouter } from "next/navigation";
 import { trackEvent } from "@/lib/analytics";
+import { TurnstileWidget, type TurnstileConfiguration } from "@/components/turnstile-widget";
 import {
   clearHearingTestSummary,
   formatHearingTestSummaryForContact,
@@ -63,6 +64,17 @@ const emptyAttribution: CampaignAttribution = {
 };
 
 const ATTRIBUTION_STORAGE_KEY = "audiosen_lead_attribution_v1";
+
+function createIdempotencyKey(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
+  return `audiosen-${Date.now()}-${Math.random().toString(36).slice(2, 14)}`;
+}
+
+function safeRedirect(value: unknown): string {
+  return typeof value === "string" && value.startsWith("/") && !value.startsWith("//")
+    ? value
+    : "/thank-you";
+}
 
 type ContactFormProps = {
   surface?: "shell" | "plain";
@@ -125,17 +137,21 @@ function hydrateAttribution(): CampaignAttribution {
 }
 
 export function ContactForm({ surface = "shell" }: ContactFormProps) {
+  const router = useRouter();
   const hasTrackedStartRef = useRef(false);
+  const idempotencyKeyRef = useRef<string | null>(null);
   const [form, setForm] = useState<FormState>(initialState);
   const [attribution, setAttribution] = useState<CampaignAttribution>(emptyAttribution);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [prefillSource, setPrefillSource] = useState<PrefillSource | null>(null);
-  const [showDetails, setShowDetails] = useState(false);
-  const [notice, setNotice] = useState<{
-    tone: "success" | "warning";
-    message: string;
-  } | null>(null);
+  const showDetails = true;
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+  const [turnstileConfiguration, setTurnstileConfiguration] = useState<TurnstileConfiguration>({
+    ready: Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY),
+    configured: Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY),
+  });
 
   useEffect(() => {
     setAttribution(hydrateAttribution());
@@ -160,7 +176,6 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
         };
       });
       setPrefillSource("hearing-report");
-      setShowDetails(true);
     };
 
     hydratePrefills();
@@ -189,32 +204,73 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!turnstileConfiguration.ready) {
+      setError("Bot verification is still loading. Please try again in a moment.");
+      return;
+    }
+
+    if (turnstileConfiguration.configured && !turnstileToken) {
+      setError("Complete the bot verification before sending this request.");
+      return;
+    }
+
     setLoading(true);
     setError(null);
-    setNotice(null);
+    const idempotencyKey = idempotencyKeyRef.current ?? createIdempotencyKey();
+    idempotencyKeyRef.current = idempotencyKey;
 
     try {
       const currentCampaign =
         attribution.landingPage.length > 0 ? attribution : hydrateAttribution();
-      const response = await fetch("/api/contact", {
+      const response = await fetch("/api/enquiries", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Idempotency-Key": idempotencyKey,
+        },
         body: JSON.stringify({
-          ...form,
-          ...currentCampaign,
-          language: "",
-          preferredChannel: "Phone or WhatsApp",
+          type: "contact",
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          city: form.city,
+          service: form.serviceNeeded,
+          message: form.message,
+          consent: form.consent,
+          website: form.website,
+          preferredChannel: "phone_or_whatsapp",
           preferredCallbackTime: "",
-          leadSource: "website_contact_form",
+          source: "website_contact_form",
+          sourcePath: currentCampaign.sourcePage || "/",
+          landingPage: currentCampaign.landingPage || "/",
+          context: {
+            sourcePath: currentCampaign.sourcePage || "/",
+            journey: "general_contact",
+          },
+          attribution: {
+            landingPage: currentCampaign.landingPage || "/",
+            utmSource: currentCampaign.utmSource,
+            utmMedium: currentCampaign.utmMedium,
+            utmCampaign: currentCampaign.utmCampaign,
+            utmTerm: currentCampaign.utmTerm,
+            utmContent: currentCampaign.utmContent,
+            gclid: currentCampaign.gclid,
+            gbraid: currentCampaign.gbraid,
+            wbraid: currentCampaign.wbraid,
+            msclkid: currentCampaign.msclkid,
+            fbclid: currentCampaign.fbclid,
+          },
+          ...(turnstileToken ? { turnstileToken } : {}),
         }),
       });
 
       const payload = (await response.json()) as {
         ok: boolean;
         error?: string;
-        warning?: string;
-        message?: string;
         fieldErrors?: Record<string, string[]>;
+        redirectTo?: string;
+        thankYouUrl?: string;
       };
 
       if (!response.ok || !payload.ok) {
@@ -222,26 +278,21 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
           ? Object.values(payload.fieldErrors).flat()[0]
           : null;
         setError(firstFieldError || payload.error || "Failed to save your request.");
+        setTurnstileResetKey((current) => current + 1);
         return;
       }
 
-      setNotice({
-        tone: payload.warning ? "warning" : "success",
-        message: payload.warning || payload.message || contactContent.successLabel,
-      });
-      trackEvent("generate_lead", {
+      trackEvent("contact_submit", {
         form_name: "hearing_care_callback",
         form_type: "lead_capture",
         lead_source: "website_contact_form",
         page_path: typeof window !== "undefined" ? window.location.pathname : "unknown",
       });
       clearHearingTestSummary();
-      setPrefillSource(null);
-      setShowDetails(false);
-      setForm(initialState);
-      hasTrackedStartRef.current = false;
+      router.push(safeRedirect(payload.redirectTo ?? payload.thankYouUrl));
     } catch {
       setError("Network error. Please try again later.");
+      setTurnstileResetKey((current) => current + 1);
     } finally {
       setLoading(false);
     }
@@ -251,6 +302,10 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
     <form
       onSubmit={onSubmit}
       onFocusCapture={trackFormStart}
+      onChangeCapture={() => {
+        idempotencyKeyRef.current = null;
+        setError(null);
+      }}
       className={surface === "shell" ? "premium-shell p-6 sm:p-8" : ""}
     >
       <div className="grid gap-4">
@@ -283,50 +338,41 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
           </label>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div>
           <label className="grid gap-2 text-sm font-medium text-slate-700">
-            City
+            Email address
             <input
-              type="text"
+              type="email"
               required
-              autoComplete="address-level2"
-              value={form.city}
-              onChange={(event) => setForm({ ...form, city: event.target.value })}
+              autoComplete="email"
+              value={form.email}
+              onChange={(event) => setForm({ ...form, email: event.target.value })}
               className="rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none ring-0 transition placeholder:text-slate-400 focus:border-sky-500"
-              placeholder="Your city"
+              placeholder="you@example.com"
             />
-          </label>
-
-          <label className="grid gap-2 text-sm font-medium text-slate-700">
-            What do you need help with?
-            <select
-              required
-              value={form.serviceNeeded}
-              onChange={(event) => setForm({ ...form, serviceNeeded: event.target.value })}
-              className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-0 transition focus:border-sky-500"
-            >
-              <option value="" disabled>
-                Select one
-              </option>
-              <option>Choose a hearing aid</option>
-              <option>Book a hearing assessment</option>
-              <option>Discuss an online hearing check</option>
-              <option>Hearing aid fitting or tuning</option>
-              <option>Hearing aid repair or service</option>
-              <option>ENT referral guidance</option>
-              <option>Something else</option>
-            </select>
           </label>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setShowDetails((current) => !current)}
-          className="w-fit text-sm font-semibold text-sky-700 underline decoration-sky-300 underline-offset-4"
-          aria-expanded={showDetails}
-        >
-          {showDetails ? "Hide additional details" : "+ Add details for our team (optional)"}
-        </button>
+        <label className="grid gap-2 text-sm font-medium text-slate-700">
+          What do you need help with?
+          <select
+            required
+            value={form.serviceNeeded}
+            onChange={(event) => setForm({ ...form, serviceNeeded: event.target.value })}
+            className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-0 transition focus:border-sky-500"
+          >
+            <option value="" disabled>
+              Select one
+            </option>
+            <option>Choose a hearing aid</option>
+            <option>Book a hearing assessment</option>
+            <option>Discuss an online hearing check</option>
+            <option>Hearing aid fitting or tuning</option>
+            <option>Hearing aid repair or service</option>
+            <option>ENT referral guidance</option>
+            <option>Something else</option>
+          </select>
+        </label>
 
         {showDetails ? (
           <div className="grid gap-2">
@@ -343,24 +389,14 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
               </span>
             ) : null}
             <label className="grid gap-2 text-sm font-medium text-slate-700">
-              Email for a confirmation (optional)
-              <input
-                type="email"
-                autoComplete="email"
-                value={form.email}
-                onChange={(event) => setForm({ ...form, email: event.target.value })}
-                className="rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none ring-0 transition placeholder:text-slate-400 focus:border-sky-500"
-                placeholder="you@example.com"
-              />
-            </label>
-            <label className="grid gap-2 text-sm font-medium text-slate-700">
-              Additional details (optional)
+              Message
               <textarea
+                required
                 value={form.message}
                 onChange={(event) => setForm({ ...form, message: event.target.value })}
                 rows={3}
                 className="rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none ring-0 transition placeholder:text-slate-400 focus:border-sky-500"
-                placeholder="Anything useful for our team to know"
+                placeholder="Tell us how we can help"
               />
             </label>
           </div>
@@ -384,7 +420,7 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
             >
               Privacy Policy
             </a>{" "}
-            and consent to Audiosen contacting me by phone or WhatsApp about this request.
+            I agree to be contacted by Audiosen regarding my enquiry through phone, email, SMS or WhatsApp.
           </span>
         </label>
 
@@ -399,9 +435,15 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
           />
         </label>
 
+        <TurnstileWidget
+          onTokenChange={setTurnstileToken}
+          resetKey={turnstileResetKey}
+          onConfigurationChange={setTurnstileConfiguration}
+        />
+
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || !turnstileConfiguration.ready || !turnstileConfiguration.configured}
           className="premium-button-primary mt-2 disabled:cursor-not-allowed disabled:border-slate-400 disabled:bg-slate-400"
         >
           {loading ? "Saving your request..." : "Request a hearing-care callback"}
@@ -413,21 +455,9 @@ export function ContactForm({ surface = "shell" }: ContactFormProps) {
           </p>
         ) : null}
 
-        {notice ? (
-          <p
-            role="status"
-            className={
-              notice.tone === "warning"
-                ? "rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-800"
-                : "rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
-            }
-          >
-            {notice.message}
-          </p>
-        ) : null}
-
         <p className="text-center text-xs text-slate-500">
-          Your details are used only to respond to this request. {contactContent.lockline}
+          Your details are used only to respond to this request. Sensitive narratives are never
+          sent to analytics.
         </p>
       </div>
     </form>

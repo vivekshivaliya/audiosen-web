@@ -1,176 +1,229 @@
-import nodemailer, { type SendMailOptions } from "nodemailer";
+import {
+  EmailClient,
+  KnownEmailSendStatus,
+  type EmailMessage,
+} from "@azure/communication-email";
+import { DefaultAzureCredential } from "@azure/identity";
+import nodemailer from "nodemailer";
 
-const DEFAULT_OWNER_EMAIL = "vivekshivaliya@gmail.com";
+const PATIENT_SUPPORT_ADDRESS = "support@audiosen.com";
+const AZURE_MANAGED_SENDER = /^[a-z0-9._%+-]+@[a-f0-9-]+\.azurecomm\.net$/i;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function firstDefined(names: string[]): string | undefined {
-  for (const name of names) {
-    const value = process.env[name];
-    if (value && value.trim()) {
-      return value.trim();
-    }
+export type QueuedEmailMessage = {
+  to: string;
+  replyTo?: string;
+  subject: string;
+  text: string;
+  html: string;
+  operationId: string;
+};
+
+export type QueuedEmailResult = {
+  providerMessageId: string;
+  providerStatus: string;
+};
+
+export class AzureEmailConfigurationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "AzureEmailConfigurationError";
   }
-  return undefined;
 }
 
-function env(names: string[], label: string): string {
-  const value = firstDefined(names);
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${label}`);
+export class AzureEmailDeliveryError extends Error {
+  readonly providerMessageId?: string;
+  readonly providerStatus?: string;
+  readonly providerErrorCode?: string;
+
+  constructor(options: {
+    providerMessageId?: string;
+    providerStatus?: string;
+    providerErrorCode?: string;
+  }) {
+    super("Azure Communication Services Email did not report successful delivery.");
+    this.name = "AzureEmailDeliveryError";
+    this.providerMessageId = options.providerMessageId;
+    this.providerStatus = options.providerStatus;
+    this.providerErrorCode = options.providerErrorCode;
   }
-  return value;
 }
 
-function optionalEnv(name: string): string | undefined {
-  const value = process.env[name];
-  if (!value) return undefined;
-  return value.trim();
+function configuredValue(name: string): string | undefined {
+  const value = process.env[name]?.trim();
+  return value || undefined;
 }
 
-function smtpHost(): string {
-  const configured = firstDefined(["SMTP_HOST"]);
-  if (configured) {
-    return configured.toLowerCase();
+function requireEmailAddress(value: string, label: string): string {
+  const normalized = value.trim().toLowerCase();
+  if (!EMAIL_PATTERN.test(normalized) || normalized.length > 320) {
+    throw new AzureEmailConfigurationError(`${label} must be a valid email address.`);
   }
-
-  const service = firstDefined(["SMTP_SERVICE"]);
-  if (service && service.toLowerCase() === "gmail") {
-    return "smtp.gmail.com";
-  }
-
-  const user = smtpUser();
-  if (user.toLowerCase().endsWith("@gmail.com")) {
-    return "smtp.gmail.com";
-  }
-
-  throw new Error("Missing required environment variable: SMTP_HOST");
+  return normalized;
 }
 
-function smtpPort(): number {
-  const configured = firstDefined(["SMTP_PORT"]);
-  if (configured) {
-    const port = Number(configured);
-    if (!Number.isInteger(port) || port < 1 || port > 65535) {
-      throw new Error("SMTP_PORT must be a valid TCP port number.");
-    }
-    return port;
-  }
-  return smtpHost() === "smtp.gmail.com" ? 465 : 587;
-}
-
-function smtpSecure(): boolean {
-  const configured = firstDefined(["SMTP_SECURE"]);
-  if (configured) {
-    return configured.toLowerCase() === "true";
-  }
-  return smtpPort() === 465;
-}
-
-function smtpUser(): string {
-  return env(["SMTP_USER", "GMAIL_USER"], "SMTP_USER / GMAIL_USER");
-}
-
-function smtpPass(): string {
-  let raw = env(
-    ["SMTP_PASS", "GMAIL_APP_PASSWORD", "GMAIL_PASS"],
-    "SMTP_PASS / GMAIL_APP_PASSWORD",
-  ).trim();
-
-  // Strip optional wrapping quotes from .env values.
-  raw = raw.replace(/^"(.*)"$/, "$1").replace(/^'(.*)'$/, "$1");
-
-  // Gmail app passwords are sometimes pasted with spaces like: "abcd efgh ijkl mnop"
-  if (smtpHost() === "smtp.gmail.com") {
-    return raw.replace(/\s+/g, "");
-  }
-  return raw;
-}
-
-function validateMailConfig() {
-  const host = smtpHost();
-  if (host !== "smtp.gmail.com") {
-    return;
-  }
-
-  const compactPass = smtpPass();
-  if (compactPass.length !== 16) {
-    throw new Error(
-      "Gmail requires a Google-generated 16-character App Password. The configured value is not a valid Gmail App Password.",
+function senderAddress(): string {
+  const sender = configuredValue("AZURE_COMMUNICATION_EMAIL_SENDER");
+  if (!sender) {
+    throw new AzureEmailConfigurationError(
+      "AZURE_COMMUNICATION_EMAIL_SENDER is required and must be a verified ACS sender.",
     );
   }
-}
 
-function createTransport(host: string, port: number, secure: boolean) {
-  const requireTls = host === "smtp.azurecomm.net" || port === 587;
-
-  return nodemailer.createTransport({
-    service: host === "smtp.gmail.com" ? "gmail" : undefined,
-    host,
-    port,
-    secure,
-    requireTLS: requireTls,
-    connectionTimeout: 15_000,
-    greetingTimeout: 15_000,
-    socketTimeout: 30_000,
-    auth: {
-      user: smtpUser(),
-      pass: smtpPass(),
-    },
-    tls: requireTls
-      ? {
-          minVersion: "TLSv1.2",
-          servername: host,
-        }
-      : undefined,
-  });
-}
-
-export async function sendMail(message: SendMailOptions) {
-  const host = smtpHost();
-  const port = smtpPort();
-  const secure = smtpSecure();
-
-  validateMailConfig();
-
-  const candidates: Array<{ host: string; port: number; secure: boolean }> = [
-    { host, port, secure },
-  ];
-
-  // Gmail fallback if primary config uses a different TLS mode.
-  if (host === "smtp.gmail.com") {
-    if (!(port === 465 && secure)) {
-      candidates.push({ host, port: 465, secure: true });
-    }
-    if (!(port === 587 && !secure)) {
-      candidates.push({ host, port: 587, secure: false });
-    }
+  const normalized = requireEmailAddress(sender, "AZURE_COMMUNICATION_EMAIL_SENDER");
+  if (normalized !== PATIENT_SUPPORT_ADDRESS && !AZURE_MANAGED_SENDER.test(normalized)) {
+    throw new AzureEmailConfigurationError(
+      `AZURE_COMMUNICATION_EMAIL_SENDER must be ${PATIENT_SUPPORT_ADDRESS} or an Azure-managed verified sender.`,
+    );
   }
+  return normalized;
+}
 
-  let lastError: unknown;
-  for (const candidate of candidates) {
+function communicationEmailClient(): EmailClient {
+  const endpoint = configuredValue("AZURE_COMMUNICATION_EMAIL_ENDPOINT");
+  if (endpoint) {
+    let url: URL;
     try {
-      const transporter = createTransport(
-        candidate.host,
-        candidate.port,
-        candidate.secure,
+      url = new URL(endpoint);
+    } catch {
+      throw new AzureEmailConfigurationError(
+        "AZURE_COMMUNICATION_EMAIL_ENDPOINT must be a valid HTTPS URL.",
       );
-      await transporter.sendMail(message);
-      return;
-    } catch (error) {
-      lastError = error;
     }
+    if (url.protocol !== "https:" || url.username || url.password || url.search || url.hash) {
+      throw new AzureEmailConfigurationError(
+        "AZURE_COMMUNICATION_EMAIL_ENDPOINT must be a credential-free HTTPS URL.",
+      );
+    }
+    if (url.pathname !== "/") {
+      throw new AzureEmailConfigurationError(
+        "AZURE_COMMUNICATION_EMAIL_ENDPOINT must not contain a path.",
+      );
+    }
+    return new EmailClient(url.origin, new DefaultAzureCredential());
   }
 
-  throw lastError;
+  const connectionString = configuredValue("AZURE_COMMUNICATION_EMAIL_CONNECTION_STRING");
+  if (connectionString) {
+    return new EmailClient(connectionString);
+  }
+
+  throw new AzureEmailConfigurationError(
+    "Configure AZURE_COMMUNICATION_EMAIL_ENDPOINT for managed identity or supply AZURE_COMMUNICATION_EMAIL_CONNECTION_STRING from a secret store.",
+  );
 }
 
-export function mailConfig() {
-  const smtpUserValue = optionalEnv("SMTP_USER");
-  const fromFallback = smtpUserValue
-    ? `Audiosen <${smtpUserValue}>`
-    : `Audiosen <${DEFAULT_OWNER_EMAIL}>`;
+function hasAzureEmailConfiguration(): boolean {
+  return Boolean(
+    configuredValue("AZURE_COMMUNICATION_EMAIL_ENDPOINT") ||
+      configuredValue("AZURE_COMMUNICATION_EMAIL_CONNECTION_STRING"),
+  );
+}
+
+function smtpConfiguration(): {
+  host: string;
+  port: number;
+  secure: boolean;
+  user?: string;
+  pass?: string;
+  from: string;
+} | null {
+  const host = configuredValue("SMTP_HOST");
+  if (!host) return null;
+
+  const portRaw = configuredValue("SMTP_PORT") ?? "587";
+  const port = Number(portRaw);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw new AzureEmailConfigurationError("SMTP_PORT must be a valid TCP port.");
+  }
+  const secureRaw = configuredValue("SMTP_SECURE")?.toLowerCase();
+  if (secureRaw && secureRaw !== "true" && secureRaw !== "false") {
+    throw new AzureEmailConfigurationError("SMTP_SECURE must be true or false.");
+  }
+  const user = configuredValue("SMTP_USER");
+  const pass = configuredValue("SMTP_PASS");
+  if (Boolean(user) !== Boolean(pass)) {
+    throw new AzureEmailConfigurationError("SMTP_USER and SMTP_PASS must be configured together.");
+  }
+  const from = configuredValue("EMAIL_FROM") ?? configuredValue("MAIL_FROM") ?? PATIENT_SUPPORT_ADDRESS;
+  return { host, port, secure: secureRaw === "true" || (!secureRaw && port === 465), user, pass, from };
+}
+
+async function sendSmtpEmail(message: QueuedEmailMessage): Promise<QueuedEmailResult> {
+  const config = smtpConfiguration();
+  if (!config) throw new AzureEmailConfigurationError("SMTP_HOST is not configured.");
+  const result = await nodemailer
+    .createTransport({
+      host: config.host,
+      port: config.port,
+      secure: config.secure,
+      ...(config.user && config.pass ? { auth: { user: config.user, pass: config.pass } } : {}),
+    })
+    .sendMail({
+      from: config.from,
+      to: message.to,
+      replyTo: message.replyTo,
+      subject: message.subject,
+      text: message.text,
+      html: message.html,
+      headers: { "X-Audiosen-Operation-Id": message.operationId },
+    });
+  return {
+    providerMessageId: result.messageId || `smtp-${message.operationId}`,
+    providerStatus: "smtp-accepted",
+  };
+}
+
+async function sendAzureEmail(message: QueuedEmailMessage): Promise<QueuedEmailResult> {
+  const to = requireEmailAddress(message.to, "Queued recipient");
+  const replyTo = message.replyTo
+    ? requireEmailAddress(message.replyTo, "Queued reply-to")
+    : undefined;
+
+  const payload: EmailMessage = {
+    senderAddress: senderAddress(),
+    content: {
+      subject: message.subject,
+      plainText: message.text,
+      html: message.html,
+    },
+    recipients: { to: [{ address: to }] },
+    replyTo: replyTo ? [{ address: replyTo }] : undefined,
+    disableUserEngagementTracking: true,
+  };
+
+  const poller = await communicationEmailClient().beginSend(payload, {
+    operationId: message.operationId,
+    updateIntervalInMs: 2_000,
+  });
+  const result = await poller.pollUntilDone();
+
+  if (result.status !== KnownEmailSendStatus.Succeeded) {
+    throw new AzureEmailDeliveryError({
+      providerMessageId: result.id,
+      providerStatus: result.status,
+      providerErrorCode: result.error?.code,
+    });
+  }
 
   return {
-    from: optionalEnv("MAIL_FROM") ?? fromFallback,
-    to: optionalEnv("MAIL_TO") ?? DEFAULT_OWNER_EMAIL,
+    providerMessageId: result.id,
+    providerStatus: result.status,
   };
+}
+
+export async function sendQueuedEmail(
+  message: QueuedEmailMessage,
+): Promise<QueuedEmailResult> {
+  requireEmailAddress(message.to, "Queued recipient");
+  if (message.replyTo) requireEmailAddress(message.replyTo, "Queued reply-to");
+
+  if (hasAzureEmailConfiguration() || configuredValue("AZURE_COMMUNICATION_EMAIL_SENDER")) {
+    try {
+      return await sendAzureEmail(message);
+    } catch (error) {
+      if (!smtpConfiguration()) throw error;
+    }
+  }
+  return sendSmtpEmail(message);
 }

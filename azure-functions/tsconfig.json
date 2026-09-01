@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@prisma/client": ["./node_modules/@prisma/client"],
+      "@azure/communication-email": ["./node_modules/@azure/communication-email"],
+      "@azure/identity": ["./node_modules/@azure/identity"]
+    }
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts", "../lib/email-outbox-worker.ts", "../lib/db.ts", "../lib/mailer.ts"]
+}

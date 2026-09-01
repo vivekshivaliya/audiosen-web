@@ -5,5 +5,15 @@ import nextTs from "eslint-config-next/typescript";
 export default defineConfig([
   ...nextVitals,
   ...nextTs,
-  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+  globalIgnores([
+    ".next/**",
+    "out/**",
+    "build/**",
+    "azure-functions/dist/**",
+    ".lighthouseci/**",
+    "playwright-report/**",
+    "test-results/**",
+    ".azure-deploy-*/**",
+    "next-env.d.ts",
+  ]),
 ]);

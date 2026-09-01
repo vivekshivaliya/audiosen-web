@@ -3,9 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import { Reveal } from "@/components/reveal";
-import { brands, callHref, clinicContact, whatsappHref } from "@/lib/content";
+import { isCatalogStagingPreviewEnabled } from "@/lib/catalog/launch";
+import { getStagedCatalogBrands } from "@/lib/catalog/repository";
+import { callHref, clinicContact, whatsappHref } from "@/lib/content";
+import { StructuredData } from "@/lib/structured-data";
 
 const pageUrl = "https://audiosen.com/hearing-aids-india";
+const stagedBrands = getStagedCatalogBrands();
+const catalogStagingPreviewEnabled = isCatalogStagingPreviewEnabled();
 
 const careJourney = [
   {
@@ -21,16 +26,16 @@ const careJourney = [
   {
     title: "Compare suitable hearing aids",
     description:
-      "Review styles, technology levels, connectivity, charging, warranty, fitting needs, and written costs from trusted brands.",
+      "Review source-checked manufacturer information about styles, connectivity, charging, and fitting considerations before requesting written terms.",
   },
   {
-    title: "Coordinate fitting and support",
+    title: "Confirm the local pathway",
     description:
-      "Audiosen coordinates the appropriate delivery, fitting, follow-up adjustment, maintenance, and repair pathway for your location.",
+      "Ask which delivery, fitting, follow-up, maintenance, or repair steps, if any, can be confirmed for your location.",
   },
 ];
 
-const nationwideServices = [
+const guidanceAreas = [
   {
     title: "Online hearing-care guidance",
     description:
@@ -64,9 +69,9 @@ const decisionFactors = [
 
 const faqs = [
   {
-    question: "Does Audiosen support customers across India?",
+    question: "Can I send Audiosen an enquiry from anywhere in India?",
     answer:
-      "Yes. Audiosen accepts hearing-care and hearing-aid enquiries from across India and coordinates online guidance, assessment planning, device selection, delivery, fitting support, and aftercare according to the customer's location and service availability.",
+      "Yes. Audiosen accepts hearing-care and hearing-aid enquiries from across India. The response confirms what online guidance or location-specific pathway, if any, is available; it does not promise delivery, fitting, a home visit, or aftercare coverage.",
   },
   {
     question: "Can I choose a hearing aid without a hearing test?",
@@ -81,12 +86,12 @@ const faqs = [
   {
     question: "Are home visits available everywhere in India?",
     answer:
-      "Home visits and in-person fitting availability vary by city, pin code, clinical need, and team or partner availability. Audiosen confirms the available pathway before you book or pay.",
+      "No. Home-visit enquiries are limited to the approved Dehradun service area. Outside that area, Audiosen can provide bounded consultation, device guidance, and coordinated support without promising an in-person visit.",
   },
   {
     question: "Which hearing-aid brands can I discuss with Audiosen?",
     answer:
-      "Audiosen provides guidance on hearing aids from Phonak, Signia, Widex, ReSound, Oticon, and Starkey, subject to suitability, stock, service coverage, and written terms.",
+      "Audiosen provides brand-neutral guidance using source-checked information for Phonak, Signia, Widex, and ReSound. This does not claim Audiosen stock, suitability, price, warranty, or nationwide fitting coverage.",
   },
   {
     question: "What should I do if my hearing changes suddenly?",
@@ -100,9 +105,9 @@ const structuredData = [
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": `${pageUrl}#service`,
-    name: "Hearing aids and hearing-care support across India",
+    name: "Hearing-aid guidance and coordinated support enquiries across India",
     description:
-      "Nationwide hearing-aid guidance, assessment planning, fitting coordination, repair guidance, and aftercare support from Audiosen.",
+      "India-wide enquiry intake for hearing-aid guidance, assessment planning, and location-specific fitting, repair, and aftercare coordination.",
     url: pageUrl,
     serviceType: "Hearing aid consultation, selection, fitting coordination, and aftercare",
     areaServed: {
@@ -146,16 +151,16 @@ const structuredData = [
 ];
 
 export const metadata: Metadata = {
-  title: "Hearing Aids in India | Expert Guidance & Support | Audiosen",
+  title: "Hearing Aids in India | Source-Checked Guidance | Audiosen",
   description:
     "Compare hearing aids and get online guidance, assessment planning, fitting coordination, repair guidance, and aftercare support from Audiosen across India.",
   alternates: {
     canonical: "/hearing-aids-india",
   },
   openGraph: {
-    title: "Hearing Aids and Hearing Care Across India | Audiosen",
+    title: "Hearing Aids in India | Source-Checked Guidance | Audiosen",
     description:
-      "A clear nationwide journey from hearing-care guidance and assessment planning to device fitting and aftercare.",
+      "Compare hearing aids and get online guidance, assessment planning, fitting coordination, repair guidance, and aftercare support from Audiosen across India.",
     url: pageUrl,
     siteName: "Audiosen",
     type: "website",
@@ -163,15 +168,15 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/images/editorial/audiosen-hero-consultation-v3.webp",
-        alt: "An Indian audiologist fitting a modern hearing aid for an older woman",
+        alt: "A hearing-care consultation with an older woman and a small hearing device",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hearing Aids and Hearing Care Across India | Audiosen",
+    title: "Hearing Aids in India | Source-Checked Guidance | Audiosen",
     description:
-      "Hearing-aid guidance, assessment planning, fitting coordination, and aftercare support across India.",
+      "Compare hearing aids and get online guidance, assessment planning, fitting coordination, repair guidance, and aftercare support from Audiosen across India.",
     images: ["/images/editorial/audiosen-hero-consultation-v3.webp"],
   },
 };
@@ -179,13 +184,7 @@ export const metadata: Metadata = {
 export default function HearingAidsIndiaPage() {
   return (
     <main>
-      {structuredData.map((item, index) => (
-        <script
-          key={`hearing-aids-india-schema-${index}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
-        />
-      ))}
+      <StructuredData data={structuredData} />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
         <nav aria-label="Breadcrumb" className="mb-6 text-sm text-slate-600">
@@ -196,18 +195,18 @@ export default function HearingAidsIndiaPage() {
 
         <div className="premium-shell grid items-center gap-9 overflow-hidden px-6 py-10 sm:px-10 lg:grid-cols-[1.02fr_0.98fr] lg:py-14">
           <Reveal>
-            <p className="premium-eyebrow">Audiosen · Pan-India Hearing Care</p>
+            <p className="premium-eyebrow">Audiosen · India-Wide Hearing Guidance</p>
             <h1 className="sonic-hero-title mt-4 font-display font-semibold leading-tight text-slate-900">
               Hearing Aids and Hearing Care Across India
             </h1>
             <p className="premium-prose mt-5 max-w-2xl text-lg">
-              Start with clear guidance, arrange the right assessment, compare trusted hearing-aid
-              options, and receive fitting and aftercare coordination wherever you live in India.
+              Start with clear guidance, arrange the right assessment, compare hearing-aid
+              options, and ask which location-specific fitting or aftercare pathway can be confirmed.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               <span className="premium-chip">Online guidance</span>
-              <span className="premium-chip">Leading hearing-aid brands</span>
+              <span className="premium-chip">Manufacturer guidance</span>
               <span className="premium-chip">Location-based fitting support</span>
             </div>
 
@@ -224,15 +223,15 @@ export default function HearingAidsIndiaPage() {
             <div className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-white/70 p-3 shadow-[0_30px_80px_-36px_rgba(8,68,119,0.55)]">
               <Image
                 src="/images/editorial/audiosen-hero-consultation-v3.webp"
-                alt="An Indian audiologist fitting a discreet hearing aid for an older Indian woman"
+                alt="A hearing-care consultation with an older Indian woman and a discreet hearing device"
                 width={1200}
                 height={1500}
                 priority
                 className="h-[30rem] w-full rounded-[1.55rem] object-cover object-center"
               />
               <div className="absolute bottom-7 left-7 right-7 rounded-2xl border border-white/80 bg-slate-950/80 p-4 text-white backdrop-blur-md">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-cyan-200">Across India</p>
-                <p className="mt-1 font-semibold">Personal guidance · suitable devices · ongoing support</p>
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-cyan-200">India-wide enquiries</p>
+                <p className="mt-1 font-semibold">Source-checked guidance · local scope confirmed</p>
               </div>
             </div>
           </Reveal>
@@ -242,7 +241,7 @@ export default function HearingAidsIndiaPage() {
       <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <Reveal>
           <div className="text-center">
-            <p className="premium-eyebrow mb-4">How nationwide support works</p>
+            <p className="premium-eyebrow mb-4">How the enquiry pathway works</p>
             <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
               Four practical steps from concern to aftercare
             </h2>
@@ -268,14 +267,14 @@ export default function HearingAidsIndiaPage() {
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="premium-section px-6 py-10 sm:px-8">
             <Reveal>
-              <p className="premium-eyebrow mb-4">India-wide service pathway</p>
+              <p className="premium-eyebrow mb-4">Location-specific guidance</p>
               <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-                Support built around your location and hearing needs
+                Confirm what is available for your location and hearing needs
               </h2>
             </Reveal>
 
             <div className="mt-8 grid gap-5 md:grid-cols-2">
-              {nationwideServices.map((service, index) => (
+              {guidanceAreas.map((service, index) => (
                 <Reveal key={service.title} delay={index * 0.04} className="premium-card h-full p-6">
                   <h3 className="text-2xl font-semibold text-slate-900">{service.title}</h3>
                   <p className="premium-prose mt-3">{service.description}</p>
@@ -284,9 +283,9 @@ export default function HearingAidsIndiaPage() {
             </div>
 
             <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-relaxed text-amber-950">
-              Audiosen serves enquiries across India, but clinical tests, in-person fitting, and home
-              visits depend on location and availability. The physical Audiosen clinic is at
-              {` ${clinicContact.locality}, ${clinicContact.region}`}. Availability is confirmed before booking.
+              Audiosen accepts consultation, device-guidance, and coordinated-support enquiries
+              across India. Clinic care and home visits are limited to the approved Dehradun service
+              area and are confirmed directly before booking.
             </div>
           </div>
         </div>
@@ -296,27 +295,33 @@ export default function HearingAidsIndiaPage() {
         <Reveal>
           <div className="grid items-end gap-5 lg:grid-cols-[1fr_auto]">
             <div>
-              <p className="premium-eyebrow mb-4">Trusted hearing-aid choices</p>
+              <p className="premium-eyebrow mb-4">Manufacturer guidance</p>
               <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
                 Compare brands only after understanding your needs
               </h2>
               <p className="premium-prose mt-4 max-w-3xl">
-                Audiosen supports leading hearing-aid brands and multiple styles. Final availability,
-                suitability, fitting requirements, and campaign pricing are confirmed in writing.
+                Audiosen offers source-checked guidance about four manufacturer families and multiple
+                styles. Availability, suitability, fitting requirements, and commercial terms are
+                confirmed in writing.
               </p>
             </div>
-            <Link href="/#brands" className="premium-button-primary">View Hearing Aids</Link>
+            <Link href="#india-enquiry" className="premium-button-primary">Request Guidance</Link>
           </div>
         </Reveal>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {brands.map((brand, index) => (
+          {stagedBrands.map((brand, index) => (
             <Reveal key={brand.slug} delay={index * 0.03} className="premium-card h-full p-5">
-              <div className="flex h-12 items-center">
-                <Image src={brand.logo} alt={`${brand.name} hearing aids logo`} width={120} height={44} className="max-h-9 w-auto" />
-              </div>
-              <h3 className="mt-4 text-xl font-semibold text-slate-900">{brand.name} hearing aids</h3>
-              <p className="premium-prose mt-2 text-sm">{brand.summary}</p>
+              <h3 className="text-xl font-semibold text-slate-900">{brand.name} hearing-aid guidance</h3>
+              <p className="premium-prose mt-2 text-sm">
+                Review source-checked manufacturer information without an inventory, suitability,
+                pricing, or commercial-relationship assumption.
+              </p>
+              {catalogStagingPreviewEnabled ? (
+                <Link href={`/hearing-aids/${brand.slug}`} className="mt-4 inline-flex font-semibold text-teal-800 underline underline-offset-4">
+                  Open {brand.name} guidance
+                </Link>
+              ) : null}
             </Reveal>
           ))}
         </div>
@@ -352,7 +357,7 @@ export default function HearingAidsIndiaPage() {
           <div className="text-center">
             <p className="premium-eyebrow mb-4">Frequently asked questions</p>
             <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-              Hearing care across India
+              Send a hearing-care enquiry from India
             </h2>
           </div>
         </Reveal>
@@ -372,7 +377,7 @@ export default function HearingAidsIndiaPage() {
           <Reveal>
             <p className="premium-eyebrow mb-4">Tell us where you are</p>
             <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-              Request your India-wide hearing-care plan
+              Request an India-wide guidance response
             </h2>
             <p className="premium-prose mt-4">
               Share your city or pin code, current hearing reports if available, the situations that
@@ -384,7 +389,7 @@ export default function HearingAidsIndiaPage() {
               <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="premium-button-secondary">
                 Ask on WhatsApp
               </a>
-              <Link href="/hearing-aids-dehradun" className="premium-button-secondary">Visit Dehradun Clinic</Link>
+              <Link href="/hearing-aids-dehradun" className="premium-button-secondary">Dehradun Care Enquiries</Link>
             </div>
           </Reveal>
 

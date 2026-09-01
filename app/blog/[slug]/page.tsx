@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { blogPosts, getBlogPost } from "@/lib/blog-posts";
-import { siteMeta } from "@/lib/content";
+import { StructuredData } from "@/lib/structured-data";
 
 type BlogArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -43,6 +43,12 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
       modifiedTime: post.updatedAt,
       images: [{ url: post.image }],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [post.image],
+    },
   };
 }
 
@@ -77,14 +83,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
           },
         }
       : {}),
-    publisher: {
-      "@type": "Organization",
-      name: "Audiosen",
-      logo: {
-        "@type": "ImageObject",
-        url: siteMeta.logo,
-      },
-    },
+    publisher: { "@id": "https://audiosen.com/#organization" },
   };
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -113,14 +112,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
   return (
     <main className="sonic-article-page mx-auto w-full max-w-5xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <StructuredData data={[articleJsonLd, breadcrumbJsonLd]} />
 
       <nav aria-label="Breadcrumb" className="mb-6 text-sm text-slate-600">
         <Link href="/" className="hover:text-sky-800">Home</Link>

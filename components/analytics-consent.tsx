@@ -4,13 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import {
+  analyticsAllowedOnCurrentPage,
   type AnalyticsConsentChoice,
+  isAnalyticsExcludedPath,
+  pageHasNoindexDirective,
   readAnalyticsConsent,
   saveAnalyticsConsent,
   subscribeToAnalyticsConsent,
 } from "@/lib/analytics";
 
-const googleAnalyticsId = "G-Q6H49XWK0S";
+const googleAnalyticsId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID?.trim() ?? "";
+const analyticsConfigured = /^G-[A-Z0-9]+$/i.test(googleAnalyticsId);
 type ConsentSnapshot = AnalyticsConsentChoice | null | "pending";
 
 function getClientConsentSnapshot(): ConsentSnapshot {
@@ -21,7 +25,27 @@ function getServerConsentSnapshot(): ConsentSnapshot {
   return "pending";
 }
 
+function subscribeToRobotsMetadata(onChange: () => void): () => void {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.head, {
+    attributes: true,
+    attributeFilter: ["content"],
+    childList: true,
+    subtree: true,
+  });
+  return () => observer.disconnect();
+}
+
+function getClientNoindexSnapshot(): boolean {
+  return pageHasNoindexDirective();
+}
+
+function getServerNoindexSnapshot(): boolean {
+  return true;
+}
+
 function startGoogleAnalytics() {
+  if (!analyticsConfigured || !analyticsAllowedOnCurrentPage()) return;
   if (document.getElementById("audiosen-google-analytics")) return;
 
   window.dataLayer = window.dataLayer ?? [];
@@ -66,19 +90,36 @@ export function AnalyticsConsent() {
     getClientConsentSnapshot,
     getServerConsentSnapshot,
   );
+  const pageIsNoindex = useSyncExternalStore(
+    subscribeToRobotsMetadata,
+    getClientNoindexSnapshot,
+    getServerNoindexSnapshot,
+  );
+  const analyticsDisabled =
+    !analyticsConfigured || isAnalyticsExcludedPath(pathname) || pageIsNoindex;
 
   useEffect(() => {
-    if (choice === "denied") {
+    if (choice === "denied" || analyticsDisabled) {
       window.gtag?.("consent", "update", {
         analytics_storage: "denied",
         ad_storage: "denied",
         ad_user_data: "denied",
         ad_personalization: "denied",
       });
+      if (analyticsDisabled) {
+        delete document.documentElement.dataset.audiosenAnalyticsPath;
+      }
       return;
     }
 
     if (choice !== "granted") return;
+
+    window.gtag?.("consent", "update", {
+      analytics_storage: "granted",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
 
     if ("requestIdleCallback" in window) {
       const idleId = window.requestIdleCallback(startGoogleAnalytics, { timeout: 2500 });
@@ -87,10 +128,16 @@ export function AnalyticsConsent() {
 
     const timerId = globalThis.setTimeout(startGoogleAnalytics, 1500);
     return () => globalThis.clearTimeout(timerId);
-  }, [choice]);
+  }, [analyticsDisabled, choice]);
 
   useEffect(() => {
-    if (choice !== "granted" || typeof window.gtag !== "function") return;
+    if (
+      analyticsDisabled ||
+      choice !== "granted" ||
+      typeof window.gtag !== "function"
+    ) {
+      return;
+    }
     if (document.documentElement.dataset.audiosenAnalyticsPath === pathname) return;
 
     window.gtag("event", "page_view", {
@@ -99,7 +146,7 @@ export function AnalyticsConsent() {
       page_title: document.title,
     });
     document.documentElement.dataset.audiosenAnalyticsPath = pathname;
-  }, [choice, pathname]);
+  }, [analyticsDisabled, choice, pathname]);
 
   function chooseAnalytics(nextChoice: AnalyticsConsentChoice) {
     const previousChoice = choice;
@@ -111,7 +158,7 @@ export function AnalyticsConsent() {
     }
   }
 
-  if (choice === "pending") return null;
+  if (analyticsDisabled || choice === "pending") return null;
 
   if (choice !== null && !settingsOpen) {
     return (

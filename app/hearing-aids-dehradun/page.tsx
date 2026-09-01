@@ -4,15 +4,22 @@ import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import {
   brandIdentity,
-  brands,
   callHref,
   clinicContact,
   dehradunClinicJsonLd,
   siteMeta,
   whatsappHref,
 } from "@/lib/content";
+import { getStagedCatalogBrands } from "@/lib/catalog/repository";
+import { isCatalogStagingPreviewEnabled } from "@/lib/catalog/launch";
+import { createPageMetadata } from "@/lib/page-metadata";
+import { StructuredData } from "@/lib/structured-data";
 
 const pageUrl = "https://audiosen.com/hearing-aids-dehradun";
+const metadataTitle = `Hearing Aid Store & Centre in Dehradun | ${brandIdentity.shortName}`;
+const metadataDescription = `Find ${brandIdentity.shortName}, a hearing aid store and centre in Dehradun, for assessment-led device guidance, fitting coordination, repair support, and local enquiries.`;
+const stagedBrands = getStagedCatalogBrands();
+const catalogStagingPreviewEnabled = isCatalogStagingPreviewEnabled();
 
 const localServices = [
   "Hearing aid sales and selection",
@@ -35,8 +42,8 @@ const fittingSteps = [
     description: "The team guides you through the right hearing test or clinic evaluation before selection.",
   },
   {
-    title: "Device Trial",
-    description: "You compare suitable hearing aid styles from trusted brands before final fitting.",
+    title: "Option Review",
+    description: "You review suitable hearing aid styles and handling needs before final fitting.",
   },
   {
     title: "Fitting Support",
@@ -51,17 +58,12 @@ const relatedLocalServices = [
     description: "Understand clinic assessment options and how to prepare.",
   },
   {
-    href: "/hearing-aid-prices-dehradun",
-    title: "Hearing Aid Prices",
-    description: "Compare the factors behind device and fitting costs.",
-  },
-  {
     href: "/hearing-aid-repair-dehradun",
     title: "Hearing Aid Repair",
     description: "Request cleaning, troubleshooting, maintenance, or repair guidance.",
   },
   {
-    href: "/home-hearing-care-dehradun",
+    href: "/home-hearing-care",
     title: "Home Hearing Care",
     description: "Ask whether a home visit is suitable and available for the requested service.",
   },
@@ -70,17 +72,17 @@ const relatedLocalServices = [
 const faqs = [
   {
     question: "Where is Audiosen located in Dehradun?",
-    answer: `${brandIdentity.organizationName} is at Dwarka Clinics, 3rd Floor ENT Department, Race Course Road, near Punjab National Bank, Dehradun, Uttarakhand 248001.`,
+    answer: `${brandIdentity.organizationName} is located at ${clinicContact.address}. Use the directions link or call before travelling to confirm the suitable service and appointment time.`,
   },
   {
     question: "Can I buy hearing aids near Dehradun from Audiosen?",
     answer:
-      "Yes. Audiosen helps patients choose, fit, and support hearing aids from trusted brands after consultation and hearing needs review.",
+      "Audiosen accepts assessment-led hearing-aid enquiries in Dehradun. A written response confirms the appropriate care pathway, model availability, commercial terms, fitting, and support before you proceed.",
   },
   {
-    question: "Which hearing aid brands are available?",
+    question: "Which hearing aid brands can I research here?",
     answer:
-      "Audiosen supports leading hearing aid brands including Phonak, Signia, Widex, ReSound, Oticon, and Starkey, subject to stock and suitability.",
+      "Audiosen provides brand-neutral guidance using source-checked information for Phonak, Signia, Widex, and ReSound. This does not claim that a model is in stock or suitable for you; both are confirmed individually.",
   },
   {
     question: "Do I need an appointment for a hearing aid consultation?",
@@ -137,62 +139,44 @@ const breadcrumbJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: `Hearing Aid Near Dehradun | ${brandIdentity.organizationName}`,
-  description: `Visit ${brandIdentity.organizationName} at Dwarka Clinics, Race Course Road, Dehradun for hearing aids, hearing tests, fitting, repair, and support.`,
+  ...createPageMetadata({
+    title: metadataTitle,
+    description: metadataDescription,
+    path: "/hearing-aids-dehradun",
+    image: siteMeta.ogImage,
+    imageAlt: `${brandIdentity.shortName} hearing aid store and centre in Dehradun`,
+  }),
   keywords:
     "hearing aid near Dehradun, hearing aids Dehradun, hearing aid centre Dehradun, hearing test Dehradun, hearing aid fitting Dehradun, hearing aid repair Dehradun",
-  alternates: {
-    canonical: "/hearing-aids-dehradun",
-  },
-  openGraph: {
-    title: `Hearing Aid Near Dehradun | ${brandIdentity.organizationName}`,
-    description:
-      "Hearing aid consultation, fitting, repair, and hearing tests at Dwarka Clinics, Race Course Road, Dehradun.",
-    url: pageUrl,
-    siteName: "Audiosen",
-    type: "website",
-    locale: "en_IN",
-    images: [{ url: siteMeta.ogImage }],
-  },
 };
 
 export default function HearingAidsDehradunPage() {
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(dehradunClinicJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <StructuredData data={[dehradunClinicJsonLd, faqJsonLd, breadcrumbJsonLd]} />
 
       <section className="mx-auto w-full max-w-7xl px-4 pb-12 pt-14 sm:px-6 lg:px-8">
         <div className="premium-shell grid items-center gap-8 px-6 py-10 sm:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-14">
           <div>
-            <p className="premium-eyebrow mb-4">Race Course Road, Dehradun</p>
+            <p className="premium-eyebrow mb-4">Dehradun hearing-care enquiries</p>
             <h1 className="font-display text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
-              Hearing Aid Centre Near Dehradun
+              Hearing Aid Centre in Dehradun
             </h1>
             <p className="premium-prose mt-5 max-w-2xl text-lg">
-              Visit {brandIdentity.organizationName} for hearing aid consultation, fitting,
-              repair, and hearing care support at Dwarka Clinics, 3rd Floor ENT Department, Race
-              Course Road, near Punjab National Bank.
+              Contact {brandIdentity.organizationName} for hearing-aid guidance, fitting
+              coordination, repair support, and hearing-care enquiries in Dehradun. Visit us at
+              {" "}{clinicContact.address}; please call ahead to confirm the suitable service and appointment time.
             </p>
 
             <div className="mt-6 rounded-2xl border border-sky-100 bg-white/80 p-5 shadow-sm">
-              <p className="text-sm font-bold uppercase tracking-[0.14em] text-sky-800">Clinic Address</p>
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-sky-800">Clinic address</p>
               <p className="mt-2 text-base font-semibold leading-relaxed text-slate-900">
-                {clinicContact.formattedAddress}
+                {clinicContact.address}
               </p>
               <p className="mt-2 text-sm text-slate-600">
-                Open {clinicContact.openingHoursText}. Landmark: {clinicContact.landmark}.
+                Call or get directions before travelling.
               </p>
+              <a href={clinicContact.mapsHref} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex font-semibold text-sky-800 underline underline-offset-4">Get directions</a>
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -207,34 +191,26 @@ export default function HearingAidsDehradunPage() {
               >
                 WhatsApp {clinicContact.whatsappDisplay}
               </a>
-              <a
-                href={clinicContact.mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="premium-button-secondary"
-              >
-                Get Directions
-              </a>
             </div>
           </div>
 
           <div className="glass-panel p-5 sm:p-7">
             <Image
-              src="/images/services/hearing-aid-trial.jpg"
-              alt="Patient trying hearing aids with an audiologist in Dehradun"
+              src="/images/3d/generic-ric-fallback-v1.webp"
+              alt="Brand-neutral receiver-in-canal hearing device visualization"
               width={1200}
-              height={800}
+              height={1200}
               priority
-              className="premium-card h-80 w-full object-cover object-center"
+              className="premium-card h-80 w-full bg-gradient-to-br from-slate-50 to-teal-50 object-contain object-center p-6"
             />
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               <div className="premium-card-soft p-4">
-                <p className="text-2xl font-black text-sky-800">6+</p>
-                <p className="mt-1 text-sm text-slate-600">Trusted hearing aid brands</p>
+                <p className="text-2xl font-black text-sky-800">4</p>
+                <p className="mt-1 text-sm text-slate-600">Source-checked brand families</p>
               </div>
               <div className="premium-card-soft p-4">
-                <p className="text-2xl font-black text-sky-800">9 AM-7 PM</p>
-                <p className="mt-1 text-sm text-slate-600">Monday to Saturday support</p>
+                <p className="text-2xl font-black text-sky-800">Confirm</p>
+                <p className="mt-1 text-sm text-slate-600">Timing before travel</p>
               </div>
             </div>
           </div>
@@ -249,8 +225,8 @@ export default function HearingAidsDehradunPage() {
               Hearing aids, fitting, repair, and tests in Dehradun
             </h2>
             <p className="premium-prose mt-4">
-              Audiosen supports patients who need practical hearing guidance near Race Course
-              Road, including device selection, fitting, after-sales care, and maintenance.
+              Audiosen supports patients who need practical hearing guidance in Dehradun,
+              including device selection, fitting, after-sales care, and maintenance.
             </p>
             <Link href="#appointment" className="premium-button-primary mt-6">
               Book Hearing Aid Consultation
@@ -262,7 +238,8 @@ export default function HearingAidsDehradunPage() {
               <div key={service} className="premium-card p-5">
                 <h3 className="text-lg font-semibold text-slate-900">{service}</h3>
                 <p className="premium-prose mt-2 text-sm">
-                  Available through {brandIdentity.organizationName} in Dehradun.
+                  Ask {brandIdentity.organizationName} to confirm the appropriate Dehradun pathway
+                  and current appointment scope.
                 </p>
               </div>
             ))}
@@ -295,9 +272,9 @@ export default function HearingAidsDehradunPage() {
 
       <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-8 text-center">
-          <p className="premium-eyebrow mb-4">Available Brands</p>
+          <p className="premium-eyebrow mb-4">Manufacturer model guides</p>
           <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-            Trusted hearing aid options in Dehradun
+            Research before a model-specific discussion
           </h2>
           <p className="premium-prose mx-auto mt-4 max-w-3xl">
             Audiosen helps compare suitable hearing aid styles and technology levels after
@@ -306,17 +283,18 @@ export default function HearingAidsDehradunPage() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {brands.map((brand) => (
+          {stagedBrands.map((brand) => (
             <article key={brand.slug} className="premium-card p-5">
-              <Image
-                src={brand.logo}
-                alt={`${brand.name} hearing aid brand logo`}
-                width={140}
-                height={64}
-                className="h-12 w-auto object-contain"
-              />
-              <h3 className="mt-4 text-xl font-semibold text-slate-900">{brand.name}</h3>
-              <p className="premium-prose mt-2 text-sm">{brand.summary}</p>
+              <h3 className="text-xl font-semibold text-slate-900">{brand.name}</h3>
+              <p className="premium-prose mt-2 text-sm">
+                Review source-checked manufacturer information. Local stock, suitability, price,
+                warranty, and image rights are not implied by this guide.
+              </p>
+              {catalogStagingPreviewEnabled ? (
+                <Link href={`/hearing-aids/${brand.slug}`} className="mt-4 inline-flex font-semibold text-sky-800 underline underline-offset-4">
+                  Open {brand.name} guidance
+                </Link>
+              ) : null}
             </article>
           ))}
         </div>
@@ -324,32 +302,23 @@ export default function HearingAidsDehradunPage() {
 
       <section id="appointment" className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr]">
-          <div className="premium-shell overflow-hidden">
-            <iframe
-              title={`${brandIdentity.organizationName} map in Dehradun`}
-              src={clinicContact.mapEmbedUrl}
-              className="h-80 w-full border-0"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-            <div className="p-6 sm:p-8">
+          <div className="premium-shell p-6 sm:p-8">
               <h2 className="font-display text-4xl font-semibold text-slate-900">
-                Visit Audiosen on Race Course Road
+                Visit Audiosen in Dehradun
               </h2>
               <p className="premium-prose mt-4">
-                Use directions to reach Dwarka Clinics, 3rd Floor ENT Department, near Punjab
-                National Bank. Call before visiting if you need hearing aid trial, repair, or
-                home visit guidance.
+                Find us at {clinicContact.address}. Call or WhatsApp before travelling to
+                confirm the appropriate service, appointment time, and availability for your request.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <a href={clinicContact.mapUrl} target="_blank" rel="noopener noreferrer" className="premium-button-primary">
-                  Open Google Maps
+                <a href={callHref} className="premium-button-primary">
+                  Call {clinicContact.primaryCallDisplay}
                 </a>
+                <a href={clinicContact.mapsHref} target="_blank" rel="noopener noreferrer" className="premium-button-secondary">Get Directions</a>
                 <Link href="/hearing-test" className="premium-button-secondary">
                   Take Online Hearing Test
                 </Link>
               </div>
-            </div>
           </div>
 
           <div>

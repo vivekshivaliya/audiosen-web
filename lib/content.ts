@@ -1,31 +1,24 @@
 ﻿import type {
-  FeatureItem,
   HearingTestContent,
-  HeroContent,
   InfoPageContent,
-  ServiceItem,
   SubscriptionPlan,
 } from "@/lib/types";
 
 export const brandIdentity = {
   shortName: "Audiosen",
-  organizationName: "Audiosen Advance Hearing Solutions",
-  subtitle: "Advance Hearing Solutions",
-  previousOrganizationName: "Audiosen Hearing Care Solutions",
+  organizationName: "Audiosen Advance Hearing Care Solutions",
+  subtitle: "Advance Hearing Care Solutions",
 } as const;
 
-const clinicStreetAddress =
-  "Dwarka Clinics, 3rd Floor ENT Department, Race Course Road, near Punjab National Bank";
-const clinicMapQuery = encodeURIComponent(
-  `${clinicStreetAddress}, Dehradun, Uttarakhand 248001, India`,
-);
+const approvedClinicAddress = "7, 11, Ram Vihar St, near ONGC Hospital, Dehradun, Uttarakhand 248001";
+const approvedClinicMapsUrl = "https://maps.app.goo.gl/aS14X1JqjBfKv3TS7";
 
 export const siteMeta = {
-  title: `${brandIdentity.shortName} | Hearing Aids & Hearing Care Across India`,
+  title: `${brandIdentity.shortName} | Hearing & Communication Care`,
   description:
-    `Explore hearing aids, take an online hearing screening, and get consultation, fitting coordination, repair guidance, and aftercare support from ${brandIdentity.shortName} across India.`,
+    `Explore hearing-device guidance, an online sound check, repair support, and communication services across India from ${brandIdentity.shortName}.`,
   keywords:
-    "hearing aids India, digital hearing aids, online hearing test India, audiology consultation, hearing aid fitting, hearing aid repair, Phonak, Signia, Widex, ReSound, Oticon, Starkey",
+    "hearing care Dehradun, hearing aid guidance India, online hearing sound check, hearing aid fitting, hearing aid repair, speech and language services",
   canonicalUrl: "https://audiosen.com/",
   ogImage: "https://audiosen.com/og-image-v2.webp",
   logo: "https://audiosen.com/audiosen-company-logo.png",
@@ -34,48 +27,92 @@ export const siteMeta = {
 export const clinicContact = {
   company: brandIdentity.organizationName,
   email: "support@audiosen.com",
-  streetAddress: clinicStreetAddress,
   locality: "Dehradun",
   region: "Uttarakhand",
   postalCode: "248001",
-  country: "IN",
-  primaryCallDisplay: "+91 83839 93592",
-  primaryCallE164: "+918383993592",
-  whatsappDisplay: "+91 93112 79270",
-  whatsappE164: "+919311279270",
-  openingHoursText: "Mon-Sat 9:00 AM to 7:00 PM",
-  landmark: "near Punjab National Bank, Race Course Road",
-  formattedAddress: `${brandIdentity.organizationName}, ${clinicStreetAddress}, Dehradun, Uttarakhand 248001`,
-  mapEmbedUrl: `https://maps.google.com/maps?q=${clinicMapQuery}&output=embed`,
-  mapUrl: `https://www.google.com/maps/search/?api=1&query=${clinicMapQuery}`,
+  countryCode: "IN",
+  addressLine1: "7, 11, Ram Vihar St, near ONGC Hospital",
+  address: approvedClinicAddress,
+  primaryCallDisplay: "8923092563",
+  primaryCallE164: "+918923092563",
+  whatsappDisplay: "8923092563",
+  whatsappE164: "+918923092563",
+  mapsHref: approvedClinicMapsUrl,
 };
 
 export const callHref = `tel:${clinicContact.primaryCallE164}`;
 
 export const whatsappHref = `https://wa.me/${clinicContact.whatsappE164.replace(/\D/g, "")}?text=${encodeURIComponent(
-  "Hello Audiosen team, I want hearing-care guidance and service support in India.",
+  "Hello, I would like to know more about Audiosen hearing care services.",
 )}`;
+
+export const subscriptionPlans: readonly SubscriptionPlan[] = [
+  {
+    id: "three_month",
+    label: "3 Months Care Plan",
+    priceInr: 2999,
+    badge: "Entry",
+    coverage: [
+      "1 hearing screening / consultation",
+      "1 device fitting review",
+      "1 cleaning / maintenance visit",
+      "WhatsApp support for the plan duration",
+    ],
+  },
+  {
+    id: "six_month",
+    label: "6 Months Care Plan",
+    priceInr: 4999,
+    badge: "Recommended",
+    coverage: [
+      "1 hearing screening / consultation",
+      "2 tuning / re-programming sessions",
+      "2 cleaning / maintenance visits",
+      "Priority service support",
+      "Discount on consumables",
+    ],
+  },
+  {
+    id: "twelve_month",
+    label: "12 Months Care Plan",
+    priceInr: 8999,
+    badge: "Best value",
+    coverage: [
+      "2 hearing screenings / consultations",
+      "4 tuning / re-programming sessions",
+      "4 cleaning / maintenance visits",
+      "Priority repair support",
+      "Accessory discount support",
+    ],
+  },
+];
 
 export const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "LocalBusiness",
   "@id": "https://audiosen.com/#organization",
-  name: clinicContact.company,
-  alternateName: [brandIdentity.shortName, brandIdentity.previousOrganizationName],
+  name: brandIdentity.shortName,
+  alternateName: brandIdentity.organizationName,
   url: "https://audiosen.com/",
   logo: siteMeta.logo,
   image: siteMeta.ogImage,
   telephone: clinicContact.primaryCallE164,
   email: clinicContact.email,
-  description: siteMeta.description,
   address: {
     "@type": "PostalAddress",
-    streetAddress: clinicContact.streetAddress,
+    streetAddress: clinicContact.addressLine1,
     addressLocality: clinicContact.locality,
     addressRegion: clinicContact.region,
     postalCode: clinicContact.postalCode,
-    addressCountry: clinicContact.country,
+    addressCountry: clinicContact.countryCode,
   },
+  hasMap: clinicContact.mapsHref,
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 30.3363904,
+    longitude: 78.0157661,
+  },
+  description: siteMeta.description,
   areaServed: {
     "@type": "Country",
     name: "India",
@@ -86,14 +123,14 @@ export const organizationJsonLd = {
       telephone: clinicContact.primaryCallE164,
       contactType: "customer service",
       areaServed: "IN",
-      availableLanguage: ["English", "Hindi"],
+      availableLanguage: ["English"],
     },
     {
       "@type": "ContactPoint",
       telephone: clinicContact.whatsappE164,
       contactType: "customer service",
       areaServed: "IN",
-      availableLanguage: ["English", "Hindi"],
+      availableLanguage: ["English"],
     },
   ],
   knowsAbout: [
@@ -123,59 +160,20 @@ export const websiteJsonLd = {
 
 export const dehradunClinicJsonLd = {
   "@context": "https://schema.org",
-  "@type": ["MedicalBusiness", "LocalBusiness"],
-  "@id": "https://audiosen.com/#dehradun-clinic",
-  name: clinicContact.company,
+  "@type": "Service",
+  "@id": "https://audiosen.com/#dehradun-hearing-care-enquiries",
+  name: "Audiosen hearing-care enquiries in Dehradun",
   url: "https://audiosen.com/hearing-aids-dehradun",
-  logo: siteMeta.logo,
-  image: siteMeta.ogImage,
+  serviceType: "Hearing-care enquiry coordination",
   telephone: clinicContact.primaryCallE164,
   email: clinicContact.email,
-  hasMap: clinicContact.mapUrl,
-  parentOrganization: {
+  provider: {
     "@id": "https://audiosen.com/#organization",
   },
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: clinicContact.streetAddress,
-    addressLocality: clinicContact.locality,
-    addressRegion: clinicContact.region,
-    postalCode: clinicContact.postalCode,
-    addressCountry: clinicContact.country,
-  },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "09:00",
-      closes: "19:00",
-    },
-  ],
   areaServed: {
     "@type": "City",
     name: "Dehradun",
   },
-};
-
-export const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Hearing Aids", href: "/hearing-aids" },
-  { label: "Prices", href: "/hearing-aid-prices-india" },
-  { label: "Services", href: "/#services" },
-  { label: "Online Test", href: "/hearing-test" },
-  { label: "Guides", href: "/hearing-aid-types" },
-  { label: "Blog", href: "/blog" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
-export const heroContent: HeroContent = {
-  title: "Hearing Aids & Complete Hearing Care Across India.",
-  subtitle:
-    "We help people across India hear better with online guidance, hearing assessments, branded hearing aids, fitting coordination, repair support, and long-term aftercare.",
-  ctaLabel: "Book Consultation ->",
-  ctaHref: "#contact",
-  sideNote: "Pan-India support | consultation + devices + aftercare",
 };
 
 export const hearingTestContent: HearingTestContent = {
@@ -215,595 +213,15 @@ export const hearingTestContent: HearingTestContent = {
   ],
 };
 
-export const providerHighlights = [
-  {
-    title: "Expert Consultation",
-    description: "Personalized hearing care guidance based on your lifestyle, budget, and hearing needs.",
-  },
-  {
-    title: "Trusted Hearing Aids",
-    description: "We sell and support leading hearing aid brands for mild to profound hearing loss.",
-  },
-  {
-    title: "Fitting & Repair",
-    description: "Professional fitting, programming, cleaning, and repair for reliable daily use.",
-  },
-  {
-    title: "After-Sales Care",
-    description: "Follow-up support, maintenance, and long-term assistance after purchase.",
-  },
-];
-
-export const solutionAreas = [
-  {
-    title: "Hearing Test & Screening",
-    description: "Quick hearing checks and guidance to understand your hearing condition clearly.",
-  },
-  {
-    title: "Hearing Aid Selection",
-    description: "Choose the right style, technology, and brand for your hearing requirements.",
-  },
-  {
-    title: "Senior Hearing Care",
-    description: "Friendly support for older adults who need comfortable and dependable solutions.",
-  },
-  {
-    title: "Family Hearing Support",
-    description: "Care plans for children, adults, and families with long-term hearing needs.",
-  },
-];
-
-export const services: ServiceItem[] = [
-  {
-    title: "Hearing Screening & Consultation",
-    description:
-      "First-level assessment to understand hearing concerns, lifestyle needs, and the right next step.",
-    image: "/images/services/hearing-screening-consultation.jpg",
-    imageAlt: "Audiologist consulting a patient about hearing care",
-    points: [
-      "Walk-in or appointment-based consultation",
-      "Basic hearing concern discussion",
-      "Personalized care recommendation",
-    ],
-  },
-  {
-    title: "Pure Tone Audiometry (PTA)",
-    description:
-      "Standard hearing test used to measure hearing levels across different sound frequencies.",
-    image: "/images/services/pure-tone-audiometry.jpg",
-    imageAlt: "Audiometry hearing test in a clinic",
-    points: [
-      "Air conduction testing",
-      "Bone conduction testing",
-      "Hearing threshold chart review",
-    ],
-  },
-  {
-    title: "Speech Audiometry",
-    description:
-      "Checks how well a person hears and understands speech in quiet and noisy conditions.",
-    image: "/images/services/speech-audiometry.jpg",
-    imageAlt: "Speech hearing assessment with audiologist",
-    points: [
-      "Speech recognition testing",
-      "Word understanding assessment",
-      "Conversation difficulty evaluation",
-    ],
-  },
-  {
-    title: "Impedance Audiometry / Tympanometry",
-    description:
-      "Evaluates middle ear function and helps identify ear pressure or eardrum issues.",
-    image: "/images/services/tympanometry.jpg",
-    imageAlt: "Tympanometry ear test equipment",
-    points: [
-      "Tympanogram testing",
-      "Middle ear pressure check",
-      "Eustachian tube function support",
-    ],
-  },
-  {
-    title: "OAE / Objective Hearing Tests",
-    description:
-      "Useful hearing assessment for babies, children, and cases where objective testing is needed.",
-    image: "/images/services/oae-test.jpg",
-    imageAlt: "Objective hearing test for child or infant",
-    points: [
-      "Otoacoustic emission testing",
-      "Quick objective screening",
-      "Helpful for pediatric hearing care",
-    ],
-  },
-  {
-    title: "Hearing Aid Trial & Selection",
-    description:
-      "Try different hearing aid styles and choose the best one based on hearing loss and comfort.",
-    image: "/images/services/hearing-aid-trial.jpg",
-    imageAlt: "Patient trying hearing aids with guidance",
-    points: [
-      "BTE, RIC, CIC, ITE, and rechargeable options",
-      "Brand comparison and recommendation",
-      "Comfort and sound quality trial",
-    ],
-  },
-  {
-    title: "Hearing Aid Fitting & Programming",
-    description:
-      "Professional fitting and tuning so the hearing aid matches the patient’s actual hearing needs.",
-    image: "/images/services/fitting-programming.jpg",
-    imageAlt: "Audiologist fitting and programming a hearing aid",
-    points: [
-      "Device fitting and adjustment",
-      "Programming for speech clarity",
-      "Real-ear support and follow-up tuning",
-    ],
-  },
-  {
-    title: "Hearing Aid Repair & Maintenance",
-    description:
-      "Regular servicing to keep hearing aids working properly for daily use.",
-    image: "/images/services/repair-maintenance.jpg",
-    imageAlt: "Hearing aid repair and maintenance service",
-    points: [
-      "Cleaning and inspection",
-      "Wax guard and accessory support",
-      "Battery and charging help",
-    ],
-  },
-  {
-    title: "Home Visit Hearing Services",
-    description:
-      "Hearing care support at home for elderly patients, busy families, or people with mobility issues.",
-    image: "/images/services/home-visit.jpg",
-    imageAlt: "Home visit hearing care consultation",
-    points: [
-      "Home hearing consultation",
-      "Home hearing aid fitting support",
-      "Home follow-up and servicing",
-    ],
-  },
-  {
-    title: "Pediatric & Senior Hearing Care",
-    description:
-      "Specialized support for children, adults, and older people who need different types of care.",
-    image: "/images/services/pediatric-senior-care.jpg",
-    imageAlt: "Child and senior hearing care support",
-    points: [
-      "Child-friendly hearing support",
-      "Senior citizen hearing assistance",
-      "Long-term follow-up care",
-    ],
-  },
-  {
-    title: "Tinnitus & Hearing Counseling",
-    description:
-      "Guidance and support for people experiencing ringing in the ears or communication difficulty.",
-    image: "/images/services/tinnitus-counseling.jpg",
-    imageAlt: "Hearing counseling session for tinnitus",
-    points: [
-      "Tinnitus awareness guidance",
-      "Daily hearing care advice",
-      "Communication and lifestyle support",
-    ],
-  },
-  {
-    title: "After-Sales Support",
-    description:
-      "Long-term support after purchase so the hearing solution remains comfortable and effective.",
-    image: "/images/services/after-sales-support.jpg",
-    imageAlt: "After sales hearing care support and follow up",
-    points: [
-      "Regular service checks",
-      "Follow-up adjustments",
-      "Patient support after fitting",
-    ],
-  },
-];
-
-export const facts = [
-  "Fact 1: Hearing concerns can affect people of all ages, not only seniors.",
-  "Fact 2: Early evaluation helps you choose the right hearing solution sooner.",
-  "Fact 3: Modern hearing aids can be discreet, rechargeable, and highly comfortable.",
-];
-
-export const myths = [
-  "Myth: Hearing aids are only for old age. Truth: Hearing support is useful at many stages of life.",
-  "Myth: Buying a device is enough. Truth: Fitting, tuning, and follow-up care matter just as much.",
-  "Myth: All devices are the same. Truth: Style, brand, and technology should match the person’s needs.",
-];
-
-export const whyNowPoints = [
-  "Better communication with family and friends.",
-  "Improved confidence in work and social settings.",
-  "More comfort in meetings, calls, and daily conversations.",
-  "Professional support before and after purchase.",
-];
-
-export const features: FeatureItem[] = [
-  {
-    title: "Personalized Recommendations",
-    description: "Choose the right hearing solution based on hearing needs and daily routines.",
-  },
-  {
-    title: "Multiple Hearing Aid Styles",
-    description: "Access to discreet, rechargeable, and advanced hearing aid categories.",
-  },
-  {
-    title: "Brand Support",
-    description: "Trusted products from leading manufacturers with servicing support.",
-  },
-  {
-    title: "Ongoing Care",
-    description: "Help with fitting, follow-up, repair, and long-term maintenance.",
-  },
-];
-
-export const brands = [
-  {
-    slug: "phonak",
-    name: "Phonak",
-    logo: "/brands/phonak.svg",
-    summary: "Swiss precision with powerful speech clarity and universal connectivity.",
-    position: "AI-powered speech clarity, rechargeable designs, and broad Bluetooth compatibility.",
-    devices: [
-      {
-        title: "Audéo Infinio Ultra Sphere",
-        badge: "AI flagship",
-        image: "/images/products/phonak/audeo-sphere-infinio.png",
-        imageAlt: "Phonak Audeo Infinio Ultra Sphere hearing aid",
-        description:
-          "Premium receiver-in-canal hearing aid with a dedicated AI chip for clearer speech in noise.",
-        details: ["Spheric Speech Clarity 2.0", "Rechargeable RIC", "Universal Bluetooth"],
-      },
-      {
-        title: "Audéo Infinio Ultra R",
-        badge: "Rechargeable",
-        image: "/images/products/phonak/audeo-infinio.png",
-        imageAlt: "Phonak Audeo Infinio Ultra R hearing aid",
-        description:
-          "Everyday rechargeable RIC built for automatic listening comfort and smooth sound changes.",
-        details: ["AutoSense OS", "Up to 31 hours battery", "Mild to profound fitting range"],
-      },
-      {
-        title: "Virto R Infinio",
-        badge: "Custom fit",
-        image: "/images/products/phonak/virto-infinio.png",
-        imageAlt: "Phonak Virto R Infinio custom hearing aid",
-        description:
-          "Rechargeable custom in-ear option for people who prefer a made-for-the-ear fit.",
-        details: ["Custom in-ear design", "Rechargeable", "Universal connectivity"],
-      },
-      {
-        title: "CROS Infinio",
-        badge: "Single-sided",
-        image: "/images/products/phonak/cros-infinio.png",
-        imageAlt: "Phonak CROS Infinio hearing aid",
-        description:
-          "Wireless CROS solution designed to support people with unaidable hearing loss in one ear.",
-        details: ["Single-sided hearing support", "Compatible with Infinio", "Wireless sound transfer"],
-      },
-      {
-        title: "Naida Lumity",
-        badge: "Power BTE",
-        image: "/images/products/phonak/naida-lumity.png",
-        imageAlt: "Phonak Naida Lumity power hearing aid",
-        description:
-          "Powerful behind-the-ear hearing aid for severe-to-profound hearing needs and demanding days.",
-        details: ["Power fitting range", "Rechargeable option", "Speech in noise support"],
-      },
-      {
-        title: "Sky Lumity",
-        badge: "Pediatric",
-        image: "/images/products/phonak/sky-lumity.png",
-        imageAlt: "Phonak Sky Lumity pediatric hearing aid",
-        description:
-          "Child-focused hearing aid family built for school, play, speech access, and durable daily use.",
-        details: ["Child-friendly design", "Roger compatibility", "Durable BTE style"],
-      },
-    ],
-  },
-  {
-    slug: "signia",
-    name: "Signia",
-    logo: "/brands/signia.svg",
-    summary: "Modern rechargeable hearing aids with conversation-focused performance.",
-    position: "Integrated Xperience devices focused on group conversation, rechargeability, and app support.",
-    devices: [
-      {
-        title: "Pure Charge&Go BCT IX",
-        badge: "Bluetooth Classic",
-        image: "/images/products/signia/pure-chargego-bct-ix.png",
-        imageAlt: "Signia Pure Charge and Go BCT IX hearing aid",
-        description:
-          "Small rechargeable RIC with Bluetooth Classic support and long battery runtime.",
-        details: ["36-hour runtime", "MFi, ASHA, LE Audio", "Portable charging"],
-      },
-      {
-        title: "Pure Charge&Go IX",
-        badge: "RIC",
-        image: "/images/products/signia/pure-chargego-ix.png",
-        imageAlt: "Signia Pure Charge and Go IX hearing aid",
-        description:
-          "Conversation-focused rechargeable RIC for busy social settings and everyday clarity.",
-        details: ["RealTime Conversation Enhancement", "Rechargeable", "Signia Assistant"],
-      },
-      {
-        title: "Silk Charge&Go IX",
-        badge: "Invisible",
-        image: "/images/products/signia/silk-chargego-ix.png",
-        imageAlt: "Signia Silk Charge and Go IX in-canal hearing aid",
-        description:
-          "Nearly invisible rechargeable in-canal hearing aid with ready-to-wear comfort.",
-        details: ["Rechargeable CIC style", "Discreet fit", "Conversation support"],
-      },
-      {
-        title: "Active Pro IX",
-        badge: "Earbud style",
-        image: "/images/products/signia/active-pro-ix.png",
-        imageAlt: "Signia Active Pro IX hearing aid earbuds",
-        description:
-          "Prescription hearing aid in an earbud-style design for people who want a familiar look.",
-        details: ["Earbud design", "Rechargeable case", "Group conversation focus"],
-      },
-      {
-        title: "Styletto IX",
-        badge: "Slim design",
-        image: "/images/products/signia/styletto-ix.png",
-        imageAlt: "Signia Styletto IX hearing aid",
-        description:
-          "Slim rechargeable style with IX conversation support and a pocket-friendly charging case.",
-        details: ["Integrated Xperience", "Slim receiver-in-canal", "Portable charging"],
-      },
-      {
-        title: "Motion Charge&Go IX",
-        badge: "BTE",
-        image: "/images/products/signia/motion-chargego-ix.png",
-        imageAlt: "Signia Motion Charge and Go IX hearing aid",
-        description:
-          "Behind-the-ear IX option for users who need more fitting power with rechargeable comfort.",
-        details: ["Rechargeable BTE", "Conversation support", "Comfortable all-day fit"],
-      },
-    ],
-  },
-  {
-    slug: "widex",
-    name: "Widex",
-    logo: "/brands/widex.svg",
-    summary: "Natural sound quality and comfort-focused hearing solutions.",
-    position: "Natural sound, Allure platform choices, and discreet rechargeable options.",
-    devices: [
-      {
-        title: "Allure RIC R D",
-        badge: "Newest platform",
-        image: "/images/products/widex/allure-ric-r-d.webp",
-        imageAlt: "Widex Allure RIC R D hearing aid",
-        description:
-          "Receiver-in-canal Allure model built on Widex's newest platform for natural speech clarity.",
-        details: ["W1 chip", "Allure PureSound", "Rechargeable RIC"],
-      },
-      {
-        title: "Allure BTE R D",
-        badge: "BTE power",
-        image: "/images/products/widex/allure-bte-r-d.webp",
-        imageAlt: "Widex Allure BTE R D hearing aid",
-        description:
-          "Behind-the-ear Allure option for people needing a durable style and broad fitting support.",
-        details: ["Mild to profound support", "Rechargeable BTE", "Allure sound platform"],
-      },
-      {
-        title: "Allure ITE R D",
-        badge: "In-ear",
-        image: "/images/products/widex/allure-ite-r-d.webp",
-        imageAlt: "Widex Allure ITE R D hearing aid",
-        description:
-          "Rechargeable in-the-ear Allure model with app control and hands-free connectivity.",
-        details: ["In-the-ear fit", "Hands-free Bluetooth", "Intuitive charger"],
-      },
-      {
-        title: "SmartRIC",
-        badge: "All-day design",
-        image: "/images/products/official/widex-smartric.jpg",
-        imageAlt: "Widex SmartRIC hearing aid",
-        description:
-          "Slim L-shaped RIC designed for all-day battery life and better microphone placement.",
-        details: ["Up to 37 hours battery", "Portable charger", "Wind-noise comfort"],
-      },
-      {
-        title: "Moment Sheer",
-        badge: "Natural sound",
-        image: "/images/products/official/widex-moment.png",
-        imageAlt: "Widex Moment hearing aid",
-        description:
-          "Discreet Widex option known for natural sound processing and everyday listening comfort.",
-        details: ["PureSound processing", "Rechargeable styles", "App personalization"],
-      },
-      {
-        title: "Widex Beyond",
-        badge: "Connected",
-        image: "/images/products/official/widex-beyond.jpg",
-        imageAlt: "Widex Beyond hearing aid",
-        description:
-          "Connected hearing aid option with Widex sound quality and smartphone control support.",
-        details: ["Smartphone app control", "Streaming support", "Comfort-focused fitting"],
-      },
-    ],
-  },
-  {
-    slug: "resound",
-    name: "ReSound",
-    logo: "/brands/resound.svg",
-    summary: "AI hearing support with smart connectivity and streaming.",
-    position: "AI-enhanced listening, Auracast-ready connectivity, and near-invisible styles.",
-    devices: [
-      {
-        title: "ReSound Vivia",
-        badge: "AI flagship",
-        image: "/images/products/resound/vivia-black.png",
-        imageAlt: "ReSound Vivia hearing aids",
-        description:
-          "AI hearing aid focused on vivid sound, hearing in noise, and natural listening control.",
-        details: ["Intelligence Augmented", "Bluetooth LE Audio", "Auracast Assistant"],
-      },
-      {
-        title: "ReSound Savi",
-        badge: "Connected",
-        image: "/images/products/resound/savi-sand.png",
-        imageAlt: "ReSound Savi hearing aids",
-        description:
-          "Small, comfortable hearing aid line built for clear sound and strong connectivity.",
-        details: ["Bluetooth LE Audio", "Auracast support", "Rechargeable or battery styles"],
-      },
-      {
-        title: "ReSound Nexia",
-        badge: "Auracast",
-        image: "/images/products/official/resound-nexia.png",
-        imageAlt: "ReSound Nexia hearing aid",
-        description:
-          "Award-winning hearing aid family with Auracast support and multiple style options.",
-        details: ["Micro RIE, RIE, BTE, custom", "Made for Auracast", "Streaming support"],
-      },
-      {
-        title: "ReSound OMNIA",
-        badge: "Noise focus",
-        image: "/images/products/official/resound-omnia.png",
-        imageAlt: "ReSound OMNIA hearing aid",
-        description:
-          "Premium ReSound hearing aid built for stronger hearing in noise and natural sound access.",
-        details: ["Front Focus", "Rechargeable options", "Smart 3D app support"],
-      },
-      {
-        title: "ReSound Key",
-        badge: "Essential",
-        image: "/images/products/official/resound-key.png",
-        imageAlt: "ReSound Key hearing aid",
-        description:
-          "Reliable essential hearing aid line for practical daily clarity and comfortable fitting.",
-        details: ["Essential daily support", "Multiple styles", "Wireless accessory support"],
-      },
-      {
-        title: "ReSound Vivia RIE",
-        badge: "Rechargeable",
-        image: "/images/products/resound/vivia-grey.png",
-        imageAlt: "ReSound Vivia RIE hearing aids with charger",
-        description:
-          "Rechargeable RIE version of Vivia with AI-assisted listening and modern streaming support.",
-        details: ["Rechargeable RIE", "AI noise handling", "Bluetooth LE Audio"],
-      },
-    ],
-  },
-];
-
-export const rentalPlans = [
-  {
-    title: "Basic Hearing Aid Rental",
-    price: "3,499 / month",
-    deposit: "6,999 refundable deposit",
-    minPeriod: "Minimum 30 days",
-    bestFor: "First-time users, temporary support, mild hearing needs",
-    includes: [
-      "One hearing aid device",
-      "Initial fitting guidance",
-      "One follow-up adjustment",
-      "Basic cleaning kit",
-    ],
-  },
-  {
-    title: "Mid-Range Hearing Aid Rental",
-    price: "5,999 / month",
-    deposit: "11,999 refundable deposit",
-    minPeriod: "Minimum 30 days",
-    bestFor: "Regular daily use, better sound clarity, rechargeable options",
-    includes: [
-      "One branded hearing aid device",
-      "Fitting and programming support",
-      "One follow-up service visit",
-      "Cleaning and maintenance support",
-    ],
-  },
-  {
-    title: "Premium Hearing Aid Rental",
-    price: "9,999 / month",
-    deposit: "19,999 refundable deposit",
-    minPeriod: "Minimum 90 days",
-    bestFor: "AI hearing aids, rechargeable models, strong speech support",
-    includes: [
-      "Premium hearing aid device",
-      "Professional fitting",
-      "Priority service support",
-      "One replacement check if needed",
-    ],
-  },
-];
-
-export const rentalTerms = [
-  "Valid government ID and address proof are required before rental approval.",
-  "Rental is approved only after hearing assessment and device suitability check.",
-  "Minimum rental period is 30 days for basic and mid-range devices; 90 days for premium devices.",
-  "Security deposit is refundable only after device return and full inspection.",
-  "Late return charges will apply after the agreed rental end date.",
-  "Damage, tampering, water damage, or loss will be charged at full replacement cost.",
-  "Only normal wear and tear is accepted; missing accessories are charged separately.",
-  "Customer must not open, modify, repair, or hand over the device to a third party.",
-  "Rental includes initial fitting and one standard follow-up adjustment.",
-  "Consumables such as wax guards, domes, tubes, batteries, and chargers may be chargeable separately.",
-  "The company may replace a device with a similar model if servicing is required.",
-  "Final approval for rental remains with the company after inspection and stock availability.",
-  "No refund is provided for partially used rental periods.",
-  "The customer is responsible for safe storage, handling, and daily care of the device.",
-  "Any service visit outside the included plan may be billed separately.",
-];
-
-export const subscriptionPlans: SubscriptionPlan[] = [
-  {
-    id: "three_month",
-    label: "3 Months Care Plan",
-    priceInr: 2999,
-    badge: "Entry",
-    coverage: [
-      "1 hearing screening / consultation",
-      "1 device fitting review",
-      "1 cleaning / maintenance visit",
-      "WhatsApp support for plan duration",
-    ],
-  },
-  {
-    id: "six_month",
-    label: "6 Months Care Plan",
-    priceInr: 4999,
-    badge: "Recommended",
-    coverage: [
-      "1 hearing screening / consultation",
-      "2 tuning / re-programming sessions",
-      "2 cleaning / maintenance visits",
-      "Priority service support",
-      "Discount on consumables",
-    ],
-  },
-  {
-    id: "twelve_month",
-    label: "12 Months Care Plan",
-    priceInr: 8999,
-    badge: "Best Value",
-    coverage: [
-      "2 hearing screenings / consultations",
-      "4 tuning / re-programming sessions",
-      "4 cleaning / maintenance visits",
-      "Priority repair support",
-      "Accessory discount support",
-    ],
-  },
-];
-
 export const footerContact = {
   company: clinicContact.company,
   copyright: "Copyright 2026 - Better hearing, better living",
-  location: `Serving customers across India | Dehradun clinic: ${clinicContact.formattedAddress}, India`,
+  location: clinicContact.address,
   callDisplay: clinicContact.primaryCallDisplay,
   callHref,
   whatsappDisplay: clinicContact.whatsappDisplay,
   whatsappHref,
   gmail: clinicContact.email,
-  mapUrl: clinicContact.mapUrl,
 };
 
 export const infoPages: Record<
@@ -823,23 +241,23 @@ export const infoPages: Record<
     image: "/images/editorial/hearing-test-consultation-v2.webp",
     imageAlt: "An Audiosen-style hearing consultation with an older Indian patient",
     paragraphs: [
-      "Audiosen is an India-focused hearing-care startup helping people hear better through consultation, hearing assessments, branded hearing aids, fitting coordination, repair guidance, and ongoing support.",
-      "Our team supports children, adults, seniors, and families across India through online guidance and location-appropriate care, with in-person clinic services available in Dehradun.",
-      "Our mission is to make trustworthy, understandable hearing care easier to access throughout India.",
+      "Audiosen is an India-focused hearing-care startup offering consultation, hearing-assessment planning, hearing-device guidance, fitting coordination, repair guidance, and ongoing support.",
+      "Audiosen accepts enquiries from children, adults, seniors, and families across India for online guidance and location-appropriate coordination. Clinic and home-care scope is confirmed before booking.",
+      "Our mission is to make trustworthy, understandable hearing guidance easier to access while keeping every in-person service promise location-specific.",
     ],
   },
   careers: {
-    title: "Join the Audiosen Team",
+    title: "Careers and Expressions of Interest",
     image: "/images/editorial/hearing-care-careers-v2.webp",
     imageAlt: "Indian hearing-care professionals collaborating around audiology equipment",
     paragraphs: [
-      "We are looking for hearing care professionals, patient coordinators, and support team members.",
-      "Send your CV to careersaudiosen@gmail.com with the subject line \"Application - [Position Name]\".",
+      "Audiosen accepts general career expressions of interest. This page does not confirm that a vacancy, position, location, salary, or recruitment timeline is currently open.",
+      "If you would like to be considered when a suitable role is confirmed, send your CV to support@audiosen.com with the subject line \"Career Expression of Interest - [Area]\".",
     ],
     bullets: [
-      "Clinical Audiologist - Full time, patient care and fitting support.",
-      "Hearing Aid Technician - Repair, maintenance, and servicing work.",
-      "Patient Counselor - Friendly communication and follow-up support.",
+      "Clinical hearing care - identity, qualifications, registration, scope, and exact role terms are checked before any appointment.",
+      "Technical support - repair capability, supervision, location, and exact role terms are confirmed for any opening.",
+      "Patient coordination - responsibilities, working arrangement, and exact role terms are confirmed for any opening.",
     ],
   },
   blog: {
@@ -874,18 +292,16 @@ export const infoPages: Record<
     imageAlt: "Organized policy documents representing clear website navigation and trust",
     paragraphs: [
       "Audiosen website map and key pages for hearing care services, support, and policies.",
-      `Address: ${clinicContact.streetAddress}, ${clinicContact.locality}, ${clinicContact.region} ${clinicContact.postalCode}, India.`,
+      "In-person location details are shared only after the team confirms the requested service and booking availability.",
     ],
     bullets: [
       "Home",
       "Hearing Aids Across India",
       "Browse All Hearing Aids",
-      "Hearing Aid Prices in India",
       "Hearing Aid Types",
       "Hearing Aid Fitting & Aftercare",
       "Hearing Aid Repair in India",
       "Hearing Aid Cost Calculator",
-      "Savings Offer Terms",
       "About Us",
       "Careers",
       "Blog",
@@ -893,13 +309,12 @@ export const infoPages: Record<
       "Accessibility",
       "Hearing Aids in Dehradun",
       "Hearing Test in Dehradun",
-      "Hearing Aid Prices in Dehradun",
       "Hearing Aid Repair in Dehradun",
       "Home Hearing Care in Dehradun",
       "Online Hearing Test",
       "Services",
       "Hearing Aid Brands",
-      "Contact & Location",
+      "Contact Audiosen",
       "Legal",
       "Privacy Policy",
       "Terms of Service",
@@ -911,9 +326,9 @@ export const infoPages: Record<
     image: "/images/editorial/policy-trust-v2.webp",
     imageAlt: "Clear policy documents with a privacy lock and hearing technology",
     paragraphs: [
-      "Effective date: May 1, 2026.",
-      "This page provides a central reference to Audiosen's legal, privacy, and customer policy documents. These policies apply to visitors, customers, and users of our website and related digital services.",
-      "By using our website, booking services, or submitting enquiries, you agree to the applicable terms listed below.",
+      "Review status: staged on August 22, 2026; final owner and Indian legal approval is required before production launch.",
+      "This page provides a central reference to Audiosen's privacy, website-use, and commercial guidance documents.",
+      "A written quote, appointment confirmation, invoice, or service agreement may add transaction-specific terms. Nothing on these staged pages limits a right that cannot lawfully be excluded.",
     ],
     bullets: [
       "Privacy Policy: how we collect, use, and protect your data.",
@@ -927,23 +342,28 @@ export const infoPages: Record<
     image: "/images/editorial/policy-trust-v2.webp",
     imageAlt: "Privacy documents and a frosted lock representing protected information",
     paragraphs: [
-      "Effective date: August 17, 2026.",
-      "Audiosen values your privacy. This Privacy Policy explains what information we collect through our website, how we use it, and the choices available to you.",
-      "When you send an enquiry, we collect the details you choose to provide, including name, phone or WhatsApp number, city, the type of help requested, consent record, source page and campaign attribution. Email, preferred contact details, and additional message text are optional.",
-      "We use enquiry information to answer your request, coordinate the requested service, send operational confirmations, maintain follow-up records, prevent abuse, and understand whether an enquiry became a qualified appointment. Contact and hearing-related details are never sent to Google Analytics.",
-      "Enquiries are stored in Microsoft Azure Table Storage using the Audiosen App Service managed identity. Staff notifications and optional confirmation messages use configured email-delivery services. Website hosting, analytics, email, and payment providers process only the information needed for their role.",
-      "Optional Google Analytics stays off until you accept it. When enabled, Audiosen sends privacy-limited page paths and fixed interaction labels, excludes URL query strings, disables advertising signals, and does not send names, phone numbers, email addresses, cities, symptoms, hearing-test responses, or message text. You can change the choice at any time with the Analytics settings button.",
-      "Audiosen does not sell personal information. Information may be disclosed when needed to deliver a requested service, protect the website, comply with applicable law, or respond to a valid legal requirement.",
-      "Website enquiry records are reviewed for deletion or anonymisation after 24 months from the last meaningful interaction unless a longer period is needed for an active service, warranty, transaction, dispute, fraud prevention, or applicable legal requirement.",
-      "You may request access, correction, withdrawal of contact consent, or deletion of website enquiry data, subject to applicable record-keeping and operational requirements. Send the request from a verifiable contact channel to support@audiosen.com.",
-      "We apply reasonable technical and administrative safeguards, but no internet transmission or storage system can be guaranteed completely secure.",
+      "Effective date: August 22, 2026.",
+      "Audiosen values your privacy. This policy explains the personal data used by the public website enquiry and administration system. The website CRM coordinates requests and is not a clinical-record or hospital-record system.",
+      "When you send an enquiry, Audiosen collects the details you choose to provide: name, phone or WhatsApp number, city, age group, requested service, consent record, source page and limited campaign attribution. Email, appointment preference, device context and additional message text are optional. Private repair photos or audiograms are accepted only through the protected upload workflow.",
+      "Audiosen uses this information to answer and coordinate your request, send operational confirmations, maintain authorised follow-up records, prevent abuse, protect the service, meet applicable legal duties and understand whether an enquiry progressed. The team should not use this website CRM as a substitute for a clinical patient file.",
+      "New enquiry records use Azure Database for PostgreSQL. Sensitive free text is encrypted, private attachments use random paths in non-public Azure Blob Storage and begin in quarantine, and outbound messages are queued in a transactional outbox for Azure Communication Services Email. The previous Azure Table lead source remains read-only only during an audited migration and retention window.",
+      "Access to enquiries and private attachments is limited to allowlisted staff using authenticated, role-based administration. Administrative changes and sensitive reads are recorded in an audit trail. Application and security logs are structured to redact names, contact details, narratives, references, upload tokens and credentials.",
+      "Optional Google Analytics stays off until you accept it. When enabled, Audiosen sends only fixed event names and identifiers such as page type, CTA location, brand slug or product slug. Query strings, names, phone numbers, emails, cities, age, finder answers, symptoms, hearing-test responses, enquiry references, messages and uploads are excluded. Advertising signals remain disabled.",
+      "Audiosen does not sell personal data or use website health enquiries for targeted advertising. Necessary providers may process limited information for Azure hosting and storage, bot protection, authenticated administration, operational email or consented analytics. Information may also be disclosed when required to deliver an authorised service, investigate abuse, comply with applicable law or respond to a valid legal requirement.",
+      "Default retention is: suspected spam for 30 days; unconverted website enquiries for 24 months after the last meaningful activity; private attachments for 90 days after closure and no longer than 12 months without documented need; delivered email-outbox bodies for 30 days; and raw Google Business snapshots for no more than 30 days. Legal minimums, active services, transactions, disputes, security investigations and documented holds may require a different period.",
+      "For a patient under 18, a parent or lawful guardian must provide consent. A website checkbox is an initial declaration only; Audiosen must complete any legally required age and guardian verification before collecting expanded child information or delivering the applicable service. Do not upload a child's identity or clinical record through a general enquiry.",
+      "You may request access, correction, withdrawal of contact consent, deletion, or grievance review for website enquiry data, subject to identity verification and applicable retention duties. Use support@audiosen.com from a verifiable contact channel. Withdrawing optional consent does not affect processing already lawfully completed, and Audiosen will stop consent-based contact that is no longer required.",
+      "Audiosen applies technical and organisational safeguards, but no internet transmission or storage system can be guaranteed completely secure. Suspected privacy or security incidents should be reported promptly to support@audiosen.com.",
+      "This implementation is designed for review against India's Digital Personal Data Protection Act, 2023 and the Digital Personal Data Protection Rules, 2025, including their notified commencement timetable. It is not a substitute for final Indian legal counsel and operational compliance review before production launch.",
     ],
     bullets: [
-      "Required enquiry data: name, phone or WhatsApp, city, requested help, and explicit contact/privacy consent.",
-      "Optional data: email, contact preferences, additional message text, and campaign attribution identifiers.",
-      "Analytics: opt-in only, advertising signals disabled, and no contact or hearing-health content.",
-      "Enquiry retention default: review after 24 months from the last meaningful interaction, subject to stated exceptions.",
-      "Contact for privacy concerns: support@audiosen.com.",
+      "Required enquiry data: name, phone or WhatsApp, city, requested help and explicit contact/privacy consent.",
+      "Optional data: email, age group, appointment preferences, device context, additional message text and limited campaign attribution.",
+      "Private files: validated, quarantined, non-public and available only through short-lived authenticated access.",
+      "Analytics: opt-in only, advertising disabled and no contact, health, finder, reference or query-string data.",
+      "Children: parent or lawful-guardian consent and any required verification before expanded processing.",
+      "Rights and grievance contact: support@audiosen.com.",
+      "Official framework: https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa",
     ],
   },
   termsOfService: {
@@ -951,13 +371,14 @@ export const infoPages: Record<
     image: "/images/editorial/policy-trust-v2.webp",
     imageAlt: "Organized service terms beside a pen and hearing technology",
     paragraphs: [
-      "Effective date: May 1, 2026.",
+      "Review status: staged on August 22, 2026; final owner and Indian legal approval is required before production launch.",
       "These Terms of Service govern use of the Audiosen website and related online interactions. If you do not agree with these terms, please do not use this website.",
       "Website content is provided for general information and does not replace a clinical diagnosis, emergency care, or direct medical advice.",
       "Users agree to provide accurate information while submitting enquiries, appointment requests, or service details.",
-      "Audiosen may update website content, prices, product availability, and service scope without prior notice.",
-      "All logos, designs, written content, and media on this site are owned by or licensed to Audiosen and must not be copied or reused without permission.",
-      "Audiosen is not liable for losses arising from third-party websites, network interruptions, external payment issues, or misuse of user credentials.",
+      "A website enquiry does not reserve a product, appointment, trial, home visit, price, offer, warranty, or service. Audiosen confirms any applicable scope and commercial terms separately in writing.",
+      "The website does not accept online payment. Any clinic or offline transaction proceeds only after written terms are supplied through an authorised Audiosen channel.",
+      "Audiosen publishes original material and third-party material only under its recorded permission or source terms. Product media with unresolved commercial rights remains withheld.",
+      "Links to third-party services are provided for convenience. Their availability and privacy practices are governed by their own terms, subject always to rights that cannot lawfully be excluded.",
       "These terms are governed by applicable laws of India. Any disputes are subject to competent jurisdiction as per applicable law.",
     ],
     bullets: [
@@ -968,62 +389,21 @@ export const infoPages: Record<
     ],
   },
   refundCancellation: {
-    title: "Refund & Cancellation Policy",
+    title: "Cancellation & Commercial Terms",
     image: "/images/editorial/policy-trust-v2.webp",
     imageAlt: "Clear customer policy documents arranged in a trustworthy setting",
     paragraphs: [
-      "Effective date: May 1, 2026.",
-      "This policy applies to online and offline bookings, hearing care consultations, device services, and plan payments made to Audiosen.",
-      "Appointment cancellation requests should be shared as early as possible through phone or email. Timely rescheduling requests are generally accommodated subject to slot availability.",
-      "If Audiosen cancels a confirmed appointment due to operational constraints, customers may choose a rescheduled slot or applicable refund for the affected service fee.",
-      "Refund eligibility depends on service type, device category, payment channel, and whether the service has already been delivered or consumed.",
-      "For hearing aid device purchases, trials, rentals, consumables, and custom-fit products, return and refund outcomes are subject to product condition, hygiene handling, manufacturer terms, and documented service scope.",
-      "Approved refunds are processed back to the original payment method where possible, and processing timelines may vary by bank or payment provider.",
-      "Non-refundable items may include completed consultations, already-rendered service sessions, used consumables, damaged products, and partially used plan durations unless otherwise committed in writing.",
+      "Review status: staged on August 22, 2026; final owner and Indian legal approval is required before production launch.",
+      "Audiosen does not publish a universal device, service, rental, trial, offer, return, deposit, warranty, or refund promise. The exact owner-approved written quote, appointment confirmation, invoice, manufacturer term, and service agreement supplied before an offline transaction control that transaction, together with applicable law.",
+      "The website accepts enquiries only and does not take online payment. Sending a form does not create a purchase, reserve stock, or make a commercial program available.",
+      "To cancel or reschedule a confirmed appointment, contact Audiosen as early as practical using the phone or support email in the confirmation. The team will respond using the written terms supplied for that booking.",
+      "For an offline payment or device order, keep the written quote, invoice, exact model and serial details, included services, warranty, cancellation conditions, and any manufacturer terms. Audiosen will review a request against those records and rights under applicable law.",
+      "Nothing on this staged page limits a consumer right that cannot lawfully be excluded.",
     ],
     bullets: [
-      `To request cancellation/refund: ${clinicContact.email} or call ${clinicContact.primaryCallDisplay}.`,
-      "Share booking ID, payment reference, and reason for request for faster processing.",
-      "Refund decisions are based on service records and applicable policy terms.",
-      "Rental and subscription plans also remain subject to their specific signed terms.",
+      `Cancellation or commercial query: ${clinicContact.email} or call ${clinicContact.primaryCallDisplay}.`,
+      "Share only the minimum booking or invoice details needed to locate the authorised record.",
+      "Do not send payment-card information, banking credentials, or clinical documents by general email.",
     ],
   },
 };
-
-export const contactContent = {
-  sectionTitle: "Book Your Hearing Care Consultation",
-  sectionSubtitle:
-    "Tell us your hearing concern, product need, or service request and our team will guide you.",
-  lockline:
-    "We’ll reply within 24 hours and help you choose the right next step.",
-  submitLabel: "Send Enquiry",
-  successLabel:
-    "Your enquiry has been sent. We will contact you soon with next steps.",
-};
-
-export const featureMarks = ["CARE", "FIT", "SUPPORT", "SERVICE"];
-
-export const serviceJourney = [
-  {
-    title: "Consultation",
-    description: "We learn about your hearing concern, lifestyle, and budget.",
-  },
-  {
-    title: "Evaluation",
-    description: "We guide you toward the right hearing test or screening step.",
-  },
-  {
-    title: "Recommendation",
-    description: "We suggest the right hearing aid style or service plan.",
-  },
-  {
-    title: "Support",
-    description: "We fit, service, and support your hearing solution over time.",
-  },
-];
-
-
-
-
-
-

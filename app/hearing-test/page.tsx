@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HearingTest } from "@/components/hearing-test";
 import { Reveal } from "@/components/reveal";
+import { StructuredData } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: "Online Hearing Test India | Audiosen Sound Check",
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Online Hearing Test India | Audiosen Sound Check",
     description:
-      "A private device-relative sound check with ear-by-ear tones and clear guidance on when to arrange a clinical assessment.",
+      "Take Audiosen's private device-relative online hearing sound check in India, with setup checks, ear-by-ear tones, consistency feedback, and safe next steps.",
     url: "https://audiosen.com/hearing-test",
     type: "website",
     locale: "en_IN",
@@ -28,14 +29,30 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Online Hearing Test India | Audiosen Sound Check",
-    description: "A private online sound check with ear-by-ear tones and safe next-step guidance.",
+    description:
+      "Take Audiosen's private device-relative online hearing sound check in India, with setup checks, ear-by-ear tones, consistency feedback, and safe next steps.",
     images: ["/images/editorial/hearing-test-consultation-v2.webp"],
   },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://audiosen.com/" },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Online Hearing Test",
+      item: "https://audiosen.com/hearing-test",
+    },
+  ],
 };
 
 export default function HearingTestPage() {
   return (
     <main className="mx-auto w-full max-w-7xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
+      <StructuredData data={breadcrumbJsonLd} />
       <Reveal>
         <section className="premium-shell sonic-screening-hero">
           <div>

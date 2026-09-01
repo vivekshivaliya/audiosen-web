@@ -1,126 +1,36 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { BrandShowcase } from "@/components/brand-showcase";
-import { ContactForm } from "@/components/contact-form";
-import { HearingTest } from "@/components/hearing-test";
-import { Reveal } from "@/components/reveal";
-import { ServicesExplorer } from "@/components/services-explorer";
 import {
-  brands,
-  contactContent,
-  heroContent,
-  organizationJsonLd,
-  providerHighlights,
-  rentalPlans,
-  rentalTerms,
-  services,
-  solutionAreas,
-  subscriptionPlans,
+  ApprovedBusinessDirectionsCard,
+  ApprovedBusinessProfileCopy,
+} from "@/components/approved-business-location";
+import { ApprovedOffer } from "@/components/approved-offer";
+import { CatalogModelCard } from "@/components/catalog/catalog-model-card";
+import { EarEducation } from "@/components/ear-education";
+import { Reveal } from "@/components/reveal";
+import { ServiceCard } from "@/components/service-card";
+import {
+  callHref,
+  clinicContact,
   websiteJsonLd,
   whatsappHref,
 } from "@/lib/content";
-
-const featuredBrands = brands.map((brand) => ({
-  ...brand,
-  devices: brand.devices.slice(0, 2),
-}));
-
-const rentalSpotlightDevices = [
-  {
-    src: "/images/products/official/phonak-lumity-l90.png",
-    alt: "Phonak Lumity L90 hearing aid",
-  },
-  {
-    src: "/images/products/official/signia-charge-and-go-ix.jpg",
-    alt: "Signia Charge and Go IX hearing aid",
-  },
-  {
-    src: "/images/products/official/starkey-genesis-ai.png",
-    alt: "Starkey Genesis AI hearing aid",
-  },
-  {
-    src: "/images/products/official/phonak-audeo-paradise.png",
-    alt: "Phonak Audeo Paradise hearing aid",
-  },
-  {
-    src: "/images/products/official/resound-nexia.png",
-    alt: "ReSound Nexia hearing aid",
-  },
-  {
-    src: "/images/products/official/widex-moment.png",
-    alt: "Widex Moment hearing aid",
-  },
-];
-
-const subscriptionTerms = [
-  "Subscription is available only after hearing consultation.",
-  "Physical payment only at the clinic.",
-  "No online checkout or payment gateway is shown on the website.",
-  "Plan benefits apply only during the active plan period.",
-  "Extra repair parts, accessories, or major servicing can be billed separately.",
-];
-
-const campaignOffer = {
-  headline: "Request Current Hearing Aid Savings",
-  subline:
-    "Potential savings vary by device and are confirmed only in a model-specific written quote. Eligibility, stock, fitting, warranty, validity, and exclusions apply.",
-  ctaLabel: "Read the Offer Terms",
-  ctaHref: "/offers/50-percent-off",
-};
-
-const offerHighlights = [
-  "Model-specific written quote",
-  "Eligibility and stock confirmed",
-  "Fitting and warranty stated clearly",
-];
-
-const nationwideSupportSteps = [
-  {
-    title: "Talk to the care team",
-    description: "Share your hearing needs, preferred language, location, current reports, and budget by phone, WhatsApp, or the enquiry form.",
-  },
-  {
-    title: "Plan the right assessment",
-    description: "We explain whether an online orientation, a local clinical hearing assessment, or an in-person clinic visit is the sensible next step.",
-  },
-  {
-    title: "Compare suitable options",
-    description: "Review appropriate hearing-aid styles, brands, features, support terms, and written pricing without choosing on appearance alone.",
-  },
-  {
-    title: "Coordinate fitting and aftercare",
-    description: "Audiosen helps coordinate device delivery, fitting support, adjustments, repair guidance, and follow-up based on your location.",
-  },
-];
-
-const nationalServiceJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "@id": "https://audiosen.com/hearing-aids-india#service",
-  name: "Hearing aids and hearing-care support across India",
-  serviceType: "Hearing aid consultation, selection, fitting coordination, and aftercare",
-  url: "https://audiosen.com/hearing-aids-india",
-  areaServed: {
-    "@type": "Country",
-    name: "India",
-  },
-  provider: {
-    "@id": "https://audiosen.com/#organization",
-  },
-};
+import { hearingServices } from "@/lib/service-catalog";
+import { getApprovedCatalogSnapshot } from "@/lib/catalog/approved-snapshot";
+import { getActivePublicOffer } from "@/lib/offers/public";
+import { getPublicGoogleReviews } from "@/lib/public-google-reviews";
+import { StructuredData } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Audiosen | Hearing Aids & Hearing Care Across India",
+  title: "Hearing Care Across India | Audiosen Advance Hearing Care Solutions",
   description:
-    "Explore hearing aids, take an online hearing screening, and get consultation, fitting coordination, repair guidance, and aftercare support across India.",
-  alternates: {
-    canonical: "/",
-  },
+    "India-wide hearing-device guidance, assessment planning, fitting coordination, repair support and speech-service enquiries with personalized support from Audiosen.",
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Audiosen | Hearing Aids & Hearing Care Across India",
+    title: "Hearing Care Across India | Audiosen Advance Hearing Care Solutions",
     description:
-      "Compare trusted hearing-aid brands and connect with Audiosen for hearing-care guidance and support across India.",
+      "India-wide hearing-device guidance, assessment planning, fitting coordination, repair support and speech-service enquiries with personalized support from Audiosen.",
     url: "https://audiosen.com/",
     siteName: "Audiosen",
     type: "website",
@@ -130,456 +40,540 @@ export const metadata: Metadata = {
         url: "/og-image-v2.webp",
         width: 1200,
         height: 630,
-        alt: "Audiosen hearing aids and hearing care across India",
+        alt: "Audiosen hearing and communication care",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Audiosen | Hearing Aids & Hearing Care Across India",
-    description: "Hearing-aid guidance, online screening, fitting coordination, and aftercare support across India.",
+    title: "Hearing Care Across India | Audiosen Advance Hearing Care Solutions",
+    description:
+      "India-wide hearing-device guidance, assessment planning, fitting coordination, repair support and speech-service enquiries with personalized support from Audiosen.",
     images: ["/og-image-v2.webp"],
   },
 };
 
-export default function HomePage() {
+const trustItems = [
+  {
+    title: "Assessment-led guidance",
+    description: "Device discussions follow an appropriate professional hearing assessment.",
+  },
+  {
+    title: "Clear commercial terms",
+    description: "Prices, availability and program terms are confirmed in writing—never guessed.",
+  },
+  {
+    title: "Care beyond selection",
+    description: "Fitting, programming, maintenance and follow-up are part of the conversation.",
+  },
+  {
+    title: "India-wide support",
+    description: "Guidance and coordination across India, with clinic care confirmed for Dehradun.",
+  },
+];
+
+const brandTones = {
+  phonak: "from-sky-50 to-cyan-100",
+  signia: "from-fuchsia-50 to-rose-100",
+  widex: "from-amber-50 to-orange-100",
+  resound: "from-emerald-50 to-teal-100",
+  oticon: "from-blue-50 to-cyan-100",
+  starkey: "from-rose-50 to-pink-100",
+} as const;
+
+const careJourney = [
+  "Hearing concern",
+  "Hearing assessment",
+  "Professional guidance",
+  "Hearing solution",
+  "Fitting & programming",
+  "Speech / communication support",
+  "Follow-up",
+  "Ongoing hearing care",
+];
+
+const childSigns = [
+  "delayed words or limited vocabulary",
+  "unclear speech or pronunciation difficulty",
+  "difficulty following spoken instructions",
+  "frequent requests for repetition",
+  "suspected hearing difficulty",
+  "difficulty communicating in daily routines",
+];
+
+const reasons = [
+  {
+    title: "One coordinated starting point",
+    description:
+      "Discuss assessment, devices, repair, hearing follow-up and communication needs without navigating disconnected forms.",
+  },
+  {
+    title: "Facts before promotion",
+    description:
+      "Unapproved prices, discounts, stock, credentials and reviews stay unpublished until their evidence is recorded.",
+  },
+  {
+    title: "Human help when it matters",
+    description:
+      "Call, WhatsApp or send a structured request. The team confirms the appropriate service and location before booking.",
+  },
+];
+
+const faqs = [
+  {
+    question: "Can Audiosen help me choose a hearing aid online?",
+    answer:
+      "Audiosen can explain styles and preferences online, but suitability and programming decisions require an appropriate professional hearing assessment.",
+  },
+  {
+    question: "Does Audiosen provide care outside Dehradun?",
+    answer:
+      "Audiosen accepts enquiries across India for consultation, device guidance and coordinated support. Clinic and home-visit services are confirmed for the approved Dehradun service area only.",
+  },
+  {
+    question: "Are prices, trials or discounts guaranteed on the website?",
+    answer:
+      "No. A price, trial, rental or offer appears only after its exact eligibility, dates and written terms are approved. Otherwise the team provides a personalized written response.",
+  },
+  {
+    question: "Can I use the online sound check instead of a clinical test?",
+    answer:
+      "No. The browser check is device-relative and non-diagnostic. It cannot measure clinical hearing thresholds or replace an age-appropriate assessment.",
+  },
+  {
+    question: "What should I do about sudden hearing change or severe ear symptoms?",
+    answer:
+      "Seek prompt medical assessment rather than relying on an online check or routine website enquiry—especially for sudden one-sided change, severe pain, discharge, injury, dizziness or neurological symptoms.",
+  },
+];
+
+const nationalServiceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://audiosen.com/#care-guidance",
+  name: "Hearing and communication care guidance and coordination",
+  serviceType:
+    "Consultation, hearing-device guidance, assessment planning, and location-based support coordination",
+  description:
+    "Audiosen accepts India-wide enquiries for guidance and coordinated support. In-person clinic and home-care availability is confirmed only for the approved Dehradun service area.",
+  url: "https://audiosen.com/",
+  areaServed: { "@type": "Country", name: "India" },
+  provider: { "@id": "https://audiosen.com/#organization" },
+};
+
+export default async function HomePage() {
+  const [catalogSnapshot, activeCampaign, publicReviews] = await Promise.all([
+    getApprovedCatalogSnapshot(),
+    getActivePublicOffer("50-percent-off"),
+    getPublicGoogleReviews(),
+  ]);
+  const catalogSurfaceEnabled = catalogSnapshot !== null;
+  const catalogBrowsePath = catalogSurfaceEnabled ? "/hearing-aids" : "/hearing-aids-india";
+  const featuredModels = catalogSnapshot?.models.filter((model) => model.isFeatured).slice(0, 4) ?? [];
   return (
-    <main>
-      {[organizationJsonLd, websiteJsonLd, nationalServiceJsonLd].map((structuredData) => (
-        <script
-          key={structuredData["@id"]}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-      ))}
-      <section id="home" className="sonic-page-section mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
-        <div className="premium-shell sonic-home-hero grid items-stretch gap-10 px-6 py-10 sm:px-10 lg:grid-cols-[minmax(0,1.02fr)_minmax(25rem,0.98fr)] lg:py-14">
-          <div className="sonic-hero-copy">
-            <div>
-              <p className="premium-eyebrow mb-4">Pan-India Hearing Care & Hearing Aid Solutions</p>
-              <Link href="/offers/50-percent-off" className="offer-kicker">
-                Ask about current device savings · written terms apply
+    <main id="main-content">
+      <StructuredData data={[websiteJsonLd, nationalServiceJsonLd]} />
+
+      <section className="mx-auto max-w-7xl px-4 pb-10 pt-5 sm:px-6 lg:px-8 lg:pt-8">
+        <div className="grid items-center gap-8 overflow-hidden rounded-[2rem] border border-teal-900/10 bg-[linear-gradient(145deg,rgba(255,255,255,.98),rgba(228,247,243,.94))] p-5 shadow-[0_42px_100px_-60px_rgba(5,46,58,.7)] sm:p-8 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-[1.02fr_.98fr] lg:p-10 xl:p-12">
+          <div className="relative z-10">
+            <p className="premium-eyebrow mb-4">Audiosen · Advance Hearing Care Solutions</p>
+            <h1 className="max-w-3xl font-display text-[clamp(2.75rem,5.4vw,5.25rem)] font-semibold leading-[.95] tracking-[-.025em] text-slate-950">
+              Hearing Care Across India, With Caring, Clear Support
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+              Start with a clear conversation about hearing concerns, modern devices, fitting,
+              repair, home care or speech support—wherever you are in India.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link
+                href="/book-consultation"
+                className="premium-button-primary"
+                data-analytics-event="book_consultation"
+                data-analytics-location="home_hero"
+              >
+                Book Consultation
               </Link>
-              <h1 className="sonic-hero-title font-semibold leading-tight text-slate-900">
-                Audiosen: Hearing Aids &amp; Complete Hearing Care Across India
-              </h1>
-              <p className="premium-prose mt-5 max-w-xl text-lg">{heroContent.subtitle}</p>
-              <div className="premium-chip mt-6">{heroContent.sideNote}</div>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="premium-button-primary"
-                >
-                  Chat With a Hearing Care Advisor
-                </a>
-                <Link href={heroContent.ctaHref} className="premium-button-secondary">
-                  {heroContent.ctaLabel}
-                </Link>
-                <Link href="#brands" className="premium-button-secondary">
-                  Explore Hearing Aids
-                </Link>
-                <Link href="/hearing-aids-india" className="premium-button-secondary">
-                  Hearing Care Across India
-                </Link>
-              </div>
-
-              <div className="offer-panel sonic-offer-v2 mt-8 p-5">
-                <div className="sonic-discount-mark" aria-label="Request a model-specific written quote">
-                  <strong>?</strong>
-                  <span>written quote</span>
-                </div>
-                <div className="sonic-offer-copy">
-                  <p className="text-xs font-black uppercase tracking-[0.14em] text-amber-100">Current savings · model-specific eligibility</p>
-                  <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">{campaignOffer.headline}</h2>
-                  <p className="mt-2 text-sm text-amber-50 sm:text-base">{campaignOffer.subline}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {offerHighlights.map((item) => <span key={item} className="offer-pill">{item}</span>)}
-                  </div>
-                  <Link href={campaignOffer.ctaHref} className="premium-button-secondary mt-4 border-white/60 bg-white text-rose-700">
-                    {campaignOffer.ctaLabel}
-                  </Link>
-                </div>
-              </div>
+              <Link
+                href={catalogBrowsePath}
+                className="premium-button-secondary"
+                data-analytics-event="hearing_aid_view"
+                data-analytics-location="home_hero"
+              >
+                Explore Hearing Aids
+              </Link>
+              <a
+                href={callHref}
+                className="inline-flex min-h-11 items-center px-2 font-extrabold text-teal-900 underline decoration-teal-300 underline-offset-4"
+                data-analytics-event="call_click"
+                data-analytics-location="home_hero"
+              >
+                Call {clinicContact.primaryCallDisplay}
+              </a>
+            </div>
+            <div className="mt-7 grid max-w-2xl grid-cols-2 gap-3 text-sm sm:grid-cols-3">
+              <span className="rounded-2xl border border-teal-900/10 bg-white/80 px-4 py-3 font-semibold text-slate-700">
+                Hearing care
+              </span>
+              <span className="rounded-2xl border border-teal-900/10 bg-white/80 px-4 py-3 font-semibold text-slate-700">
+                Device support
+              </span>
+              <span className="col-span-2 rounded-2xl border border-teal-900/10 bg-white/80 px-4 py-3 font-semibold text-slate-700 sm:col-span-1">
+                Speech enquiries
+              </span>
             </div>
           </div>
-
-          <Reveal delay={0.1} className="sonic-hero-visual-wrap">
-            <div className="sonic-hero-visual">
-              <div className="sonic-human-card">
-                <Image
-                  src="/images/editorial/audiosen-hero-consultation-v3.webp"
-                  alt="An Indian audiologist fitting a modern hearing aid for an older Indian woman"
-                  fill
-                  sizes="(max-width: 1023px) 100vw, 44vw"
-                  className="sonic-human-image"
-                  priority
-                />
-                <div className="sonic-human-caption">
-                  <span>Personal hearing care</span>
-                  <strong>Thoughtful fitting for clearer everyday moments.</strong>
-                </div>
-              </div>
-
-              <div className="sonic-care-orbit" aria-hidden="true">
-                <span />
-                <span />
-                <i />
-              </div>
-
-              <div className="sonic-trust-float">
-                <span className="sonic-live-dot" aria-hidden="true" />
-                <div>
-                  <small>Pan-India hearing care</small>
-                  <strong>Assessment · fitting · aftercare</strong>
-                </div>
-              </div>
-
-              <div className="sonic-hero-device-deck">
-                <div className="sonic-device-deck-heading">
-                  <div>
-                    <span>Latest premium hearing aids</span>
-                    <strong>Three advanced styles. One personal care journey.</strong>
-                  </div>
-                  <Link href="/offers/50-percent-off" className="offer-ribbon">
-                    Written savings terms
-                  </Link>
-                </div>
-
-                <div className="sonic-mini-device-grid">
-                  <div className="sonic-mini-device">
-                    <Image
-                      src="/images/products/phonak/audeo-sphere-infinio.png"
-                      alt="Phonak Audeo Sphere Infinio premium hearing aid"
-                      width={180}
-                      height={180}
-                      sizes="42px"
-                    />
-                    <span><strong>Phonak</strong><small>Infinio</small></span>
-                  </div>
-                  <div className="sonic-mini-device">
-                    <Image
-                      src="/images/products/signia/pure-chargego-bct-ix.png"
-                      alt="Signia Pure Charge and Go BCT IX hearing aid"
-                      width={180}
-                      height={180}
-                      sizes="42px"
-                    />
-                    <span><strong>Signia</strong><small>IX</small></span>
-                  </div>
-                  <div className="sonic-mini-device">
-                    <Image
-                      src="/images/products/resound/vivia-grey.png"
-                      alt="ReSound Vivia premium rechargeable hearing aid"
-                      width={180}
-                      height={180}
-                      sizes="42px"
-                    />
-                    <span><strong>ReSound</strong><small>Vivia</small></span>
-                  </div>
-                </div>
-
-                <p>Advanced rechargeable devices, discreet styles, fitting, repair, and support.</p>
-              </div>
+          <div className="relative min-h-[25rem] overflow-hidden rounded-[1.75rem] border border-white/25 bg-teal-950 sm:min-h-[32rem]">
+            <Image
+              src="/images/editorial/audiosen-hero-consultation-v3.webp"
+              alt="Illustrative image of an audiologist helping an adult woman with a hearing aid"
+              fill
+              priority
+              sizes="(max-width: 1023px) 100vw, 43vw"
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-teal-950/85 via-teal-950/25 to-transparent px-5 pb-5 pt-20">
+              <p className="max-w-sm text-sm font-semibold leading-6 text-white">
+                Illustrative consultation scene · the right pathway is confirmed for your location.
+              </p>
             </div>
-          </Reveal>
+          </div>
         </div>
+      </section>
 
-        <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {providerHighlights.map((item, index) => (
-            <Reveal key={item.title} delay={0.04 + index * 0.05} className="premium-card sonic-float-card p-5">
-              <h2 className="text-lg font-semibold text-slate-900">{item.title}</h2>
-              <p className="premium-prose mt-2 text-sm">{item.description}</p>
+      <section aria-labelledby="trust-title" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="premium-eyebrow">A clearer care journey</p>
+            <h2 id="trust-title" className="mt-3 font-display text-4xl font-semibold text-slate-950 sm:text-5xl">
+              Trust is built into the details
+            </h2>
+          </div>
+          <Link href="/about" className="font-bold text-teal-800 underline underline-offset-4">
+            How Audiosen works
+          </Link>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {trustItems.map((item, index) => (
+            <Reveal key={item.title} delay={index * 0.04} className="h-full rounded-[1.5rem] border border-teal-900/10 bg-white p-6">
+              <span className="text-xs font-extrabold text-teal-700">0{index + 1}</span>
+              <h3 className="mt-4 text-xl font-bold text-slate-950">{item.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
             </Reveal>
           ))}
         </div>
-
       </section>
 
-      <section id="india-support" className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="premium-section px-6 py-10 sm:px-8">
-          <Reveal>
-            <div className="grid items-end gap-5 lg:grid-cols-[1fr_auto]">
-              <div>
-                <p className="premium-eyebrow mb-4">Nationwide access, location-appropriate care</p>
-                <h2 className="max-w-4xl font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-                  A clear hearing-care journey wherever you live in India
-                </h2>
-                <p className="premium-prose mt-4 max-w-3xl">
-                  Audiosen supports enquiries from across India. We combine online guidance with
-                  appropriate local assessment, device selection, fitting coordination, and
-                  ongoing service support based on your needs and location.
-                </p>
-              </div>
-              <Link href="/hearing-aids-india" className="premium-button-primary">
-                Explore Pan-India Services
-              </Link>
-            </div>
-          </Reveal>
-
-          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {nationwideSupportSteps.map((step, index) => (
-              <Reveal key={step.title} delay={index * 0.04} className="premium-card h-full p-5">
-                <span className="premium-chip text-xs">Step {index + 1}</span>
-                <h3 className="mt-4 text-xl font-semibold text-slate-900">{step.title}</h3>
-                <p className="premium-prose mt-2 text-sm">{step.description}</p>
-              </Reveal>
-            ))}
-          </div>
-
-          <p className="mt-6 text-sm leading-relaxed text-slate-600">
-            Audiosen&apos;s physical clinic is in Dehradun. In-person and home-visit availability
-            varies by location; the team confirms the service pathway before booking.
+      <section id="services" aria-labelledby="home-services-title" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="premium-eyebrow">Hearing care services</p>
+          <h2 id="home-services-title" className="mt-3 font-display text-4xl font-semibold text-slate-950 sm:text-5xl">
+            Start with the service you need
+          </h2>
+          <p className="mt-4 leading-7 text-slate-600">
+            Each pathway explains what is confirmed before an appointment—without unsupported
+            availability or outcome claims.
           </p>
+        </div>
+        <div className="mt-9 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {hearingServices.slice(0, 4).map((service, index) => (
+            <ServiceCard key={service.slug} service={service} basePath="/services" index={index} />
+          ))}
+        </div>
+        <div className="mt-8 text-center">
+          <Link href="/services" className="premium-button-secondary">
+            View All Hearing Care Services
+          </Link>
         </div>
       </section>
 
-      <section id="services" className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <Reveal>
-          <h2 className="text-center font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-            Our Hearing Care Services
-          </h2>
-          <p className="premium-prose mx-auto mt-4 max-w-3xl text-center">
-            Nationwide guidance for better hearing, from assessment planning and device selection
-            to fitting coordination and ongoing care.
-          </p>
-        </Reveal>
-        <ServicesExplorer services={services} />
-      </section>
+      {activeCampaign ? (
+        <section aria-label="Current approved offer" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <ApprovedOffer offer={activeCampaign} compact />
+        </section>
+      ) : null}
 
-      <section id="solutions" className="py-14">
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="premium-section px-6 py-10 sm:px-8">
-            <Reveal>
-              <h2 className="text-center font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-                Hearing Care Solutions For Every Need
-              </h2>
-              <p className="premium-prose mx-auto mt-4 max-w-3xl text-center">
-                Tailored support for individuals, families, seniors, and working professionals.
+      {catalogSnapshot ? (
+      <>
+      <section aria-labelledby="brands-title" className="bg-slate-950 py-16 text-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[.18em] text-teal-300">
+                Manufacturer model guides
               </p>
-            </Reveal>
-
-            <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-              {solutionAreas.map((area, index) => (
-                <Reveal key={area.title} delay={index * 0.05} className="premium-card p-5">
-                  <h3 className="text-lg font-semibold text-slate-900">{area.title}</h3>
-                  <p className="premium-prose mt-2 text-sm">{area.description}</p>
-                </Reveal>
+              <h2 id="brands-title" className="mt-3 font-display text-4xl font-semibold sm:text-5xl">
+                Compare the details that affect daily life
+              </h2>
+              <p className="mt-4 max-w-xl leading-7 text-slate-300">
+                Explore structured model guides. Audiosen confirms local availability,
+                compatibility, warranty and price individually before any purchase discussion.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {catalogSnapshot.brands.map((brand) => (
+                <Link
+                  key={brand.slug}
+                  href={`/hearing-aids/${brand.slug}`}
+                  className={`group min-h-32 rounded-[1.35rem] bg-gradient-to-br ${brandTones[brand.slug]} p-5 text-slate-950 transition hover:-translate-y-1 motion-reduce:transform-none`}
+                >
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Brand guide</span>
+                  <strong className="mt-8 block text-xl">{brand.name}</strong>
+                  <span className="mt-1 block text-sm text-slate-600 group-hover:underline">Explore models →</span>
+                </Link>
               ))}
             </div>
           </div>
+
+          <div className="mt-9 grid gap-4 sm:grid-cols-3">
+            <Link href={catalogBrowsePath} className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:bg-white/10">
+              <span className="text-sm text-teal-200">Browse</span>
+              <strong className="mt-2 block text-lg">Hearing-aid guidance</strong>
+            </Link>
+            <Link href="/compare-hearing-aids" className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:bg-white/10">
+              <span className="text-sm text-teal-200">Compare</span>
+              <strong className="mt-2 block text-lg">Styles and formats</strong>
+            </Link>
+            <Link href="/find-my-hearing-aid" className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:bg-white/10">
+              <span className="text-sm text-teal-200">Find</span>
+              <strong className="mt-2 block text-lg">Options worth discussing</strong>
+            </Link>
+          </div>
         </div>
       </section>
 
-      <BrandShowcase items={featuredBrands} />
+      {featuredModels.length ? (
+        <section aria-labelledby="featured-models-title" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="premium-eyebrow">Featured model guides</p>
+            <h2 id="featured-models-title" className="mt-3 font-display text-4xl font-semibold text-slate-950 sm:text-5xl">
+              Featured hearing-aid information
+            </h2>
+          </div>
+          <div className="mt-9 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {featuredModels.map((model) => {
+              const brand = catalogSnapshot.brands.find((item) => item.slug === model.brandSlug);
+              return brand ? <CatalogModelCard key={model.key} model={model} brand={brand} headingLevel="h3" /> : null;
+            })}
+          </div>
+        </section>
+      ) : null}
 
-      <section id="rental" className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mb-8 text-center">
-          <p className="premium-eyebrow mb-4">Flexible Hearing Aid Rentals</p>
-          <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">Rent Hearing Products</h2>
-          <p className="premium-prose mx-auto mt-4 max-w-3xl">
-            Affordable short-term hearing aid rental plans with fitting, support, and clear terms.
-          </p>
-          <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">
-            Published figures are indicative. Confirm the current device, monthly price, deposit,
-            eligibility, stock, inclusions, and signed rental terms in writing before payment.
-          </p>
+      <section aria-labelledby="finder-home-title" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-8 rounded-[2rem] border border-violet-200 bg-[radial-gradient(circle_at_85%_10%,rgba(167,139,250,.28),transparent_30%),linear-gradient(135deg,#fff,#eef8f6)] p-7 sm:p-10 lg:grid-cols-[1fr_.8fr] lg:p-14">
+          <div>
+            <p className="premium-eyebrow">Find My Hearing Aid</p>
+            <h2 id="finder-home-title" className="mt-3 font-display text-4xl font-semibold text-slate-950 sm:text-5xl">
+              Turn preferences into better questions
+            </h2>
+            <p className="mt-4 max-w-2xl leading-7 text-slate-600">
+              Tell us about charging, streaming, visibility and lifestyle preferences. The finder
+              ranks guidance-ready model summaries for discussion—it does not diagnose or prescribe.
+            </p>
+            <Link href="/find-my-hearing-aid" className="premium-button-primary mt-7" data-analytics-event="hearing_aid_finder_start" data-analytics-location="home_finder">
+              Start the Accessible Finder
+            </Link>
+          </div>
+          <ol className="grid gap-3" aria-label="Finder steps">
+            {["Share non-diagnostic preferences", "Review explainable matches", "Discuss with a professional"].map((step, index) => (
+              <li key={step} className="flex items-center gap-4 rounded-2xl bg-white p-4 shadow-sm">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-violet-100 font-extrabold text-violet-800">{index + 1}</span>
+                <span className="font-semibold text-slate-800">{step}</span>
+              </li>
+            ))}
+          </ol>
         </div>
+      </section>
+      </>
+      ) : null}
 
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="premium-shell overflow-hidden">
-            <Image
-              src="/images/services/hearing-aid-trial.jpg"
-              alt="Patient trying hearing aids with an audiologist"
-              width={1200}
-              height={800}
-              className="h-72 w-full object-cover sm:h-80"
-            />
+      <section aria-labelledby="journey-title" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <p className="premium-eyebrow">Integrated care journey</p>
+          <h2 id="journey-title" className="mt-3 font-display text-4xl font-semibold text-slate-950 sm:text-5xl">
+            Hearing and communication care can connect
+          </h2>
+        </div>
+        <ol className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {careJourney.map((step, index) => (
+            <li key={step} className="h-full">
+              <Reveal delay={index * 0.035} className="relative h-full rounded-2xl border border-slate-200 bg-white p-5">
+                <span className="text-xs font-extrabold text-teal-700">STEP {index + 1}</span>
+                <h3 className="mt-3 text-lg font-bold text-slate-900">{step}</h3>
+                {index < careJourney.length - 1 ? (
+                  <span aria-hidden="true" className="absolute -bottom-3 left-1/2 z-10 grid h-6 w-6 -translate-x-1/2 place-items-center rounded-full bg-teal-800 text-xs text-white sm:hidden">
+                    ↓
+                  </span>
+                ) : null}
+              </Reveal>
+            </li>
+          ))}
+        </ol>
+        <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-7 text-slate-600">
+          Not every person needs every step. The appropriate pathway depends on professional
+          assessment, goals and confirmed service availability.
+        </p>
+      </section>
 
-            <div className="p-6 sm:p-8">
-              <div className="grid gap-4 sm:grid-cols-3">
-                <div className="premium-card-soft p-4 text-center">
-                  <p className="text-2xl font-bold text-sky-700">Rs 3,499</p>
-                  <p className="mt-1 text-sm text-slate-600">Starting monthly rent</p>
-                </div>
-                <div className="premium-card-soft p-4 text-center">
-                  <p className="text-2xl font-bold text-sky-700">30 Days</p>
-                  <p className="mt-1 text-sm text-slate-600">Minimum period</p>
-                </div>
-                <div className="premium-card-soft p-4 text-center">
-                  <p className="text-2xl font-bold text-sky-700">KYC</p>
-                  <p className="mt-1 text-sm text-slate-600">ID required</p>
-                </div>
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                <span className="premium-chip">Hearing test first</span>
-                <span className="premium-chip">Device fitting included</span>
-                <span className="premium-chip">Service support available</span>
-              </div>
-
-              <div className="mt-6">
-                <Link href="/#contact" className="premium-button-primary">
-                  Book Rental
-                </Link>
-              </div>
-
-              <div className="mt-6">
-                <p className="mb-3 text-sm font-semibold text-slate-700">
-                  Latest hearing aids available for rental
-                </p>
-
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {rentalSpotlightDevices.map((device) => (
-                    <div key={device.alt} className="premium-card p-3">
-                      <Image
-                        src={device.src}
-                        alt={device.alt}
-                        width={400}
-                        height={280}
-                        className="h-36 w-full object-contain"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
+      <section aria-labelledby="child-title" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid overflow-hidden rounded-[2rem] border border-amber-200 bg-[linear-gradient(135deg,#fffaf0,#edf9f5)] lg:grid-cols-[.9fr_1.1fr]">
+          <div className="p-7 sm:p-10 lg:p-12">
+            <p className="text-xs font-extrabold uppercase tracking-[.18em] text-amber-800">Children &amp; families</p>
+            <h2 id="child-title" className="mt-3 font-display text-4xl font-semibold text-slate-950 sm:text-5xl">
+              Concerned about your child&apos;s speech or hearing?
+            </h2>
+            <p className="mt-4 leading-7 text-slate-600">
+              Start with an age-appropriate professional pathway. Children are never given device
+              recommendations by the online finder.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link href="/services/pediatric-hearing-care" className="premium-button-primary">Pediatric Hearing Care</Link>
+              <Link href="/speech-language-services" className="premium-button-secondary">Speech &amp; Language Services</Link>
             </div>
           </div>
-
-          <div className="grid gap-5">
-            {rentalPlans.map((plan) => (
-              <article key={plan.title} className="premium-card p-6">
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-2xl font-semibold text-slate-900">{plan.title}</h3>
-                  <span className="premium-chip text-xs">Popular</span>
-                </div>
-                <p className="mt-3 text-3xl font-bold text-sky-700">{plan.price}</p>
-                <p className="mt-2 text-sm text-slate-600">{plan.deposit}</p>
-                <p className="mt-1 text-sm text-slate-600">{plan.minPeriod}</p>
-                <p className="mt-4 text-sm font-medium text-slate-800">{plan.bestFor}</p>
-                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-slate-600">
-                  {plan.includes.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
+          <div className="bg-white/70 p-7 sm:p-10 lg:p-12">
+            <h3 className="text-lg font-bold text-slate-900">Observations worth discussing</h3>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+              {childSigns.map((sign) => (
+                <li key={sign} className="flex gap-3 text-sm leading-6 text-slate-700">
+                  <span aria-hidden="true" className="text-amber-700">●</span>
+                  {sign}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 rounded-xl bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+              These signs do not confirm a diagnosis. Sudden or urgent symptoms need prompt medical assessment.
+            </p>
           </div>
-        </div>
-
-        <div className="premium-card-soft mt-8 p-6 sm:p-8">
-          <h3 className="text-2xl font-semibold text-slate-900">Terms & Conditions</h3>
-          <ul className="premium-prose mt-4 list-disc space-y-3 pl-5 text-sm">
-            {rentalTerms.map((term) => (
-              <li key={term}>{term}</li>
-            ))}
-          </ul>
         </div>
       </section>
 
-      <section id="subscription" className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <Reveal>
-          <div className="text-center">
-            <p className="premium-eyebrow mb-4">Physical Payment Only</p>
-            <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-              Hearing Care Subscription Plans
-            </h2>
-            <p className="premium-prose mx-auto mt-4 max-w-3xl">
-              Choose a care plan for regular hearing support, fitting reviews, and maintenance.
-              Payment is done in physical mode only at the clinic.
-            </p>
-            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">
-              Confirm the current plan price, eligibility, included services, exclusions, and
-              signed terms in writing at the clinic before payment.
-            </p>
+      <section aria-label="Home care and repair" className="mx-auto grid max-w-7xl gap-5 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:px-8">
+        <article className="rounded-[2rem] bg-teal-950 p-7 text-white sm:p-10">
+          <p className="text-xs font-extrabold uppercase tracking-[.16em] text-teal-300">India-wide support</p>
+          <h2 className="mt-3 font-display text-4xl font-semibold">Home Hearing Care</h2>
+          <p className="mt-4 leading-7 text-teal-50/80">
+            Request assessment planning, device support or fitting guidance wherever you are. The
+            team confirms the available location-based pathway before an appointment is accepted.
+          </p>
+          <Link href="/home-hearing-care" className="premium-button-primary mt-7 border-white bg-white text-teal-950" data-analytics-event="home_visit_request" data-analytics-location="home_service">
+            Book Home Visit
+          </Link>
+        </article>
+        <article className="rounded-[2rem] border border-slate-200 bg-white p-7 sm:p-10">
+          <p className="premium-eyebrow">Device support</p>
+          <h2 className="mt-3 font-display text-4xl font-semibold text-slate-950">Hearing Aid Repair</h2>
+          <p className="mt-4 leading-7 text-slate-600">
+            Share the brand, model and problem. Photos are accepted only through the protected
+            repair-upload workflow and remain private.
+          </p>
+          <Link href="/hearing-aid-repair" className="premium-button-secondary mt-7" data-analytics-event="repair_enquiry" data-analytics-location="home_service">
+            Request Repair
+          </Link>
+        </article>
+      </section>
+
+      {publicReviews.length ? (
+        <section aria-labelledby="home-reviews-title" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="premium-eyebrow">Selected Google reviews</p>
+              <h2 id="home-reviews-title" className="mt-3 font-display text-4xl font-semibold text-slate-950 sm:text-5xl">
+                Experiences shared by reviewers
+              </h2>
+            </div>
+            <Link href="/review" className="font-bold text-teal-800 underline underline-offset-4">Review details</Link>
           </div>
-        </Reveal>
-
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {subscriptionPlans.map((plan, index) => (
-            <Reveal key={plan.id} delay={index * 0.05}>
-              <article className="premium-card p-6">
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-2xl font-semibold text-slate-900">{plan.label}</h3>
-                  {plan.badge ? (
-                    <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-700">
-                      {plan.badge}
-                    </span>
-                  ) : null}
+          <div className="mt-9 grid gap-5 md:grid-cols-3">
+            {publicReviews.slice(0, 3).map((review) => (
+              <article key={review.id} className="rounded-[1.5rem] border border-slate-200 bg-white p-6">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <h3 className="font-bold text-slate-950">{review.reviewerDisplayName}</h3>
+                  <span aria-label={`${review.starRating} out of 5 stars`} className="text-sm font-bold text-amber-700">
+                    {"★".repeat(review.starRating)}{"☆".repeat(5 - review.starRating)}
+                  </span>
                 </div>
-
-                <p className="mt-3 text-3xl font-black text-sky-800">Rs {plan.priceInr.toLocaleString("en-IN")}</p>
-                <p className="mt-2 text-sm text-slate-500">Payment mode: physical only</p>
-
-                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-slate-700">
-                  {plan.coverage.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-
-                <Link href="/#contact" className="premium-button-primary mt-6">
-                  Enquire in Clinic
-                </Link>
+                {review.comment ? <p className="mt-4 whitespace-pre-wrap text-sm leading-7 text-slate-600">{review.comment}</p> : null}
+                <p className="mt-4 text-xs text-slate-500">
+                  Google review · <time dateTime={review.googleCreatedAt.toISOString()}>{new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeZone: "Asia/Kolkata" }).format(review.googleCreatedAt)}</time>
+                </p>
               </article>
-            </Reveal>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      <section aria-labelledby="why-title" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="premium-eyebrow">Why Audiosen</p>
+          <h2 id="why-title" className="mt-3 font-display text-4xl font-semibold text-slate-950 sm:text-5xl">
+            Technology with a human care plan
+          </h2>
+        </div>
+        <div className="mt-9 grid gap-5 md:grid-cols-3">
+          {reasons.map((reason) => (
+            <article key={reason.title} className="rounded-[1.5rem] border border-slate-200 bg-white p-6">
+              <h3 className="text-xl font-bold text-slate-950">{reason.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{reason.description}</p>
+            </article>
           ))}
         </div>
+      </section>
 
-        <div className="premium-card-soft mt-8 p-6">
-          <h3 className="text-2xl font-semibold text-slate-900">Plan Terms</h3>
-          <ul className="premium-prose mt-4 list-disc space-y-3 pl-5 text-sm">
-            {subscriptionTerms.map((term) => (
-              <li key={term}>{term}</li>
-            ))}
-          </ul>
+      <section aria-labelledby="education-title" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <span id="education-title" className="sr-only">Hearing education</span>
+        <EarEducation />
+      </section>
+
+      <section aria-labelledby="faq-title" className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <p className="premium-eyebrow">Frequently asked questions</p>
+          <h2 id="faq-title" className="mt-3 font-display text-4xl font-semibold text-slate-950 sm:text-5xl">
+            Clear answers before you book
+          </h2>
+        </div>
+        <div className="mt-8 grid gap-3">
+          {faqs.map((faq) => (
+            <details key={faq.question} className="rounded-2xl border border-slate-200 bg-white p-5 open:border-teal-300">
+              <summary className="min-h-11 cursor-pointer font-bold text-slate-950">{faq.question}</summary>
+              <p className="mt-3 leading-7 text-slate-600">{faq.answer}</p>
+            </details>
+          ))}
         </div>
       </section>
 
-      <section id="hearingtest" className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <Reveal>
-          <div className="text-center">
-            <p className="premium-eyebrow mb-4">Private Device-Relative Sound Check</p>
-            <h2 className="font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-              Check Your Hearing Online
+      <section aria-labelledby="contact-home-title" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid overflow-hidden rounded-[2rem] border border-teal-900/10 bg-white lg:grid-cols-[1.05fr_.95fr]">
+          <div className="p-7 sm:p-10 lg:p-12">
+            <p className="premium-eyebrow">Contact Audiosen</p>
+            <h2 id="contact-home-title" className="mt-3 font-display text-4xl font-semibold text-slate-950 sm:text-5xl">
+              India-wide guidance. Clinic care in Dehradun.
             </h2>
-            <p className="premium-prose mx-auto mt-4 max-w-3xl">
-              Notice a small set of ear-by-ear tones, check response consistency, and decide whether
-              a calibrated clinic-based hearing evaluation is the right next step.
-            </p>
+            <ApprovedBusinessProfileCopy />
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a href={callHref} className="premium-button-primary">Call {clinicContact.primaryCallDisplay}</a>
+              <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="premium-button-secondary">WhatsApp</a>
+              <a href={`mailto:${clinicContact.email}`} className="premium-button-secondary">Email Support</a>
+            </div>
           </div>
-        </Reveal>
-
-        <div className="mt-8">
-          <HearingTest mode="home" />
+          <div className="grid place-items-center bg-[radial-gradient(circle_at_50%_35%,#c9f0e9,#5c9b98)] p-8 text-center">
+            <ApprovedBusinessDirectionsCard />
+          </div>
         </div>
       </section>
 
-      <section id="contact" className="py-14">
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <h2 className="text-center font-display text-4xl font-semibold text-slate-900 sm:text-5xl">
-              {contactContent.sectionTitle}
-            </h2>
-            <p className="premium-prose mx-auto mt-4 max-w-3xl text-center">
-              {contactContent.sectionSubtitle}
-            </p>
-          </Reveal>
-
-          <div className="mt-8 grid items-start gap-6 lg:grid-cols-[1.05fr_1fr]">
-            <Reveal delay={0.08}>
-              <Image
-                src="/images/contact-hearing-care-clinic.png"
-                alt="Audiologist discussing hearing care with a patient in a modern clinic"
-                width={920}
-                height={600}
-                className="premium-card h-auto w-full object-cover object-center"
-              />
-            </Reveal>
-            <Reveal delay={0.12}>
-              <ContactForm />
-            </Reveal>
+      <section className="mx-auto max-w-7xl px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+        <div className="rounded-[2rem] bg-[linear-gradient(120deg,#062c3b,#075b60_55%,#36569c)] px-7 py-12 text-center text-white sm:px-10">
+          <p className="text-xs font-extrabold uppercase tracking-[.18em] text-teal-200">Your next step</p>
+          <h2 className="mx-auto mt-3 max-w-3xl font-display text-4xl font-semibold sm:text-5xl">
+            Let&apos;s make hearing and communication feel more manageable
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-200">
+            Tell the team what you need. Your request is stored before delivery and never sent to analytics.
+          </p>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <Link href="/book-consultation" className="premium-button-primary border-white bg-white text-teal-950">Book Consultation</Link>
+            <a href={callHref} className="premium-button-secondary border-white/40 bg-white/10 text-white">Call {clinicContact.primaryCallDisplay}</a>
           </div>
         </div>
       </section>

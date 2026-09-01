@@ -1,0 +1,610 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EnquiryType {
+  CONTACT
+  CONSULTATION
+  PRODUCT_ENQUIRY
+  REQUEST_PRICE
+  OFFER
+  HOME_VISIT
+  REPAIR
+  SPEECH
+  HEARING_AID_FINDER
+  TRIAL
+  CALLBACK
+  AUDIOGRAM
+  WHATSAPP_LEAD
+}
+
+enum EnquiryStatus {
+  NEW
+  CONTACTED
+  APPOINTMENT_BOOKED
+  QUALIFIED
+  CONVERTED
+  CLOSED
+  SPAM
+}
+
+enum AttachmentPurpose {
+  DEVICE_PHOTO
+  AUDIOGRAM
+  OTHER
+}
+
+enum AttachmentScanStatus {
+  PENDING
+  CLEAN
+  REJECTED
+  ERROR
+}
+
+enum UploadSessionStatus {
+  READY
+  CLAIMED
+  EXPIRED
+  REJECTED
+}
+
+enum FollowUpStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum MediaRightsStatus {
+  UNVERIFIED
+  MANUFACTURER_AUTHORIZED
+  LICENSED
+  OWNED
+  PUBLIC_DOMAIN
+  REJECTED
+}
+
+enum GoogleConnectionStatus {
+  ACTIVE
+  NEEDS_REAUTH
+  REVOKED
+}
+
+enum GoogleSyncStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  FAILED
+}
+
+enum GoogleSnapshotApprovalStatus {
+  STAGED
+  APPROVED
+  REJECTED
+  SUPERSEDED
+}
+
+enum EmailOutboxStatus {
+  PENDING
+  PROCESSING
+  SENT
+  FAILED
+  DEAD
+}
+
+enum EmailOutboxKind {
+  STAFF_ENQUIRY
+  PATIENT_CONFIRMATION
+}
+
+enum AdminRole {
+  OWNER
+  ADMIN
+  STAFF
+}
+
+model Enquiry {
+  id                    String                @id @default(uuid()) @db.Uuid
+  reference             String                @unique @db.VarChar(32)
+  idempotencyHash       String                @unique @db.VarChar(64)
+  requestFingerprint    String                @db.VarChar(64)
+  type                  EnquiryType
+  status                EnquiryStatus         @default(NEW)
+  name                  String                @db.VarChar(120)
+  email                 String?               @db.VarChar(320)
+  phone                 String                @db.VarChar(30)
+  city                  String                @db.VarChar(80)
+  age                   Int?
+  ageGroup              String?               @db.VarChar(80)
+  service               String                @db.VarChar(160)
+  selectedBrand         String?               @db.VarChar(120)
+  selectedDevice        String?               @db.VarChar(160)
+  appointmentDate       DateTime?             @db.Date
+  appointmentTime       String?               @db.VarChar(80)
+  preferredChannel      String?               @db.VarChar(40)
+  preferredCallbackTime String?               @db.VarChar(80)
+  homeVisit             Boolean?
+  source                String                @db.VarChar(80)
+  sourcePath            String                @db.VarChar(500)
+  landingPage           String?               @db.VarChar(500)
+  utmSource             String?               @db.VarChar(200)
+  utmMedium             String?               @db.VarChar(200)
+  utmCampaign           String?               @db.VarChar(200)
+  utmTerm               String?               @db.VarChar(200)
+  utmContent            String?               @db.VarChar(200)
+  clickIds              Json?
+  context               Json?
+  consent               Boolean
+  consentAt             DateTime
+  consentVersion        String                @db.VarChar(80)
+  clientIpHash          String?               @db.VarChar(64)
+  userAgent             String?               @db.VarChar(500)
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  attachments           EnquiryAttachment[]
+  sensitiveData         EnquirySensitiveData?
+  uploadSessions        UploadSession[]
+  notes                 LeadNote[]
+  followUps             FollowUp[]
+  outbox                EmailOutbox[]
+
+  @@index([createdAt])
+  @@index([status, createdAt])
+  @@index([type, createdAt])
+  @@index([source, createdAt])
+  @@index([service])
+  @@index([selectedBrand])
+  @@index([selectedDevice])
+  @@index([city])
+}
+
+model EnquirySensitiveData {
+  enquiryId  String   @id @db.Uuid
+  ciphertext String   @db.Text
+  nonce      String   @db.VarChar(32)
+  authTag    String   @db.VarChar(32)
+  keyVersion String   @db.VarChar(80)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  enquiry    Enquiry  @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+}
+
+model UploadSession {
+  id             String              @id @default(uuid()) @db.Uuid
+  claimTokenHash String              @unique @db.VarChar(64)
+  purpose        AttachmentPurpose
+  status         UploadSessionStatus @default(READY)
+  enquiryId      String?             @db.Uuid
+  expiresAt      DateTime
+  claimedAt      DateTime?
+  createdAt      DateTime            @default(now())
+  enquiry        Enquiry?            @relation(fields: [enquiryId], references: [id], onDelete: SetNull)
+  attachments    EnquiryAttachment[]
+
+  @@index([status, expiresAt])
+  @@index([enquiryId])
+}
+
+model EnquiryAttachment {
+  id              String               @id @default(uuid()) @db.Uuid
+  uploadSessionId String               @db.Uuid
+  enquiryId       String?              @db.Uuid
+  purpose         AttachmentPurpose
+  storageKey      String               @unique @db.VarChar(500)
+  originalName    String               @db.VarChar(255)
+  contentType     String               @db.VarChar(120)
+  sizeBytes       Int
+  sha256          String               @db.VarChar(64)
+  scanStatus      AttachmentScanStatus @default(PENDING)
+  scanDetail      String?              @db.VarChar(500)
+  createdAt       DateTime             @default(now())
+  scannedAt       DateTime?
+  uploadSession   UploadSession        @relation(fields: [uploadSessionId], references: [id], onDelete: Cascade)
+  enquiry         Enquiry?             @relation(fields: [enquiryId], references: [id], onDelete: SetNull)
+
+  @@index([enquiryId, createdAt])
+  @@index([uploadSessionId])
+  @@index([scanStatus])
+}
+
+model LeadNote {
+  id             String    @id @default(uuid()) @db.Uuid
+  enquiryId      String    @db.Uuid
+  authorId       String    @db.Uuid
+  bodyCiphertext String    @db.Text
+  bodyNonce      String    @db.VarChar(32)
+  bodyAuthTag    String    @db.VarChar(32)
+  keyVersion     String    @db.VarChar(80)
+  createdAt      DateTime  @default(now())
+  enquiry        Enquiry   @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  author         AdminUser @relation(fields: [authorId], references: [id], onDelete: Restrict)
+
+  @@index([enquiryId, createdAt])
+}
+
+model FollowUp {
+  id             String         @id @default(uuid()) @db.Uuid
+  enquiryId      String         @db.Uuid
+  createdById    String         @db.Uuid
+  assignedToId   String?        @db.Uuid
+  status         FollowUpStatus @default(SCHEDULED)
+  dueAt          DateTime
+  noteCiphertext String?        @db.Text
+  noteNonce      String?        @db.VarChar(32)
+  noteAuthTag    String?        @db.VarChar(32)
+  keyVersion     String?        @db.VarChar(80)
+  completedAt    DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  enquiry        Enquiry        @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  createdBy      AdminUser      @relation("FollowUpCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  assignedTo     AdminUser?     @relation("FollowUpAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([enquiryId, dueAt])
+  @@index([assignedToId, status, dueAt])
+}
+
+model Brand {
+  id          String       @id @default(uuid()) @db.Uuid
+  slug        String       @unique @db.VarChar(100)
+  name        String       @unique @db.VarChar(120)
+  description String?      @db.Text
+  websiteUrl  String?      @db.VarChar(500)
+  logoPath    String?      @db.VarChar(500)
+  sortOrder   Int          @default(0)
+  isPublished Boolean      @default(false)
+  sourceUrl   String?      @db.VarChar(500)
+  verifiedAt  DateTime?
+  verifiedBy  String?      @db.VarChar(160)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  hearingAids HearingAid[]
+  offerBrands OfferBrand[]
+
+  @@index([isPublished, sortOrder])
+}
+
+model HearingAid {
+  id                     String            @id @default(uuid()) @db.Uuid
+  brandId                String            @db.Uuid
+  slug                   String            @db.VarChar(140)
+  modelName              String            @db.VarChar(180)
+  style                  String?           @db.VarChar(100)
+  summary                String?           @db.Text
+  suitableUse            String?           @db.Text
+  rechargeable           Boolean?
+  bluetooth              Boolean?
+  streaming              Boolean?
+  mobileApp              String?           @db.VarChar(160)
+  hearingLossSuitability String?           @db.VarChar(240)
+  noiseManagement        String?           @db.VarChar(500)
+  warranty               String?           @db.VarChar(500)
+  fittingInformation     String?           @db.Text
+  afterCare              String?           @db.Text
+  repairSupport          String?           @db.Text
+  consultationRequired   Boolean           @default(true)
+  priceNote              String?           @db.VarChar(240)
+  features               Json?
+  specifications         Json?
+  status                 ProductStatus     @default(DRAFT)
+  isFeatured             Boolean           @default(false)
+  sortOrder              Int               @default(0)
+  sourceUrl              String?           @db.VarChar(500)
+  verifiedAt             DateTime?
+  verifiedBy             String?           @db.VarChar(160)
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+  brand                  Brand             @relation(fields: [brandId], references: [id], onDelete: Restrict)
+  media                  ProductMedia[]
+  offerHearingAids       OfferHearingAid[]
+
+  @@unique([brandId, slug])
+  @@index([status, isFeatured, sortOrder])
+  @@index([brandId, status])
+}
+
+model ProductMedia {
+  id                String            @id @default(uuid()) @db.Uuid
+  hearingAidId      String            @db.Uuid
+  storageKey        String            @unique @db.VarChar(500)
+  altText           String            @db.VarChar(240)
+  contentType       String            @db.VarChar(120)
+  width             Int?
+  height            Int?
+  sortOrder         Int               @default(0)
+  isPrimary         Boolean           @default(false)
+  sourceUrl         String?           @db.VarChar(500)
+  rightsStatus      MediaRightsStatus @default(UNVERIFIED)
+  rightsEvidenceUrl String?           @db.VarChar(1000)
+  rightsNotes       String?           @db.VarChar(1000)
+  rightsCheckedAt   DateTime?
+  rightsApprovedAt  DateTime?
+  rightsApprovedBy  String?           @db.VarChar(320)
+  createdAt         DateTime          @default(now())
+  hearingAid        HearingAid        @relation(fields: [hearingAidId], references: [id], onDelete: Cascade)
+
+  @@index([hearingAidId, sortOrder])
+}
+
+model Offer {
+  id                 String            @id @default(uuid()) @db.Uuid
+  slug               String            @unique @db.VarChar(140)
+  title              String            @db.VarChar(180)
+  summary            String?           @db.Text
+  maximumDiscountPct Int?
+  terms              String?           @db.Text
+  imagePath          String?           @db.VarChar(500)
+  landingPage        String?           @db.VarChar(500)
+  startsAt           DateTime?
+  endsAt             DateTime?
+  enabled            Boolean           @default(false)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  brands             OfferBrand[]
+  hearingAids        OfferHearingAid[]
+  services           OfferService[]
+
+  @@index([enabled, startsAt, endsAt])
+}
+
+model Service {
+  id         String         @id @default(uuid()) @db.Uuid
+  slug       String         @unique @db.VarChar(140)
+  name       String         @unique @db.VarChar(180)
+  summary    String?        @db.Text
+  status     ProductStatus  @default(DRAFT)
+  sortOrder  Int            @default(0)
+  sourceUrl  String?        @db.VarChar(500)
+  verifiedAt DateTime?
+  verifiedBy String?        @db.VarChar(160)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  offers     OfferService[]
+
+  @@index([status, sortOrder])
+}
+
+model OfferService {
+  offerId   String  @db.Uuid
+  serviceId String  @db.Uuid
+  offer     Offer   @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([offerId, serviceId])
+}
+
+model OfferBrand {
+  offerId String @db.Uuid
+  brandId String @db.Uuid
+  offer   Offer  @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  brand   Brand  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@id([offerId, brandId])
+}
+
+model OfferHearingAid {
+  offerId      String     @db.Uuid
+  hearingAidId String     @db.Uuid
+  offer        Offer      @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  hearingAid   HearingAid @relation(fields: [hearingAidId], references: [id], onDelete: Cascade)
+
+  @@id([offerId, hearingAidId])
+}
+
+model BusinessProfile {
+  id                   String          @id @default("primary") @db.VarChar(40)
+  organizationName     String          @db.VarChar(180)
+  legalName            String?         @db.VarChar(180)
+  phone                String          @db.VarChar(30)
+  whatsapp             String?         @db.VarChar(30)
+  email                String          @db.VarChar(320)
+  websiteUrl           String          @db.VarChar(500)
+  addressLine1         String?         @db.VarChar(240)
+  addressLine2         String?         @db.VarChar(240)
+  locality             String?         @db.VarChar(120)
+  region               String?         @db.VarChar(120)
+  postalCode           String?         @db.VarChar(20)
+  countryCode          String          @default("IN") @db.Char(2)
+  latitude             Decimal?        @db.Decimal(10, 7)
+  longitude            Decimal?        @db.Decimal(10, 7)
+  openingHours         Json?
+  specialHours         Json?
+  googleAccountId      String?         @db.VarChar(160)
+  googleLocationId     String?         @db.VarChar(160)
+  googlePlaceId        String?         @db.VarChar(180)
+  googleMapsUri        String?         @db.VarChar(1000)
+  googleReviewUri      String?         @db.VarChar(1000)
+  lastGoogleVerifiedAt DateTime?
+  approvedAt           DateTime?
+  approvedById         String?         @db.Uuid
+  sourceSnapshotId     String?         @unique @db.Uuid
+  isPublished          Boolean         @default(false)
+  version              Int             @default(1)
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  approvedBy           AdminUser?      @relation(fields: [approvedById], references: [id], onDelete: Restrict)
+  sourceSnapshot       GoogleSnapshot? @relation(fields: [sourceSnapshotId], references: [id], onDelete: SetNull)
+}
+
+model GoogleConnection {
+  id                    String                 @id @default(uuid()) @db.Uuid
+  connectedById         String                 @db.Uuid
+  googleSubject         String                 @db.VarChar(255)
+  accountId             String?                @db.VarChar(160)
+  locationId            String?                @db.VarChar(160)
+  encryptedRefreshToken String                 @db.Text
+  tokenKeyVersion       String                 @db.VarChar(80)
+  scopes                String[]
+  status                GoogleConnectionStatus @default(ACTIVE)
+  expiresAt             DateTime?
+  lastUsedAt            DateTime?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  connectedBy           AdminUser              @relation(fields: [connectedById], references: [id], onDelete: Restrict)
+  snapshots             GoogleSnapshot[]
+  syncRuns              SyncRun[]
+
+  @@unique([googleSubject, locationId])
+  @@index([status])
+}
+
+model GoogleSnapshot {
+  id             String                       @id @default(uuid()) @db.Uuid
+  connectionId   String                       @db.Uuid
+  syncRunId      String?                      @db.Uuid
+  sourceEtag     String?                      @db.VarChar(255)
+  payload        Json
+  differences    Json?
+  approvalStatus GoogleSnapshotApprovalStatus @default(STAGED)
+  approvedAt     DateTime?
+  approvedById   String?                      @db.Uuid
+  capturedAt     DateTime                     @default(now())
+  expiresAt      DateTime
+  connection     GoogleConnection             @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  syncRun        SyncRun?                     @relation(fields: [syncRunId], references: [id], onDelete: SetNull)
+  approvedBy     AdminUser?                   @relation(fields: [approvedById], references: [id], onDelete: Restrict)
+  appliedProfile BusinessProfile?
+  reviews        GoogleReview[]
+
+  @@index([connectionId, capturedAt])
+  @@index([approvalStatus, capturedAt])
+  @@index([expiresAt])
+}
+
+model GoogleReview {
+  id                  String          @id @default(uuid()) @db.Uuid
+  googleReviewName    String          @unique @db.VarChar(500)
+  sourceSnapshotId    String?         @db.Uuid
+  reviewerDisplayName String          @db.VarChar(180)
+  reviewerAvatarUrl   String?         @db.VarChar(1000)
+  starRating          Int
+  comment             String?         @db.Text
+  googleCreatedAt     DateTime
+  googleUpdatedAt     DateTime
+  sourcePayloadHash   String          @db.VarChar(64)
+  selectedByAdmin     Boolean         @default(false)
+  selectedAt          DateTime?
+  selectedById        String?         @db.Uuid
+  fetchedAt           DateTime        @default(now())
+  expiresAt           DateTime
+  sourceSnapshot      GoogleSnapshot? @relation(fields: [sourceSnapshotId], references: [id], onDelete: SetNull)
+  selectedBy          AdminUser?      @relation(fields: [selectedById], references: [id], onDelete: Restrict)
+
+  @@index([selectedByAdmin, expiresAt])
+  @@index([expiresAt])
+  @@index([googleUpdatedAt])
+}
+
+model SyncRun {
+  id            String           @id @default(uuid()) @db.Uuid
+  connectionId  String           @db.Uuid
+  status        GoogleSyncStatus @default(PENDING)
+  requestedById String           @db.Uuid
+  fieldsRead    String[]
+  differences   Json?
+  errorCode     String?          @db.VarChar(160)
+  errorMessage  String?          @db.VarChar(500)
+  startedAt     DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime         @default(now())
+  connection    GoogleConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  requestedBy   AdminUser        @relation(fields: [requestedById], references: [id], onDelete: Restrict)
+  snapshots     GoogleSnapshot[]
+
+  @@index([connectionId, createdAt])
+  @@index([status, createdAt])
+}
+
+model EmailOutbox {
+  id                String            @id @default(uuid()) @db.Uuid
+  enquiryId         String?           @db.Uuid
+  kind              EmailOutboxKind
+  status            EmailOutboxStatus @default(PENDING)
+  dedupeKey         String            @unique @db.VarChar(200)
+  fromAddress       String            @db.VarChar(320)
+  toAddress         String            @db.VarChar(320)
+  replyToAddress    String?           @db.VarChar(320)
+  subject           String            @db.VarChar(255)
+  textBody          String            @db.Text
+  htmlBody          String            @db.Text
+  attemptCount      Int               @default(0)
+  maxAttempts       Int               @default(8)
+  nextAttemptAt     DateTime          @default(now())
+  lockedAt          DateTime?
+  sentAt            DateTime?
+  providerMessageId String?           @db.VarChar(200)
+  providerStatus    String?           @db.VarChar(80)
+  providerCheckedAt DateTime?
+  lastErrorCode     String?           @db.VarChar(160)
+  lastError         String?           @db.VarChar(500)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  enquiry           Enquiry?          @relation(fields: [enquiryId], references: [id], onDelete: SetNull)
+
+  @@index([status, nextAttemptAt])
+  @@index([enquiryId])
+}
+
+model AdminUser {
+  id                String             @id @default(uuid()) @db.Uuid
+  email             String             @unique @db.VarChar(320)
+  name              String?            @db.VarChar(160)
+  imageUrl          String?            @db.VarChar(1000)
+  role              AdminRole          @default(STAFF)
+  active            Boolean            @default(true)
+  emailVerifiedAt   DateTime?
+  lastLoginAt       DateTime?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  sessions          AdminSession[]
+  notes             LeadNote[]
+  followUpsCreated  FollowUp[]         @relation("FollowUpCreator")
+  followUpsAssigned FollowUp[]         @relation("FollowUpAssignee")
+  googleConnections GoogleConnection[]
+  syncRuns          SyncRun[]
+  snapshotsApproved GoogleSnapshot[]
+  businessApprovals BusinessProfile[]
+  reviewSelections  GoogleReview[]
+  auditLogs         AuditLog[]
+}
+
+model AdminSession {
+  id               String    @id @default(uuid()) @db.Uuid
+  sessionTokenHash String    @unique @db.VarChar(64)
+  adminUserId      String    @db.Uuid
+  expiresAt        DateTime
+  lastSeenAt       DateTime  @default(now())
+  revokedAt        DateTime?
+  createdAt        DateTime  @default(now())
+  adminUser        AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+
+  @@index([adminUserId, expiresAt])
+  @@index([expiresAt])
+}
+
+model AuditLog {
+  id         String     @id @default(uuid()) @db.Uuid
+  actorId    String?    @db.Uuid
+  action     String     @db.VarChar(120)
+  entityType String     @db.VarChar(120)
+  entityId   String?    @db.VarChar(180)
+  metadata   Json?
+  ipHash     String?    @db.VarChar(64)
+  userAgent  String?    @db.VarChar(500)
+  createdAt  DateTime   @default(now())
+  actor      AdminUser? @relation(fields: [actorId], references: [id], onDelete: Restrict)
+
+  @@index([entityType, entityId, createdAt])
+  @@index([actorId, createdAt])
+  @@index([createdAt])
+}

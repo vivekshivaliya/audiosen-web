@@ -1,16 +1,17 @@
-import type { Metadata } from "next";
 import { InfoPage } from "@/components/info-page";
 import { brandIdentity, infoPages } from "@/lib/content";
+import { createPageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
-  title: `Careers | ${brandIdentity.organizationName}`,
+export const metadata = createPageMetadata({
+  title: `Careers & Expressions of Interest | ${brandIdentity.shortName}`,
   description:
-    "Explore hearing care career opportunities at Audiosen, including audiologist, technician, and patient support roles.",
-  alternates: {
-    canonical: "/careers",
-  },
-};
+    "Learn how to send Audiosen a general career expression of interest without implying that a vacancy is currently open.",
+  path: "/careers",
+  image: infoPages.careers.image,
+  imageAlt: infoPages.careers.imageAlt,
+  robots: { index: false, follow: true },
+});
 
 export default function CareersPage() {
-  return <InfoPage content={infoPages.careers} />;
+  return <InfoPage content={infoPages.careers} canonicalPath="/careers" />;
 }

@@ -42,7 +42,7 @@ export const seoLandingPages = {
       "A useful hearing-aid quote should identify the exact model and explain what you are paying for beyond the device. Audiosen helps people across India compare written costs without presenting a generic online price as a personal recommendation.",
     image: "/images/editorial/hearing-aid-guidance-v2.webp",
     imageAlt: "A hearing-care professional explaining hearing-aid options to an Indian family",
-    chips: ["Written quotes", "Model-level comparison", "Nationwide enquiries"],
+    chips: ["Written quotes", "Model-level comparison", "India-wide enquiries"],
     notice:
       "Audiosen does not publish an unverified universal price list. Model availability, MRP basis, campaign price, fitting, warranty, stock, taxes, delivery, and aftercare must be confirmed in your written quote before payment.",
     sections: [
@@ -116,7 +116,7 @@ export const seoLandingPages = {
       {
         question: "Can Audiosen help people outside Dehradun compare prices?",
         answer:
-          "Yes. Audiosen accepts enquiries across India and can provide guidance and location-based coordination. In-person services depend on confirmed availability; the verified physical clinic is in Dehradun.",
+          "Yes. Audiosen accepts enquiries across India and can provide guidance and location-based coordination. In-person location and availability are confirmed directly before booking.",
       },
       {
         question: "Does an online price confirm that a device is suitable for me?",
@@ -127,7 +127,6 @@ export const seoLandingPages = {
     relatedLinks: [
       { label: "Compare hearing-aid types", href: "/hearing-aid-types" },
       { label: "Plan total cost", href: "/tools/hearing-aid-cost-calculator" },
-      { label: "Read the offer terms", href: "/offers/50-percent-off" },
       { label: "Hearing aids across India", href: "/hearing-aids-india" },
     ],
     closingTitle: "Request a model-specific written quote",
@@ -270,7 +269,7 @@ export const seoLandingPages = {
     introduction:
       "A hearing aid needs more than a product handover. A clear fitting and aftercare plan should connect assessment, device setup, verification, realistic listening goals, maintenance, follow-up adjustments, and repair support.",
     image: "/images/editorial/hearing-test-consultation-v2.webp",
-    imageAlt: "A hearing-care consultation with an Indian adult and a qualified professional",
+    imageAlt: "A hearing-care consultation with an Indian adult and a hearing device",
     chips: ["Fitting plan", "Follow-up adjustments", "Long-term care"],
     notice:
       "Exact fitting methods and follow-up frequency depend on the person's assessment, device, age, ear health, communication needs, and provider. Confirm the plan in writing before purchase.",
@@ -358,7 +357,7 @@ export const seoLandingPages = {
       {
         question: "Does Audiosen provide in-person fitting everywhere in India?",
         answer:
-          "No nationwide in-person availability is implied. Audiosen accepts enquiries across India and confirms the available assessment, fitting, delivery, or support pathway for each location. Its verified physical clinic is in Dehradun.",
+          "No nationwide in-person availability is implied. Audiosen accepts enquiries across India and confirms the available assessment, fitting, delivery, or support pathway and in-person location details before booking.",
       },
     ],
     sources: [
