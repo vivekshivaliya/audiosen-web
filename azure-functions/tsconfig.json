@@ -17,5 +17,12 @@
       "@azure/identity": ["./node_modules/@azure/identity"]
     }
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts", "../lib/email-outbox-worker.ts", "../lib/db.ts", "../lib/mailer.ts"]
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "../lib/email-outbox-worker.ts",
+    "../lib/db.ts",
+    "../lib/mailer.ts",
+    "../types/nodemailer9.d.ts"
+  ]
 }
