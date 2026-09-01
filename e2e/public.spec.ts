@@ -56,7 +56,11 @@ test("nonce-bearing gated responses execute under their response CSP", async ({ 
   const policy = response?.headers()["content-security-policy"] || "";
   expect(policy).not.toContain("googletagmanager.com");
   expect(policy).not.toContain("google-analytics.com");
-  expect(policy).not.toContain("challenges.cloudflare.com");
+  if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim()) {
+    expect(policy).toContain("challenges.cloudflare.com");
+  } else {
+    expect(policy).not.toContain("challenges.cloudflare.com");
+  }
   const responseNonce = policy.match(/'nonce-([^']+)'/)?.[1];
   expect(responseNonce, "response CSP must contain a nonce").toBeTruthy();
   const documentNonces = await page.locator("script[nonce]").evaluateAll((scripts) =>
