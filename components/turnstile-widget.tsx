@@ -140,7 +140,7 @@ export function TurnstileWidget({
         data-cfasync="false"
         onReady={() => setScriptReady(true)}
       />
-      <div id={containerId} className="min-h-[65px]" aria-label="Bot verification" />
+      <div id={containerId} className="min-h-[65px]" role="group" aria-label="Bot verification" />
     </div>
   );
 }

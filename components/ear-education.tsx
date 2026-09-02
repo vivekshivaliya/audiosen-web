@@ -126,7 +126,7 @@ export function EarEducation() {
               onKeyDown={(event) => onTabKeyDown(event, index)}
               className={`min-h-14 rounded-xl border px-3 py-2 text-left text-sm font-bold transition ${selectedId === part.id ? "border-teal-800 bg-teal-900 text-white shadow-sm" : "border-slate-200 bg-white text-slate-700 hover:border-teal-400"}`}
             >
-              <span className="block text-[10px] uppercase tracking-[.12em] opacity-70">{part.journey}</span>
+              <span className="block text-[10px] uppercase tracking-[.12em] opacity-[.72]">{part.journey}</span>
               <span className="mt-0.5 block">{part.label}</span>
             </button>
           ))}
