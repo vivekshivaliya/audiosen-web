@@ -296,16 +296,11 @@ jobs:
             --resource-group "$AZURE_RESOURCE_GROUP" \
             --name "$AZURE_WEBAPP_NAME" \
             --slot "$AZURE_STAGING_SLOT_NAME" \
-            --settings \
+            --slot-settings \
               AUDIOSEN_STAGING_DEPLOYMENT=true \
               AUDIOSEN_STAGING_HOST="$AZURE_STAGING_HOST" \
               PUBLIC_ENQUIRIES_ENABLED=false \
               CATALOG_STAGING_PREVIEW_ENABLED=false \
-            --slot-settings \
-              AUDIOSEN_STAGING_DEPLOYMENT \
-              AUDIOSEN_STAGING_HOST \
-              PUBLIC_ENQUIRIES_ENABLED \
-              CATALOG_STAGING_PREVIEW_ENABLED \
             --output none
 
       - name: Deploy exact tested artifact to SEO staging slot
@@ -434,12 +429,9 @@ jobs:
           az webapp config appsettings set \
             --resource-group "$AZURE_RESOURCE_GROUP" \
             --name "$AZURE_WEBAPP_NAME" \
-            --settings \
+            --slot-settings \
               AUDIOSEN_STAGING_DEPLOYMENT=false \
               AUDIOSEN_STAGING_HOST="$SLOT_HOST" \
-            --slot-settings \
-              AUDIOSEN_STAGING_DEPLOYMENT \
-              AUDIOSEN_STAGING_HOST \
             --output none
 
       - name: Swap verified staging slot into production
