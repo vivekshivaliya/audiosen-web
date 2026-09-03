@@ -26,7 +26,7 @@ describe("Azure Communication Services Email configuration", () => {
     );
   });
 
-  it("rejects a private inbox as the patient-facing sender", async () => {
+  it("rejects an unverified address as the provider sender", async () => {
     vi.stubEnv("AZURE_COMMUNICATION_EMAIL_SENDER", "vivekshivaliya10@gmail.com");
 
     await expect(sendQueuedEmail(queuedMessage)).rejects.toThrow(

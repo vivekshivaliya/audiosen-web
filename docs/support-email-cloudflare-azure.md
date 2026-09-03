@@ -1,11 +1,12 @@
 # Audiosen support email architecture
 
-This setup gives Audiosen a professional support address without running an
-inbound mail server:
+This setup separates Audiosen's public contact address from its provider-verified
+transactional sender without running an inbound mail server:
 
-- Incoming: `support@audiosen.com` -> Cloudflare Email Routing -> verified owner inbox.
+- Public contact and reply-to: `contactaudiosen@gmail.com`.
+- Provider sender routing: `support@audiosen.com` -> Cloudflare Email Routing -> verified owner inbox.
 - Outgoing website mail: PostgreSQL outbox worker -> Azure Communication Services Email SDK.
-- Public sender: `support@audiosen.com`.
+- Provider-verified sender: `support@audiosen.com`.
 
 Azure Communication Services Email is outbound-only. Cloudflare Email Routing
 forwards messages but does not provide a mailbox or outbound SMTP service.
@@ -83,5 +84,5 @@ as `vivekshivaliya10@gmail.com`.
 - Confirm SPF, DKIM, and DMARC pass in the received message headers.
 - Submit the website contact form and confirm both the owner notification and
   customer confirmation arrive.
-- Reply through the approved `support@audiosen.com` send-as configuration and
-  confirm the recipient sees the support address, not the private inbox.
+- Confirm that patient confirmations use `contactaudiosen@gmail.com` as reply-to while retaining
+  the approved provider sender in the message headers.

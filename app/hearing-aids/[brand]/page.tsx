@@ -33,12 +33,12 @@ export async function generateMetadata({ params }: BrandPageProps): Promise<Meta
 
   const canonical = `/hearing-aids/${brand.slug}`;
   const social = {
-    title: `${brand.name} Hearing-Aid Model Guides | Audiosen`,
-    description: `Explore Audiosen's informational ${brand.name} model entries without assumptions about stock, price, warranty, or suitability.`,
+    title: `${brand.name} Hearing-Aid Guides in Dehradun | Audiosen`,
+    description: `Explore source-checked ${brand.name} hearing-aid model guides with Audiosen in Dehradun. Availability, price, and suitability are confirmed individually.`,
   };
   return {
     title: social.title,
-    description: `Browse informational ${brand.name} hearing-aid model guides and request current manufacturer, availability, or pricing information from Audiosen.`,
+    description: social.description,
     alternates: { canonical },
     robots: { index: snapshot.mode === "published", follow: true },
     openGraph: {

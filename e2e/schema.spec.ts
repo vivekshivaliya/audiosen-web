@@ -6,10 +6,10 @@ const legacyLocalBusinessId = "https://audiosen.com/#approved-local-business";
 const productionOrigin = "https://audiosen.com";
 
 const approvedBusinessIdentity = {
-  name: "Audiosen",
-  descriptor: "Audiosen Advance Hearing Care Solutions",
+  name: "Audiosen Advanced Hearing Care Solutions",
+  descriptor: "Audiosen Advanced Hearing Care Solutions",
   telephone: "+918923092563",
-  email: "support@audiosen.com",
+  email: "contactaudiosen@gmail.com",
   address: {
     streetAddress: "7, 11, Ram Vihar St, near ONGC Hospital",
     addressLocality: "Dehradun",
@@ -190,7 +190,7 @@ for (const path of schemaRoutes) {
           expect(child.replace(/\D/g, "")).toBe("918923092563");
         }
         if (key === "email" && typeof child === "string") {
-          expect(child.toLowerCase()).toBe("support@audiosen.com");
+          expect(child.toLowerCase()).toBe("contactaudiosen@gmail.com");
         }
         if (typeof child === "string") {
           expect(child.toLowerCase()).not.toContain("localhost");

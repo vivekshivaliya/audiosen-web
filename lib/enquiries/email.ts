@@ -5,7 +5,7 @@ import {
   AUDIOSEN_PHONE_E164,
   AUDIOSEN_ADDRESS,
   AUDIOSEN_URL,
-  PATIENT_SUPPORT_EMAIL,
+  PUBLIC_CONTACT_EMAIL,
   STAFF_ENQUIRY_EMAIL,
 } from "@/lib/enquiries/constants";
 
@@ -95,7 +95,7 @@ function staffMessage(
   return {
     kind: "STAFF_ENQUIRY",
     dedupeKey: `${reference}:staff`,
-    fromAddress: `Audiosen <${PATIENT_SUPPORT_EMAIL}>`,
+    fromAddress: `Audiosen <${PUBLIC_CONTACT_EMAIL}>`,
     toAddress: STAFF_ENQUIRY_EMAIL,
     replyToAddress: input.email || undefined,
     subject: `New Audiosen Enquiry — ${input.name}`,
@@ -124,9 +124,9 @@ function patientMessage(
   return {
     kind: "PATIENT_CONFIRMATION",
     dedupeKey: `${reference}:patient`,
-    fromAddress: `Audiosen <${PATIENT_SUPPORT_EMAIL}>`,
+    fromAddress: `Audiosen <${PUBLIC_CONTACT_EMAIL}>`,
     toAddress: input.email,
-    replyToAddress: PATIENT_SUPPORT_EMAIL,
+    replyToAddress: PUBLIC_CONTACT_EMAIL,
     subject: "Thank You for Contacting Audiosen",
     textBody: [
       `Dear ${input.name},`,
@@ -138,13 +138,13 @@ function patientMessage(
       "",
       `Phone: ${AUDIOSEN_PHONE_DISPLAY}`,
       `Clinic address: ${AUDIOSEN_ADDRESS}`,
-      `Email: ${PATIENT_SUPPORT_EMAIL}`,
+      `Email: ${PUBLIC_CONTACT_EMAIL}`,
       `Website: ${AUDIOSEN_URL}`,
       "",
       "Warm regards,",
       "Audiosen Hearing Care",
     ].join("\n"),
-    htmlBody: `<div style="font-family:Arial,sans-serif;max-width:640px;margin:auto;color:#1e293b;border:1px solid #dbeafe;border-radius:16px;overflow:hidden"><div style="background:#075985;color:white;padding:22px 26px"><h1 style="margin:0;font-size:23px">Thank you for contacting Audiosen</h1></div><div style="padding:24px 26px;line-height:1.65"><p>Dear ${safeName},</p><p>Your enquiry has been received successfully. Our team will contact you shortly.</p><p><strong>Enquiry reference:</strong> ${safeReference}<br><strong>Requested service:</strong> ${safeService}</p><p><strong>Phone:</strong> <a href="tel:${AUDIOSEN_PHONE_E164}">${AUDIOSEN_PHONE_DISPLAY}</a><br><strong>Clinic address:</strong> ${escapeHtml(AUDIOSEN_ADDRESS)}<br><strong>Email:</strong> <a href="mailto:${PATIENT_SUPPORT_EMAIL}">${PATIENT_SUPPORT_EMAIL}</a><br><strong>Website:</strong> <a href="${AUDIOSEN_URL}">${AUDIOSEN_URL}</a></p><p>Warm regards,<br><strong>Audiosen Advance Hearing Care Solutions</strong></p></div></div>`,
+    htmlBody: `<div style="font-family:Arial,sans-serif;max-width:640px;margin:auto;color:#1e293b;border:1px solid #dbeafe;border-radius:16px;overflow:hidden"><div style="background:#075985;color:white;padding:22px 26px"><h1 style="margin:0;font-size:23px">Thank you for contacting Audiosen</h1></div><div style="padding:24px 26px;line-height:1.65"><p>Dear ${safeName},</p><p>Your enquiry has been received successfully. Our team will contact you shortly.</p><p><strong>Enquiry reference:</strong> ${safeReference}<br><strong>Requested service:</strong> ${safeService}</p><p><strong>Phone:</strong> <a href="tel:${AUDIOSEN_PHONE_E164}">${AUDIOSEN_PHONE_DISPLAY}</a><br><strong>Clinic address:</strong> ${escapeHtml(AUDIOSEN_ADDRESS)}<br><strong>Email:</strong> <a href="mailto:${PUBLIC_CONTACT_EMAIL}">${PUBLIC_CONTACT_EMAIL}</a><br><strong>Website:</strong> <a href="${AUDIOSEN_URL}">${AUDIOSEN_URL}</a></p><p>Warm regards,<br><strong>Audiosen Advanced Hearing Care Solutions</strong></p></div></div>`,
   };
 }
 

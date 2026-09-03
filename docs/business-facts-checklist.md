@@ -10,7 +10,7 @@ Do not publish a medical, professional, price, warranty, discount, trial, dealer
 - [ ] GST number and invoice name, if applicable
 - [x] Clinic address and pin code: `7, 11, Ram Vihar St, near ONGC Hospital, Dehradun, Uttarakhand 248001`
 - [x] Public phone and WhatsApp: `+91 89230 92563`
-- [x] Public email: `support@audiosen.com`
+- [x] Public email: `contactaudiosen@gmail.com`
 - [ ] Opening hours (remain unpublished until the owner verifies them)
 - [ ] Google Business Profile URL
 - [ ] Direct Google review-request URL

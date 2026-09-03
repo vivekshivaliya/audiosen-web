@@ -19,7 +19,7 @@ function candidate(overrides: Partial<EmailOutbox> = {}): EmailOutbox {
     kind: EmailOutboxKind.STAFF_ENQUIRY,
     status: EmailOutboxStatus.PENDING,
     dedupeKey: "fixture:staff",
-    fromAddress: "support@audiosen.com",
+    fromAddress: "contactaudiosen@gmail.com",
     toAddress: "vivekshivaliya10@gmail.com",
     replyToAddress: null,
     subject: "Fixture subject",

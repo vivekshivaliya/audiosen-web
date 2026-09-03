@@ -23,14 +23,14 @@ import { getPublicGoogleReviews } from "@/lib/public-google-reviews";
 import { StructuredData } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Hearing Care Across India | Audiosen Advance Hearing Care Solutions",
+  title: "Hearing Aid Centre in Dehradun | Audiosen Advanced Hearing Care Solutions",
   description:
-    "India-wide hearing-device guidance, assessment planning, fitting coordination, repair support and speech-service enquiries with personalized support from Audiosen.",
+    "Audiosen Advanced Hearing Care Solutions provides hearing aids, hearing tests, hearing aid fitting, programming, repair, and speech assessment enquiries in Dehradun.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Hearing Care Across India | Audiosen Advance Hearing Care Solutions",
+    title: "Hearing Aid Centre in Dehradun | Audiosen Advanced Hearing Care Solutions",
     description:
-      "India-wide hearing-device guidance, assessment planning, fitting coordination, repair support and speech-service enquiries with personalized support from Audiosen.",
+      "Audiosen Advanced Hearing Care Solutions provides hearing aids, hearing tests, hearing aid fitting, programming, repair, and speech assessment enquiries in Dehradun.",
     url: "https://audiosen.com/",
     siteName: "Audiosen",
     type: "website",
@@ -46,9 +46,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hearing Care Across India | Audiosen Advance Hearing Care Solutions",
+    title: "Hearing Aid Centre in Dehradun | Audiosen Advanced Hearing Care Solutions",
     description:
-      "India-wide hearing-device guidance, assessment planning, fitting coordination, repair support and speech-service enquiries with personalized support from Audiosen.",
+      "Audiosen Advanced Hearing Care Solutions provides hearing aids, hearing tests, hearing aid fitting, programming, repair, and speech assessment enquiries in Dehradun.",
     images: ["/og-image-v2.webp"],
   },
 };
@@ -177,7 +177,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 pb-10 pt-5 sm:px-6 lg:px-8 lg:pt-8">
         <div className="grid items-center gap-8 overflow-hidden rounded-[2rem] border border-teal-900/10 bg-[linear-gradient(145deg,rgba(255,255,255,.98),rgba(228,247,243,.94))] p-5 shadow-[0_42px_100px_-60px_rgba(5,46,58,.7)] sm:p-8 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-[1.02fr_.98fr] lg:p-10 xl:p-12">
           <div className="relative z-10">
-            <p className="premium-eyebrow mb-4">Audiosen · Advance Hearing Care Solutions</p>
+            <p className="premium-eyebrow mb-4">Audiosen · Advanced Hearing Care Solutions</p>
             <h1 className="max-w-3xl font-display text-[clamp(2.75rem,5.4vw,5.25rem)] font-semibold leading-[.95] tracking-[-.025em] text-slate-950">
               Hearing Care Across India, With Caring, Clear Support
             </h1>

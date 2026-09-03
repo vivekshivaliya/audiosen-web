@@ -65,4 +65,4 @@ Then add the DNS records shown by Google.
 - Confirm:
   - staff enquiry mail reaches `vivekshivaliya10@gmail.com`
   - patient mail reaches submitted patient address
-  - patient-facing messages show the verified sender `support@audiosen.com`
+  - patient-facing messages are sent by the verified provider sender `support@audiosen.com` and use `contactaudiosen@gmail.com` as their public reply-to address

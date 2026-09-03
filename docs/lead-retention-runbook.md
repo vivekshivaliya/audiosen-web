@@ -58,7 +58,7 @@ exclusion are deployed; an ordinary CRM note is not a safe retention control.
 
 ## Data-principal request and consent withdrawal
 
-1. Receive the request through `support@audiosen.com` or another verifiable contact channel.
+1. Receive the request through `contactaudiosen@gmail.com` or another verifiable contact channel.
 2. Verify control of the relevant email or phone before exposing, correcting, exporting, or
    deleting data. For a child, complete the applicable parent/lawful-guardian verification.
 3. Search narrowly. Keep identity-verification material out of general enquiry notes.

@@ -27,10 +27,10 @@ Use this exact public identity everywhere; it is derived from the owner-confirme
 permanent signage:
 
 - Name: `Audiosen`
-- Descriptor (not a replacement business name): `Audiosen Advance Hearing Care Solutions`
+- Business name: `Audiosen Advanced Hearing Care Solutions`
 - Address: `7, 11, Ram Vihar St, near ONGC Hospital, Dehradun, Uttarakhand 248001`
 - Phone and WhatsApp: `+91 89230 92563`
-- Email: `support@audiosen.com`
+- Email: `contactaudiosen@gmail.com`
 - Canonical domain: `https://audiosen.com`
 
 Do not invent opening hours, professional credentials, ratings, review counts, prices, discounts,

@@ -6,19 +6,19 @@
 
 export const brandIdentity = {
   shortName: "Audiosen",
-  organizationName: "Audiosen Advance Hearing Care Solutions",
-  subtitle: "Advance Hearing Care Solutions",
+  organizationName: "Audiosen Advanced Hearing Care Solutions",
+  subtitle: "Advanced Hearing Care Solutions",
 } as const;
 
 const approvedClinicAddress = "7, 11, Ram Vihar St, near ONGC Hospital, Dehradun, Uttarakhand 248001";
 const approvedClinicMapsUrl = "https://maps.app.goo.gl/aS14X1JqjBfKv3TS7";
 
 export const siteMeta = {
-  title: `${brandIdentity.shortName} | Hearing & Communication Care`,
+  title: "Hearing Aid Centre in Dehradun | Audiosen Advanced Hearing Care Solutions",
   description:
-    `Explore hearing-device guidance, an online sound check, repair support, and communication services across India from ${brandIdentity.shortName}.`,
+    "Audiosen Advanced Hearing Care Solutions provides hearing aids, hearing tests, hearing aid fitting, programming, repair, and speech assessment enquiries in Dehradun.",
   keywords:
-    "hearing care Dehradun, hearing aid guidance India, online hearing sound check, hearing aid fitting, hearing aid repair, speech and language services",
+    "hearing aid centre Dehradun, hearing test Dehradun, hearing aid fitting Dehradun, hearing aid repair Dehradun, speech assessment enquiries",
   canonicalUrl: "https://audiosen.com/",
   ogImage: "https://audiosen.com/og-image-v2.webp",
   logo: "https://audiosen.com/audiosen-company-logo.png",
@@ -26,7 +26,7 @@ export const siteMeta = {
 
 export const clinicContact = {
   company: brandIdentity.organizationName,
-  email: "support@audiosen.com",
+  email: "contactaudiosen@gmail.com",
   locality: "Dehradun",
   region: "Uttarakhand",
   postalCode: "248001",
@@ -91,7 +91,7 @@ export const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "@id": "https://audiosen.com/#organization",
-  name: brandIdentity.shortName,
+  name: brandIdentity.organizationName,
   alternateName: brandIdentity.organizationName,
   url: "https://audiosen.com/",
   logo: siteMeta.logo,
@@ -252,7 +252,7 @@ export const infoPages: Record<
     imageAlt: "Indian hearing-care professionals collaborating around audiology equipment",
     paragraphs: [
       "Audiosen accepts general career expressions of interest. This page does not confirm that a vacancy, position, location, salary, or recruitment timeline is currently open.",
-      "If you would like to be considered when a suitable role is confirmed, send your CV to support@audiosen.com with the subject line \"Career Expression of Interest - [Area]\".",
+      "If you would like to be considered when a suitable role is confirmed, send your CV to contactaudiosen@gmail.com with the subject line \"Career Expression of Interest - [Area]\".",
     ],
     bullets: [
       "Clinical hearing care - identity, qualifications, registration, scope, and exact role terms are checked before any appointment.",
@@ -352,8 +352,8 @@ export const infoPages: Record<
       "Audiosen does not sell personal data or use website health enquiries for targeted advertising. Necessary providers may process limited information for Azure hosting and storage, bot protection, authenticated administration, operational email or consented analytics. Information may also be disclosed when required to deliver an authorised service, investigate abuse, comply with applicable law or respond to a valid legal requirement.",
       "Default retention is: suspected spam for 30 days; unconverted website enquiries for 24 months after the last meaningful activity; private attachments for 90 days after closure and no longer than 12 months without documented need; delivered email-outbox bodies for 30 days; and raw Google Business snapshots for no more than 30 days. Legal minimums, active services, transactions, disputes, security investigations and documented holds may require a different period.",
       "For a patient under 18, a parent or lawful guardian must provide consent. A website checkbox is an initial declaration only; Audiosen must complete any legally required age and guardian verification before collecting expanded child information or delivering the applicable service. Do not upload a child's identity or clinical record through a general enquiry.",
-      "You may request access, correction, withdrawal of contact consent, deletion, or grievance review for website enquiry data, subject to identity verification and applicable retention duties. Use support@audiosen.com from a verifiable contact channel. Withdrawing optional consent does not affect processing already lawfully completed, and Audiosen will stop consent-based contact that is no longer required.",
-      "Audiosen applies technical and organisational safeguards, but no internet transmission or storage system can be guaranteed completely secure. Suspected privacy or security incidents should be reported promptly to support@audiosen.com.",
+      "You may request access, correction, withdrawal of contact consent, deletion, or grievance review for website enquiry data, subject to identity verification and applicable retention duties. Use contactaudiosen@gmail.com from a verifiable contact channel. Withdrawing optional consent does not affect processing already lawfully completed, and Audiosen will stop consent-based contact that is no longer required.",
+      "Audiosen applies technical and organisational safeguards, but no internet transmission or storage system can be guaranteed completely secure. Suspected privacy or security incidents should be reported promptly to contactaudiosen@gmail.com.",
       "This implementation is designed for review against India's Digital Personal Data Protection Act, 2023 and the Digital Personal Data Protection Rules, 2025, including their notified commencement timetable. It is not a substitute for final Indian legal counsel and operational compliance review before production launch.",
     ],
     bullets: [
@@ -362,7 +362,7 @@ export const infoPages: Record<
       "Private files: validated, quarantined, non-public and available only through short-lived authenticated access.",
       "Analytics: opt-in only, advertising disabled and no contact, health, finder, reference or query-string data.",
       "Children: parent or lawful-guardian consent and any required verification before expanded processing.",
-      "Rights and grievance contact: support@audiosen.com.",
+      "Rights and grievance contact: contactaudiosen@gmail.com.",
       "Official framework: https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa",
     ],
   },

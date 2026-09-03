@@ -6,7 +6,8 @@ import {
 import { DefaultAzureCredential } from "@azure/identity";
 import nodemailer from "nodemailer9";
 
-const PATIENT_SUPPORT_ADDRESS = "support@audiosen.com";
+// This is an existing provider-verified sender, not the public contact address.
+const VERIFIED_TRANSACTIONAL_SENDER = "support@audiosen.com";
 const AZURE_MANAGED_SENDER = /^[a-z0-9._%+-]+@[a-f0-9-]+\.azurecomm\.net$/i;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -71,9 +72,9 @@ function senderAddress(): string {
   }
 
   const normalized = requireEmailAddress(sender, "AZURE_COMMUNICATION_EMAIL_SENDER");
-  if (normalized !== PATIENT_SUPPORT_ADDRESS && !AZURE_MANAGED_SENDER.test(normalized)) {
+  if (normalized !== VERIFIED_TRANSACTIONAL_SENDER && !AZURE_MANAGED_SENDER.test(normalized)) {
     throw new AzureEmailConfigurationError(
-      `AZURE_COMMUNICATION_EMAIL_SENDER must be ${PATIENT_SUPPORT_ADDRESS} or an Azure-managed verified sender.`,
+      `AZURE_COMMUNICATION_EMAIL_SENDER must be ${VERIFIED_TRANSACTIONAL_SENDER} or an Azure-managed verified sender.`,
     );
   }
   return normalized;
@@ -145,7 +146,7 @@ function smtpConfiguration(): {
   if (Boolean(user) !== Boolean(pass)) {
     throw new AzureEmailConfigurationError("SMTP_USER and SMTP_PASS must be configured together.");
   }
-  const from = configuredValue("EMAIL_FROM") ?? configuredValue("MAIL_FROM") ?? PATIENT_SUPPORT_ADDRESS;
+  const from = configuredValue("EMAIL_FROM") ?? configuredValue("MAIL_FROM") ?? VERIFIED_TRANSACTIONAL_SENDER;
   return { host, port, secure: secureRaw === "true" || (!secureRaw && port === 465), user, pass, from };
 }
 

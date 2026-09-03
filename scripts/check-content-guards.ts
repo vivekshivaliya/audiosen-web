@@ -4,7 +4,7 @@ import ts from "typescript";
 
 const root = process.cwd();
 const approvedPhone = "8923092563";
-const approvedPublicEmail = "support@audiosen.com";
+const approvedPublicEmail = "contactaudiosen@gmail.com";
 const sourceExtensions = new Set([".ts", ".tsx", ".js", ".jsx"]);
 const emailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
 const phonePattern = /(?<!\d)(?:\+?91[\s.-]*)?([6-9](?:[\s.-]*\d){9})(?!\d)/g;
@@ -66,7 +66,9 @@ function isPublicSurface(file: string): boolean {
     name.startsWith("lib/admin/") ||
     name.startsWith("lib/enquiries/") ||
     name.startsWith("lib/google-business/") ||
-    name.startsWith("lib/uploads/")
+    name.startsWith("lib/uploads/") ||
+    name === "lib/mailer.ts" ||
+    name === "lib/email-outbox-worker.ts"
   ) {
     return false;
   }

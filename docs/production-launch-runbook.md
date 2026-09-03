@@ -67,8 +67,8 @@ media rights.
 
 ## 4. Email and DNS
 
-- Verify `support@audiosen.com` as the Azure Communication Services sender and configure independent
-  staff/patient outbox delivery. Staff mail routes only to `vivekshivaliya10@gmail.com`.
+- Verify `support@audiosen.com` as the Azure Communication Services provider sender and configure independent
+  staff/patient outbox delivery. Patient messages use `contactaudiosen@gmail.com` as the public reply-to address; staff mail routes only to `vivekshivaliya10@gmail.com`.
 - **External gate:** configure Cloudflare Email Routing from `support@audiosen.com` to the owner
   inbox after the Mailcow check.
 - Align SPF, ACS DKIM selectors, Cloudflare routing records, and staged DMARC reporting. Validate

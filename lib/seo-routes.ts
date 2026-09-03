@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export const SITE_ORIGIN = "https://audiosen.com";
-export const SEO_CONTENT_LAST_MODIFIED = "2026-09-01";
+export const SEO_CONTENT_LAST_MODIFIED = "2026-08-30";
 
 export type SeoCanonicalPath = "/" | `/${string}`;
 
