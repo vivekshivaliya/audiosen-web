@@ -3,3 +3,10 @@
 # Firefox consultation-enquiry flow from loading its third-party verification
 # script, so it remains intentionally absent until that dependency supports it.
 90004	IGNORE	COEP intentionally omitted for verified cross-browser enquiry compatibility; COOP and CORP are enforced.
+# Dynamic HTML is deliberately non-storable because it carries a per-response
+# CSP nonce. The public robots, sitemap, and manifest use normal revalidation.
+10015	IGNORE	Public machine-readable resources use explicit max-age=0 revalidation; no user data is cached.
+10049	IGNORE	Dynamic HTML deliberately uses Cache-Control no-store for nonce-protected responses; hashed static assets are safe to cache.
+# The consultation service query parameter is normalized against the server-side
+# service allow-list before being passed to the controlled select element.
+10031	IGNORE	The service query parameter is strict-allow-listed before rendering; passive scan reports the selected option attribute only.
