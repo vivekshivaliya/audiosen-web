@@ -222,8 +222,7 @@ export function BookServicePopup() {
         aria-labelledby="book-service-popup-title"
         aria-describedby="book-service-popup-description"
         tabIndex={-1}
-        className="relative flex max-h-[calc(100vh-2.5rem)] flex-col overflow-hidden rounded-[1.6rem] border border-white/80 bg-white shadow-[0_28px_90px_-44px_rgba(4,28,58,0.88)] outline-none"
-        style={{ width: "min(64rem, calc(100vw - 2rem))" }}
+        className="relative flex w-[min(64rem,calc(100vw-2rem))] max-h-[calc(100vh-2.5rem)] flex-col overflow-hidden rounded-[1.6rem] border border-white/80 bg-white shadow-[0_28px_90px_-44px_rgba(4,28,58,0.88)] outline-none"
       >
         <button
           ref={closeButtonRef}

@@ -370,6 +370,7 @@ jobs:
           allow_issue_writing: false
           fail_action: true
           artifact_name: zap-staging-${{ github.run_id }}
+          rules_file_name: .zap/rules.tsv
           cmd_options: "-m 5"
 
       - name: Upload staging smoke diagnostics

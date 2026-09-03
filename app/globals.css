@@ -688,21 +688,33 @@ textarea:focus-visible {
 .sonic-progress {
   position: relative;
   z-index: 1;
+  display: block;
   overflow: hidden;
   max-width: 38rem;
   height: 0.48rem;
   margin: 1.25rem auto 0;
+  width: 100%;
+  appearance: none;
+  border: 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
 }
 
-.sonic-progress > span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
+.sonic-progress::-webkit-progress-bar {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sonic-progress::-webkit-progress-value {
+  border-radius: 999px;
   background: linear-gradient(90deg, #62dfd0, #8bc7ff, #a99eff);
   box-shadow: 0 0 1.4rem rgba(98, 223, 208, 0.48);
   transition: width 300ms ease;
+}
+
+.sonic-progress::-moz-progress-bar {
+  border-radius: 999px;
+  background: linear-gradient(90deg, #62dfd0, #8bc7ff, #a99eff);
+  box-shadow: 0 0 1.4rem rgba(98, 223, 208, 0.48);
 }
 
 .sonic-progress-label {

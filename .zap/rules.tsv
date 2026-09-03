@@ -1,0 +1,5 @@
+# Rule ID	Action	Reason
+# COOP and CORP are sent on every response. COEP `require-corp` prevents the
+# Firefox consultation-enquiry flow from loading its third-party verification
+# script, so it remains intentionally absent until that dependency supports it.
+90004	IGNORE	COEP intentionally omitted for verified cross-browser enquiry compatibility; COOP and CORP are enforced.

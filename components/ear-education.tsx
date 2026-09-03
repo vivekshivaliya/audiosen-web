@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { type CSSProperties, type KeyboardEvent, useRef, useState } from "react";
+import { type KeyboardEvent, useRef, useState } from "react";
 import { earAnatomyDataUri } from "@/components/ear-anatomy-image";
 
 type EarPart = "outer" | "canal" | "middle" | "inner";
@@ -13,7 +14,7 @@ type EarPartDetail = {
   description: string;
   journey: string;
   cue: string;
-  focus: CSSProperties;
+  focusClassName: string;
 };
 
 const parts: readonly EarPartDetail[] = [
@@ -24,7 +25,7 @@ const parts: readonly EarPartDetail[] = [
     description: "The pinna is the visible part of the ear. Its folds collect sound from around you and guide it toward the ear canal.",
     journey: "1. Collect",
     cue: "The outer ear helps gather sound; it does not determine whether someone has hearing loss.",
-    focus: { left: "5%", top: "22%", width: "28%", height: "59%" },
+    focusClassName: "left-[5%] top-[22%] h-[59%] w-[28%]",
   },
   {
     id: "canal",
@@ -33,7 +34,7 @@ const parts: readonly EarPartDetail[] = [
     description: "Sound travels through the ear canal to the eardrum. The eardrum responds to sound as a very small, controlled vibration.",
     journey: "2. Guide",
     cue: "Wax, irritation and infection can affect comfort or sound. A clinician can assess the cause safely.",
-    focus: { left: "26%", top: "39%", width: "28%", height: "28%" },
+    focusClassName: "left-[26%] top-[39%] h-[28%] w-[28%]",
   },
   {
     id: "middle",
@@ -42,7 +43,7 @@ const parts: readonly EarPartDetail[] = [
     description: "Behind the eardrum, three tiny bones—malleus, incus and stapes—transfer vibration toward the inner ear.",
     journey: "3. Transfer",
     cue: "This illustration simplifies very small structures. It is an education aid, not a diagnostic image.",
-    focus: { left: "45%", top: "36%", width: "22%", height: "32%" },
+    focusClassName: "left-[45%] top-[36%] h-[32%] w-[22%]",
   },
   {
     id: "inner",
@@ -51,24 +52,25 @@ const parts: readonly EarPartDetail[] = [
     description: "The cochlea converts vibration into nerve signals. Those signals travel through the auditory nerve for the brain to interpret as sound.",
     journey: "4. Convert",
     cue: "Hearing tests help measure hearing ability; this model cannot show an individual’s hearing health.",
-    focus: { left: "60%", top: "19%", width: "31%", height: "62%" },
+    focusClassName: "left-[60%] top-[19%] h-[62%] w-[31%]",
   },
 ] as const;
 
 function AnatomyVisual({ selected }: { selected: EarPartDetail }) {
   return (
     <div className="relative min-h-[22rem] overflow-hidden rounded-[1.5rem] bg-[#dff2ef] sm:min-h-[28rem]">
-      <div
-        role="img"
-        aria-label="Illustrative 3D cutaway of the outer, middle and inner ear, including the ear canal, eardrum, ossicles, cochlea and auditory nerve."
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${earAnatomyDataUri})` }}
+      <Image
+        src={earAnatomyDataUri}
+        alt="Illustrative 3D cutaway of the outer, middle and inner ear, including the ear canal, eardrum, ossicles, cochlea and auditory nerve."
+        fill
+        sizes="(min-width: 640px) 50vw, 100vw"
+        unoptimized
+        className="object-cover object-center"
       />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(7,44,52,.13),transparent_36%,transparent_72%,rgba(255,255,255,.1))]" />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute rounded-full border-2 border-white bg-teal-200/20 shadow-[0_0_0_7px_rgba(13,148,136,.18),0_0_34px_rgba(13,148,136,.38)] transition-all duration-500 motion-reduce:transition-none"
-        style={selected.focus}
+        className={`pointer-events-none absolute rounded-full border-2 border-white bg-teal-200/20 shadow-[0_0_0_7px_rgba(13,148,136,.18),0_0_34px_rgba(13,148,136,.38)] transition-all duration-500 motion-reduce:transition-none ${selected.focusClassName}`}
       />
       <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-white/70 bg-white/90 px-3 py-2.5 text-xs shadow-sm backdrop-blur sm:left-5 sm:right-5">
         <span className="font-bold text-teal-950">{selected.journey} · {selected.label}</span>

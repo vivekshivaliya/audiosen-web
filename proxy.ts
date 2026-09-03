@@ -77,7 +77,10 @@ function createContentSecurityPolicy(nonce: string, secureTransport: boolean): s
     // HTML responses below opt out of intermediary transformations, so retain
     // the nonce-based strict policy for Next.js application scripts.
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${analyticsScriptOrigin}${turnstileOrigin}${developmentScripts};`,
-    "style-src 'self' 'unsafe-inline';",
+    `style-src 'self' 'nonce-${nonce}';`,
+    // Next/Image emits positioning attributes during server rendering. Keep
+    // those attributes separate from the nonce-protected stylesheet policy.
+    "style-src-attr 'unsafe-inline';",
     "font-src 'self' data:;",
     "img-src 'self' data: blob:;",
     "media-src 'self' blob:;",

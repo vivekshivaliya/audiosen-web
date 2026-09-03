@@ -146,7 +146,7 @@ export const seoLandingPages = {
     imageAlt: "Modern hearing-aid technology arranged for a clear product comparison",
     chips: ["RIC and BTE", "In-ear styles", "Assessment-led selection"],
     notice:
-      "This guide explains common categories, not personal suitability. Do not select or program a hearing aid from style descriptions alone; arrange an appropriate assessment and qualified fitting.",
+      "This guide explains common categories, not personal suitability. Do not choose or adjust a hearing aid from style descriptions alone; arrange an appropriate assessment and qualified fitting.",
     sections: [
       {
         eyebrow: "Common styles",
