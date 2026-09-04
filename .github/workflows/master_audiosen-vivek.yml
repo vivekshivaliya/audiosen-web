@@ -109,7 +109,13 @@ jobs:
         run: |
           npm ci --prefix azure-functions
           npm --prefix azure-functions run verify
-          npm --prefix azure-functions audit --audit-level=high
+          # npm's retiring quick-audit endpoint can intermittently reject an
+          # otherwise valid lockfile. Rebuild the local audit tree once and
+          # retry; a real high-severity vulnerability still fails this gate.
+          if ! npm --prefix azure-functions audit --audit-level=high; then
+            npm --prefix azure-functions install --package-lock-only --ignore-scripts --no-audit
+            npm --prefix azure-functions audit --audit-level=high
+          fi
 
       - name: Generate Prisma client
         run: npm run prisma:generate
