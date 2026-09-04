@@ -497,30 +497,32 @@ jobs:
               return 1
             fi
 
-            ROBOTS_STATUS="$(
-              curl --fail --silent --show-error --retry 8 --retry-all-errors --retry-delay 10 \
-                -H "Cache-Control: no-cache" \
-                --output "$PROD_CHECK_DIR/robots.txt" \
-                --write-out '%{http_code}' \
-                "$PRODUCTION_ORIGIN/robots.txt"
-            )" || return 1
-            if [ "$ROBOTS_STATUS" != "200" ]; then
-              echo "Production robots.txt returned HTTP $ROBOTS_STATUS instead of 200"
-              return 1
-            fi
-            tr -d '\r' < "$PROD_CHECK_DIR/robots.txt" > "$PROD_CHECK_DIR/robots.normalized"
-            if ! grep -Eiq '^allow:[[:space:]]*/[[:space:]]*$' "$PROD_CHECK_DIR/robots.normalized"; then
-              echo "Production robots.txt does not explicitly allow the site root"
-              return 1
-            fi
-            if grep -Eiq '^disallow:[[:space:]]*/[[:space:]]*$' "$PROD_CHECK_DIR/robots.normalized"; then
-              echo "Production robots.txt blocks the entire site"
-              return 1
-            fi
-            if ! grep -Eiq '^sitemap:[[:space:]]*https://audiosen\.com/sitemap\.xml[[:space:]]*$' "$PROD_CHECK_DIR/robots.normalized"; then
-              echo "Production robots.txt does not advertise the canonical sitemap"
-              return 1
-            fi
+            production_robots_are_indexable() {
+              ROBOTS_STATUS="$(
+                curl --fail --silent --show-error --retry 2 --retry-all-errors --retry-delay 5 \
+                  -H "Cache-Control: no-cache" \
+                  --output "$PROD_CHECK_DIR/robots.txt" \
+                  --write-out '%{http_code}' \
+                  "$PRODUCTION_ORIGIN/robots.txt"
+              )" || return 1
+              [ "$ROBOTS_STATUS" = "200" ] || return 1
+              tr -d '\r' < "$PROD_CHECK_DIR/robots.txt" > "$PROD_CHECK_DIR/robots.normalized"
+              grep -Eiq '^allow:[[:space:]]*/[[:space:]]*$' "$PROD_CHECK_DIR/robots.normalized" && \
+                ! grep -Eiq '^disallow:[[:space:]]*/[[:space:]]*$' "$PROD_CHECK_DIR/robots.normalized" && \
+                grep -Eiq '^sitemap:[[:space:]]*https://audiosen\.com/sitemap\.xml[[:space:]]*$' "$PROD_CHECK_DIR/robots.normalized"
+            }
+
+            for attempt in $(seq 1 8); do
+              if production_robots_are_indexable; then
+                break
+              fi
+              if [ "$attempt" -eq 8 ]; then
+                echo "Production robots.txt did not become indexable after the slot swap"
+                return 1
+              fi
+              echo "Waiting for production robots.txt to reflect the new slot ($attempt/8)"
+              sleep 10
+            done
 
             SITEMAP_STATUS="$(
               curl --fail --silent --show-error --retry 8 --retry-all-errors --retry-delay 10 \
